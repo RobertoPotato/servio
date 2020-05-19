@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:servio/constants.dart';
+import 'package:servio/components/horizontal_items.dart';
+import 'package:servio/components/horizontal_buttons.dart';
+import 'package:servio/components/job_items_vertical.dart';
+import 'package:servio/components/bottomNavBar.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -6,13 +11,154 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: kElevationValue,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.black54,
+              size: 30,
+            ),
+            onPressed: () {
+              //todo implement search functionality
+            },
+          )
+        ],
+        //elevation: kElevationValue,
+        title: Text(
+          'Home',
+          style: kAppBarTitle,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Text('Home screen'),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: Text(
+                      'Top Categories',
+                      style: kHeadingTextStyle,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    height: 70.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        HorizontalButtons(),
+                        HorizontalButtons(),
+                        HorizontalButtons(),
+                        HorizontalButtons(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    color: Colors.white,
+                    height: 180.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        HorizontalCards(
+                          companyImage: 'hands.png',
+                          companyName: 'Company Name',
+                          location: 'Location',
+                          openPositions: 10,
+                        ),
+                        HorizontalCards(
+                          companyImage: 'hands.png',
+                          companyName: 'Company Name',
+                          location: 'Location',
+                          openPositions: 10,
+                        ),
+                        HorizontalCards(
+                          companyImage: 'hands.png',
+                          companyName: 'Company Name',
+                          location: 'Location',
+                          openPositions: 10,
+                        ),
+                        HorizontalCards(
+                          companyImage: 'hands.png',
+                          companyName: 'Company Name',
+                          location: 'Location',
+                          openPositions: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Categories for you',
+                          style: kHeadingTextStyle,
+                        ),
+                        Text(
+                          'See All',
+                          style: kHeadingSubTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      VerticalJobCards(
+                        companyImage: 'hands.png',
+                        companyName: 'Company Name',
+                        location: 'Location',
+                        openPositions: 10,
+                      ),
+                      VerticalJobCards(
+                        companyImage: 'hands.png',
+                        companyName: 'Company Name',
+                        location: 'Location',
+                        openPositions: 10,
+                      ),
+                      VerticalJobCards(
+                        companyImage: 'hands.png',
+                        companyName: 'Company Name',
+                        location: 'Location',
+                        openPositions: 10,
+                      ),
+                      VerticalJobCards(
+                        companyImage: 'hands.png',
+                        companyName: 'Company Name',
+                        location: 'Location',
+                        openPositions: 10,
+                      ),
+                      VerticalJobCards(
+                        companyImage: 'hands.png',
+                        companyName: 'Company Name',
+                        location: 'Location',
+                        openPositions: 10,
+                      ),
+                    ],
+                  ),
+                ],
+              ), //has vertically scrolling widgets
+            ],
+          ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
