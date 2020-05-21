@@ -3,7 +3,6 @@ import 'package:servio/constants.dart';
 import 'package:servio/components/horizontal_items.dart';
 import 'package:servio/components/horizontal_buttons.dart';
 import 'package:servio/components/job_items_vertical.dart';
-import 'package:servio/components/bottomNavBar.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -11,7 +10,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: kElevationValue,
         actions: <Widget>[
@@ -31,7 +29,6 @@ class HomeScreen extends StatelessWidget {
           'Home',
           style: kAppBarTitle,
         ),
-        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -49,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     height: 70.0,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
@@ -66,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               Column(
                 children: <Widget>[
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     height: 180.0,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
@@ -75,25 +72,25 @@ class HomeScreen extends StatelessWidget {
                           companyImage: 'hands.png',
                           companyName: 'Company Name',
                           location: 'Location',
-                          openPositions: 10,
+                          openPositions: 10.0,
+                        ),
+                        HorizontalCards(
+                          companyImage: 'agent_image.jpg',
+                          companyName: 'Company Name',
+                          location: 'Location',
+                          openPositions: 20.0,
                         ),
                         HorizontalCards(
                           companyImage: 'hands.png',
                           companyName: 'Company Name',
                           location: 'Location',
-                          openPositions: 10,
+                          openPositions: 10.0,
                         ),
                         HorizontalCards(
-                          companyImage: 'hands.png',
+                          companyImage: 'agent_image.jpg',
                           companyName: 'Company Name',
                           location: 'Location',
-                          openPositions: 10,
-                        ),
-                        HorizontalCards(
-                          companyImage: 'hands.png',
-                          companyName: 'Company Name',
-                          location: 'Location',
-                          openPositions: 10,
+                          openPositions: 3.0,
                         ),
                       ],
                     ),
@@ -158,7 +155,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

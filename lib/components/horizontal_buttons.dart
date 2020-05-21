@@ -15,14 +15,14 @@ class HorizontalButtons extends StatelessWidget {
           bottom: kMainHorizontalPadding + 6),
       child: Material(
         elevation: kElevationValue,
-        color: kMainColor,
+        color: kPrimaryColor,
         borderRadius: BorderRadius.circular(40.0),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-          child: FlatButton(
-            onPressed: () {
-              //todo Do something
-            },
+        child: InkWell(
+          onTap: () {
+            print('Horizontal button pressed');
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               buttonText,
               style: TextStyle(

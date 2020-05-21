@@ -23,22 +23,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           title: Text('Home'),
-          backgroundColor: kMainColor,
+          backgroundColor: kPrimaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
           title: Text('Alerts'),
-          backgroundColor: kMainColor,
+          backgroundColor: kPrimaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
           title: Text('Favorites'),
-          backgroundColor: kMainColor,
+          backgroundColor: kPrimaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
           title: Text('Profile'),
-          backgroundColor: kMainColor,
+          backgroundColor: kPrimaryColor,
         ),
       ],
       currentIndex: _selectedIndex,

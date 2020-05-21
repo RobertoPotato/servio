@@ -8,8 +8,11 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Your profile Here'),
+            Center(
+              child: Text('Your profile Here'),
+            ),
           ],
         ),
       ),

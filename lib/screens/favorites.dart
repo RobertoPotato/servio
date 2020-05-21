@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -8,8 +9,11 @@ class FavoritesScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Your favorites Here'),
+            Center(
+              child: Text('You currently have no favorites. Add some'),
+            ),
           ],
         ),
       ),

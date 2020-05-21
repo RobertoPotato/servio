@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+//COLORS
+const kPrimaryColor = Colors.teal;
+const kAccentColor = Colors.lightBlueAccent;
+const kScaffoldBackgroundColor = Colors.white70;
+
+//SIZES
 const kMainHorizontalPadding = 12.0;
-const kElevationValue = 6.0;
-const kMainColor = Colors.lightBlueAccent;
+const kElevationValue = 10.0;
 
 const kHeadingTextStyle = TextStyle(
   fontSize: 20,
@@ -25,4 +30,18 @@ const kAppBarTitle = TextStyle(
   fontWeight: FontWeight.w700,
   fontSize: 30.0,
   letterSpacing: 1,
+);
+
+const kTestTextStyleWhite = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 20.0,
+  letterSpacing: 1.2,
+);
+
+const kTestTextStyleBlack = TextStyle(
+  color: Colors.black54,
+  fontWeight: FontWeight.bold,
+  fontSize: 20.0,
+  letterSpacing: 1.2,
 );

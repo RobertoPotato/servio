@@ -8,8 +8,11 @@ class AlertsScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Your notifications Here'),
+            Center(
+              child: Text('Seems you\'re all caught up'),
+            ),
           ],
         ),
       ),
