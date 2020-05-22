@@ -13,14 +13,14 @@ class VerticalJobCards extends StatelessWidget {
   final location;
   final openPositions;
 
-  final double height = 90.0;
+  //final double height = 90.0;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: kMainHorizontalPadding, right: kMainHorizontalPadding, top: 8.0),
       child: Container(
         width: double.infinity,
-        height: height,
+        height: 100,
         child: Card(
           elevation: kElevationValue,
           child: InkWell(

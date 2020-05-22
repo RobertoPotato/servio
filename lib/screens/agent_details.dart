@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
+import 'package:servio/components/review_card.dart';
 
 class AgentDetailsScreen extends StatelessWidget {
   static String id = 'agentDetails';
@@ -26,6 +27,7 @@ class AgentDetailsScreen extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(kMainHorizontalPadding),
@@ -52,18 +54,28 @@ class AgentDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 200.0,
-                  ),
+//                  SizedBox(
+//                    height: 200.0,
+//                  ),
+                  //Reviews Section
                   Container(
-                    height: 75.0,
+                    height: 160.0,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        ReviewCard(userReview: userReviews[0]),
-                        ReviewCard(userReview: userReviews[1]),
-                        ReviewCard(userReview: userReviews[2]),
-                        ReviewCard(userReview: userReviews[3]),
+                        ReviewCard(reviewerName: 'John Doe', review: kLoremIpsum, reviewerAvatar: '', rating: 4.5,),
+                        ReviewCard(reviewerName: 'John Doe', review: kLoremIpsumShort, reviewerAvatar: '', rating: 2.0,),
+                        ReviewCard(reviewerName: 'John Doe', review: kLoremIpsum, reviewerAvatar: '', rating: 4.5,),
+                        ReviewCard(reviewerName: 'John Doe', review: kLoremIpsumShort, reviewerAvatar: '', rating: 4.5,),
+                      ],
+                    ),
+                  ),
+                  //Skills Section
+                  Container(
+                    height: 100,
+                    child: ListView(
+                      children: <Widget>[
+
                       ],
                     ),
                   ),
@@ -75,31 +87,9 @@ class AgentDetailsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('FAB has been pressed');
+          print('Hire button has been pressed');
         },
         child: Icon(Icons.attach_money),
-      ),
-    );
-  }
-}
-
-class ReviewCard extends StatelessWidget {
-  ReviewCard({this.userReview});
-  final userReview;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(kMainHorizontalPadding),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            userReview,
-            style: kTestTextStyleBlack,
-          ),
-        ),
-        elevation: kElevationValue,
       ),
     );
   }

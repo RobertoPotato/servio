@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/horizontal_items.dart';
+import 'package:servio/components/company_card.dart';
 import 'package:servio/components/horizontal_buttons.dart';
 import 'package:servio/components/job_items_vertical.dart';
 
@@ -51,10 +51,10 @@ class HomeScreen extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        HorizontalButtons(),
-                        HorizontalButtons(),
-                        HorizontalButtons(),
-                        HorizontalButtons(),
+                        HorizontalButtons(buttonText: 'Example Service',),
+                        HorizontalButtons(buttonText: 'Example Service',),
+                        HorizontalButtons(buttonText: 'Example Service',),
+                        HorizontalButtons(buttonText: 'Example Service',),
                       ],
                     ),
                   ),
@@ -64,33 +64,49 @@ class HomeScreen extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     //color: Colors.white,
-                    height: 180.0,
+                    height: 200.0,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        HorizontalCards(
+                        CompanyCard(
+                          companyName: 'This Company',
+                          //servicesOffered,
+                          location: 'Mombasa',
                           companyImage: 'hands.png',
-                          companyName: 'Company Name',
-                          location: 'Location',
-                          openPositions: 10.0,
+                          //reviews,
+                          companyIsVerified: true,
+                          successRate: 90.0,
+                          bio: kLoremIpsum,
                         ),
-                        HorizontalCards(
+                        CompanyCard(
+                          companyName: 'Another Company',
+                          //servicesOffered,
+                          location: 'Kisumu',
                           companyImage: 'agent_image.jpg',
-                          companyName: 'Company Name',
-                          location: 'Location',
-                          openPositions: 20.0,
+                          //reviews,
+                          companyIsVerified: false,
+                          successRate: 10.0,
+                          bio: kLoremIpsum,
                         ),
-                        HorizontalCards(
+                        CompanyCard(
+                          companyName: 'Awesome Company in the country',
+                          //servicesOffered,
+                          location: 'Nairobi',
                           companyImage: 'hands.png',
-                          companyName: 'Company Name',
-                          location: 'Location',
-                          openPositions: 10.0,
+                          //reviews,
+                          companyIsVerified: true,
+                          successRate: 30.0,
+                          bio: kLoremIpsum,
                         ),
-                        HorizontalCards(
+                        CompanyCard(
+                          companyName: 'Another Company',
+                          //servicesOffered,
+                          location: 'Kabete',
                           companyImage: 'agent_image.jpg',
-                          companyName: 'Company Name',
-                          location: 'Location',
-                          openPositions: 3.0,
+                          //reviews,
+                          companyIsVerified: true,
+                          successRate: 70.0,
+                          bio: kLoremIpsum,
                         ),
                       ],
                     ),

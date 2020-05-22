@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 
 class HorizontalButtons extends StatelessWidget {
-  //todo initialize items
-  final String buttonText = 'Example Service';
+  HorizontalButtons({this.buttonText});
+
+  final String buttonText;
   //final Function onPress;
 
   @override

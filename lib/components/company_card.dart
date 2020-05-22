@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/screens/agent_details.dart';
+import 'package:servio/screens/company.dart';
 
-class HorizontalCards extends StatelessWidget {
-  //todo refactor the names of the variables
-  HorizontalCards(
-      {@required this.companyImage,
-      @required this.companyName,
-      @required this.location,
-      @required this.openPositions});
-  final companyImage;
-  final companyName;
-  final location;
-  final openPositions;
+class CompanyCard extends StatelessWidget {
+  CompanyCard(
+      {this.companyName,
+      //this.servicesOffered, todo uncomment this and initialize with list
+      this.location,
+      this.companyImage,
+      //this.reviews, todo uncomment this and initialize with list
+      this.companyIsVerified,
+      this.successRate,
+      this.bio});
+
+  final String companyName;
+  //final List<String> servicesOffered; todo uncomment this
+  final String location; //todo make this an actual map location object
+  final String companyImage;
+  //final List<String> reviews; todo uncomment this
+  final bool companyIsVerified;
+  final double successRate;
+  final String bio;
 
   final double width = 120.0;
 
   final List<String> reviews = [
+    'First Review',
+    'Second Review',
+    'Third Review',
+    'Fourth Review',
+  ];
+
+  final List<String> servicesOffered = [
     'First Review',
     'Second Review',
     'Third Review',
@@ -39,15 +54,18 @@ class HorizontalCards extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AgentDetailsScreen(
-                    agentName: companyName,
-                    agentRating: openPositions,
-                    profileImageTitle: companyImage,
-                    userReviews: reviews,
+                  builder: (context) => CompanyScreen(
+                    companyName: companyName,
+                    servicesOffered: servicesOffered,
+                    location: location,
+                    companyImage: companyImage,
+                    reviews: reviews,
+                    companyIsVerified: companyIsVerified,
+                    successRate: successRate,
+                    bio: bio,
                   ),
                 ),
               );
-              //Navigator.pushNamed(context, AgentDetailsScreen.id);
             },
             child: Column(
               children: <Widget>[
@@ -55,29 +73,24 @@ class HorizontalCards extends StatelessWidget {
                   flex: 4,
                   child: Container(
                     child: CircleAvatar(
-                      radius: 42.0,
+                      radius: 48.0,
                       backgroundImage: AssetImage('images/$companyImage'),
                     ),
-                    /*child: Image(
-                      width: double.infinity,
-                      image: AssetImage('images/$companyImage'),
-                    ),*/
                   ),
-                ),
-                SizedBox(
-                  height: 2,
                 ),
                 Expanded(
                   flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Text(
-                        '$companyName',
-                        textAlign: TextAlign.center,
+                      Flexible(
+                        child: Text(
+                          '$companyName',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Text('$location',
-                          textAlign: TextAlign.center, maxLines: 2),
+                          textAlign: TextAlign.center, maxLines: 2, style: TextStyle(color: kPrimaryColor),),
                     ],
                   ),
                 ),
@@ -87,7 +100,7 @@ class HorizontalCards extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(
-                        '$openPositions position(s)',
+                        '$successRate% success',
                         style: TextStyle(
                             //todo implement text style for positions
                             ),

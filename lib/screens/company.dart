@@ -1,0 +1,164 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../components/review_card.dart';
+import '../constants.dart';
+import '../components/horizontal_buttons.dart';
+
+class CompanyScreen extends StatelessWidget {
+  CompanyScreen(
+      {this.companyName,
+      this.servicesOffered,
+      this.location,
+      this.companyImage,
+      this.reviews,
+      this.companyIsVerified,
+      this.successRate,
+      this.bio});
+
+  final String companyName;
+  final List<String> servicesOffered;
+  final String location; //todo make this an actual map location object
+  final String companyImage;
+  final List<String> reviews;
+  final bool companyIsVerified;
+  final double successRate;
+  final String bio;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: (Text(companyName)),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Image(
+                image: AssetImage('images/$companyImage'),
+                width: double.infinity,
+                fit: BoxFit.fitHeight,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(kMainHorizontalPadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Text('$successRate%'),
+                        Text('Success Rate'),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.verified_user,
+                          color: companyIsVerified ? Colors.blue : Colors.grey,
+                        ),
+                        Text(companyIsVerified ? 'Verified' : 'Not Verified'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding),
+                      child: Text(
+                        bio,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding),
+                      child: Text(location),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    height: 160.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        ReviewCard(
+                          reviewerName: 'John Doe',
+                          review: kLoremIpsum,
+                          reviewerAvatar: '',
+                          rating: 4.5,
+                        ),
+                        ReviewCard(
+                          reviewerName: 'John Doe',
+                          review: kLoremIpsumShort,
+                          reviewerAvatar: '',
+                          rating: 2.0,
+                        ),
+                        ReviewCard(
+                          reviewerName: 'John Doe',
+                          review: kLoremIpsum,
+                          reviewerAvatar: '',
+                          rating: 4.5,
+                        ),
+                        ReviewCard(
+                          reviewerName: 'John Doe',
+                          review: kLoremIpsumShort,
+                          reviewerAvatar: '',
+                          rating: 4.5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 70.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        HorizontalButtons(
+                          buttonText: 'Company\s Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Company\s Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Company\s Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Company\s Service',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              InkWell(
+                onTap: () {
+                  //todo Implement hire company functionality
+                  print('Hire company pressed');
+                },
+                child: Container(
+                  color: kAccentColor,
+                  width: double.infinity,
+                  height: 50.0,
+                  child: Center(
+                    child: Text(
+                      'HIRE',
+                      style: kTestTextStyleWhite,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

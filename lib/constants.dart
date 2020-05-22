@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 //COLORS
 const kPrimaryColor = Colors.teal;
 const kAccentColor = Colors.lightBlueAccent;
-const kScaffoldBackgroundColor = Colors.white70;
+const kScaffoldBackgroundColor = Colors.white;
 
+//TEXT
+const kLoremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+const kLoremIpsumShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 //SIZES
 const kMainHorizontalPadding = 12.0;
 const kElevationValue = 10.0;
