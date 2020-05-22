@@ -21,7 +21,7 @@ class ReviewCard extends StatelessWidget {
       child: Container(
         width: 320.0,
         child: Card(
-          color: Color(0x66000000),
+          elevation: kElevationValue,
           child: InkWell(
             onTap: (){
               //todo Navigate to job details screen
@@ -34,10 +34,14 @@ class ReviewCard extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      child: Image(
-                        image: AssetImage('images/$reviewerAvatar'),
-                      ),
+                      child: CircleAvatar(
+                      radius: 48.0,
+                      backgroundImage: AssetImage('images/$reviewerAvatar'),
                     ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.0,
                   ),
                   Expanded(
                     flex: 5,
@@ -50,7 +54,7 @@ class ReviewCard extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               '$reviewerName',
-                              style: kHeadingTextStyle.copyWith(color: Colors.white),
+                              style: kHeadingTextStyle.copyWith(color: Colors.black54),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -58,7 +62,7 @@ class ReviewCard extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   '$rating',
-                                  style: kHeadingTextStyle.copyWith(color: Colors.lightBlueAccent),
+                                  style: kHeadingTextStyle,
                                 ),
                                 Icon(Icons.star, size: 24, color: rating > 2.5 ? Colors.green : Colors.deepOrange,),
                               ],
@@ -72,7 +76,7 @@ class ReviewCard extends StatelessWidget {
                                 '$review',
                                 textAlign: TextAlign.start,
                                 maxLines: 4,
-                                style: kTestTextStyleBlack.copyWith(letterSpacing: 1.2, fontSize: 15, color: kAccentColor),
+                                style: kTestTextStyleBlack.copyWith(fontSize: 15, color: Colors.black ),
                               ),
                             ),
                           ],
