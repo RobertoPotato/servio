@@ -47,7 +47,10 @@ class CompanyScreen extends StatelessWidget {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Text('$successRate%'),
+                        Text(
+                          '$successRate%',
+                          style: kHeadingTextStyle.copyWith(fontSize: 24, color: kPrimaryColor),
+                        ),
                         Text('Success Rate'),
                       ],
                     ),
@@ -56,27 +59,48 @@ class CompanyScreen extends StatelessWidget {
                         Icon(
                           Icons.verified_user,
                           color: companyIsVerified ? Colors.blue : Colors.grey,
+                          size: 28.0,
                         ),
                         Text(companyIsVerified ? 'Verified' : 'Not Verified'),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.map,
+                          size: 28.0,
+                          color: kPrimaryColor,
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          location,
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
+              Divider(
+                indent: kMainHorizontalPadding,
+                endIndent: kMainHorizontalPadding,
+                thickness: 2.0,
+                color: kPrimaryColor,
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding),
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kMainHorizontalPadding),
                       child: Text(
                         bio,
                         textAlign: TextAlign.center,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding),
-                      child: Text(location),
                     ),
                   ],
                 ),
@@ -121,16 +145,16 @@ class CompanyScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         HorizontalButtons(
-                          buttonText: 'Company\s Service',
+                          buttonText: 'Company\s first Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s Service',
+                          buttonText: 'Company\s second Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s Service',
+                          buttonText: 'Company\s third Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s Service',
+                          buttonText: 'Company\s fourth Service',
                         ),
                       ],
                     ),

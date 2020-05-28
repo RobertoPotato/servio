@@ -6,9 +6,9 @@ class ReviewCard extends StatelessWidget {
   //todo refactor the names of the variables
   ReviewCard(
       {@required this.reviewerName,
-        @required this.reviewerAvatar,
-        @required this.review,
-        @required this.rating});
+      @required this.reviewerAvatar,
+      @required this.review,
+      @required this.rating});
   final String reviewerName;
   final String reviewerAvatar;
   final String review;
@@ -17,27 +17,33 @@ class ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: kMainHorizontalPadding, bottom: kMainHorizontalPadding, top: kMainHorizontalPadding),
+      padding: const EdgeInsets.only(
+          left: kMainHorizontalPadding,
+          right: kMainHorizontalPadding/2,
+          bottom: kMainHorizontalPadding,
+          top: kMainHorizontalPadding),
       child: Container(
         width: 320.0,
         child: Card(
           elevation: kElevationValue,
           child: InkWell(
-            onTap: (){
+            onTap: () {
               //todo Navigate to job details screen
               print('Review Item Clicked');
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding, horizontal: kMainHorizontalPadding),
+              padding: const EdgeInsets.symmetric(
+                  vertical: kMainHorizontalPadding,
+                  horizontal: kMainHorizontalPadding),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     flex: 2,
                     child: Container(
                       child: CircleAvatar(
-                      radius: 48.0,
-                      backgroundImage: AssetImage('images/$reviewerAvatar'),
-                    ),
+                        radius: 40.0,
+                        backgroundImage: AssetImage('images/$reviewerAvatar'),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -54,7 +60,8 @@ class ReviewCard extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               '$reviewerName',
-                              style: kHeadingTextStyle.copyWith(color: Colors.black54),
+                              style: kHeadingTextStyle.copyWith(
+                                  color: Colors.black54),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -64,7 +71,13 @@ class ReviewCard extends StatelessWidget {
                                   '$rating',
                                   style: kHeadingTextStyle,
                                 ),
-                                Icon(Icons.star, size: 24, color: rating > 2.5 ? Colors.green : Colors.deepOrange,),
+                                Icon(
+                                  Icons.star,
+                                  size: 24,
+                                  color: rating > 2.5
+                                      ? Colors.green
+                                      : Colors.deepOrange,
+                                ),
                               ],
                             ),
                           ],
@@ -76,7 +89,8 @@ class ReviewCard extends StatelessWidget {
                                 '$review',
                                 textAlign: TextAlign.start,
                                 maxLines: 4,
-                                style: kTestTextStyleBlack.copyWith(fontSize: 15, color: Colors.black ),
+                                style: kTestTextStyleBlack.copyWith(
+                                    fontSize: 15, color: Colors.black),
                               ),
                             ),
                           ],

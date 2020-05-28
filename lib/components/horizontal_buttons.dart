@@ -12,6 +12,7 @@ class HorizontalButtons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(
           left: kMainHorizontalPadding,
+          right: kMainHorizontalPadding/2,
           top: kMainHorizontalPadding,
           bottom: kMainHorizontalPadding + 6),
       child: Material(

@@ -4,6 +4,7 @@ import 'screens/register_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/parent_screen.dart';
 import 'constants.dart';
+import 'screens/client_post_service.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,11 +17,6 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         accentColor: kAccentColor,
         scaffoldBackgroundColor: kScaffoldBackgroundColor,
-        textTheme: TextTheme(
-          body1: TextStyle(
-            color: Colors.black,
-          ),
-        ),
       ),
       initialRoute: MainParentScreen.id,
       routes: {
@@ -28,6 +24,7 @@ class MyApp extends StatelessWidget {
         RegisterScreen.id: (context) => RegisterScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
+        RequestServicePage.id : (context) => RequestServicePage()
       },
     );
   }

@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/company_card.dart';
 import 'package:servio/components/horizontal_buttons.dart';
 import 'package:servio/components/job_items_vertical.dart';
+import 'package:servio/screens/client_post_service.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -22,7 +24,17 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               //todo implement search functionality
             },
-          )
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: Colors.black54,
+              size: 36,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, RequestServicePage.id);
+            },
+          ),
         ],
         //elevation: kElevationValue,
         title: Text(
@@ -51,17 +63,42 @@ class HomeScreen extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        HorizontalButtons(buttonText: 'Example Service',),
-                        HorizontalButtons(buttonText: 'Example Service',),
-                        HorizontalButtons(buttonText: 'Example Service',),
-                        HorizontalButtons(buttonText: 'Example Service',),
+                        HorizontalButtons(
+                          buttonText: 'Example Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Example Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Example Service',
+                        ),
+                        HorizontalButtons(
+                          buttonText: 'Example Service',
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Now Hiring',
+                          style: kHeadingTextStyle,
+                        ),
+                        Text(
+                          'See All',
+                          style: kHeadingSubTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
                     //color: Colors.white,
                     height: 200.0,
