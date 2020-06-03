@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../components/review_card.dart';
 import '../constants.dart';
 import '../components/horizontal_buttons.dart';
+import 'map_page.dart';
 
 class CompanyScreen extends StatelessWidget {
   CompanyScreen(
@@ -49,7 +50,8 @@ class CompanyScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '$successRate%',
-                          style: kHeadingTextStyle.copyWith(fontSize: 24, color: kPrimaryColor),
+                          style: kHeadingTextStyle.copyWith(
+                              fontSize: 24, color: kPrimaryColor),
                         ),
                         Text('Success Rate'),
                       ],
@@ -66,10 +68,20 @@ class CompanyScreen extends StatelessWidget {
                     ),
                     Column(
                       children: <Widget>[
-                        Icon(
-                          Icons.map,
-                          size: 28.0,
-                          color: kPrimaryColor,
+                        InkWell(
+                          child: Icon(
+                            Icons.map,
+                            size: 28.0,
+                            color: kPrimaryColor,
+                          ),
+                          onTap: () {
+                            /*open the map page while passing in the lat and long  to start with*/
+                            print("Open Map Page");
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MapPage(lat: -1.1962, long: 36.9487,);
+                            }));
+                          },
                         ),
                         SizedBox(
                           width: 10.0,
