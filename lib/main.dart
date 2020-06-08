@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
         RegisterScreen.id: (context) => RegisterScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
-        RequestServicePage.id : (context) => RequestServicePage()
+        RequestServicePage.id : (context) => RequestServicePage(),
+        //This is a comment
       },
     );
   }
