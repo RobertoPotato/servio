@@ -36,21 +36,22 @@ class _RequestServicePageState extends State<RequestServicePage> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Your Progress will be lost'),
-              content: Text('Do you really want to exit?'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Continue'),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
-                FlatButton(
-                  child: Text('Exit'),
-                  onPressed: () => Navigator.pop(context, true),
-                ),
-              ],
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Your Progress will be lost'),
+        content: Text('Do you really want to exit?'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Continue'),
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          FlatButton(
+            child: Text('Exit'),
+            onPressed: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -58,6 +59,9 @@ class _RequestServicePageState extends State<RequestServicePage> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Order a Service'),
+        ),
         body: SafeArea(
           child: Center(
             child: FormBuilder(
@@ -68,148 +72,204 @@ class _RequestServicePageState extends State<RequestServicePage> {
               child: PageView(
                 controller: _pageController,
                 children: [
-                  //FIRST FORM PAGE
                   SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        FormBuilderTextField(
-                          attribute: 'county',
-                          decoration: InputDecoration(
-                            labelText: 'County',
-                            icon: Icon(Icons.map),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            attribute: 'county',
+                            decoration: InputDecoration().copyWith(
+                              hasFloatingPlaceholder: false,
+                              hintText: 'County',
+                              labelText: 'County',
+                              prefixIcon: Icon(Icons.map),
+                            ),
+                            validators: [FormBuilderValidators.required()],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        FormBuilderDropdown(
-                          attribute: 'service_category',
-                          decoration: InputDecoration(
-                            labelText: 'Category',
-                            icon: Icon(Icons.category),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderDropdown(
+                            attribute: 'service_category',
+                            decoration: InputDecoration().copyWith(
+                              prefixIcon: Icon(Icons.category),
+                            ),
+                            hint: Text('Select Service Category'),
+                            validators: [FormBuilderValidators.required()],
+                            items: [
+                              'Service 1',
+                              'Service 2',
+                              'Service 3'
+                            ] //todo these will be loaded from the services table in the db
+                                .map((service) => DropdownMenuItem(
+                                      child: Text('$service'),
+                                      value: service,
+                                    ))
+                                .toList(),
                           ),
-                          hint: Text('Select Service Category'),
-                          validators: [FormBuilderValidators.required()],
-                          items: ['Service 1', 'Service 2', 'Service 3']
-                              .map((service) => DropdownMenuItem(
-                                    child: Text('$service'),
-                                    value: service,
-                                  ))
-                              .toList(),
                         ),
-                        FormBuilderTextField(
-                          attribute: 'service_title',
-                          decoration: InputDecoration(
-                            labelText: 'Title',
-                            hintText: 'Develop/Clean/Transport...',
-                            icon: Icon(Icons.work),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            attribute: 'service_title',
+                            decoration: InputDecoration().copyWith(
+                              hintText: 'Title',
+                              labelText: 'Title',
+                              hasFloatingPlaceholder: false,
+                              prefixIcon: Icon(Icons.work),
+                            ),
+                            validators: [FormBuilderValidators.required()],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        FormBuilderDropdown(
-                          attribute: 'service_type',
-                          decoration: InputDecoration(
-                            labelText: 'Employment Type',
-                            icon: Icon(Icons.work),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderDropdown(
+                            attribute: 'service_type',
+                            decoration: InputDecoration().copyWith(
+                              prefixIcon: Icon(Icons.supervisor_account),
+                            ),
+                            hint: Text('Employment Type'),
+                            validators: [FormBuilderValidators.required()],
+                            items: ['Part Time', 'Full time', 'Unspecified']
+                                .map((service) => DropdownMenuItem(
+                                      child: Text('$service'),
+                                      value: service,
+                                    ))
+                                .toList(),
                           ),
-                          hint: Text('Select Type'),
-                          validators: [FormBuilderValidators.required()],
-                          items: ['Part Time', 'Full time', 'Unspecified']
-                              .map((service) => DropdownMenuItem(
-                                    child: Text('$service'),
-                                    value: service,
-                                  ))
-                              .toList(),
                         ),
-                        FormBuilderTextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          attribute: 'service_description',
-                          decoration: InputDecoration(
-                            labelText: 'Description',
-                            hintText: 'Describe the service',
-                            icon: Icon(Icons.note_add),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 3,
+                            attribute: 'service_description',
+                            decoration: InputDecoration().copyWith(
+                              hasFloatingPlaceholder: false,
+                              labelText: 'Description',
+                              hintText: 'Describe the service',
+                              prefixIcon: Icon(Icons.note_add),
+                            ),
+                            validators: [FormBuilderValidators.required()],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: FormBuilderTextField(
-                                keyboardType: TextInputType.number,
-                                attribute: 'service_duration',
-                                decoration: InputDecoration(
-                                  labelText: 'Duration',
-                                  hintText: '2/4/7',
-                                  icon: Icon(Icons.access_time),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: kMainHorizontalPadding / 2),
+                                  child: FormBuilderTextField(
+                                    keyboardType: TextInputType.number,
+                                    attribute: 'service_duration',
+                                    decoration: InputDecoration().copyWith(
+                                      hasFloatingPlaceholder: false,
+                                      labelText: 'Duration',
+                                      hintText: '2/4/7',
+                                      prefixIcon: Icon(Icons.access_time),
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                  ),
                                 ),
-                                validators: [FormBuilderValidators.required()],
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: FormBuilderDropdown(
-                                attribute: 'service_duration_time',
-                                decoration: InputDecoration(
-                                  labelText: 'Period',
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding / 2),
+                                  child: FormBuilderDropdown(
+                                    attribute: 'service_duration_time',
+                                    decoration: InputDecoration().copyWith(
+                                    ),
+                                    hint: Text('Select Period'),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                    items: ['Hours', 'Days', 'Weeks', 'Months']
+                                        .map((service) => DropdownMenuItem(
+                                              child: Text('$service'),
+                                              value: service,
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
-                                hint: Text('Select Period'),
-                                validators: [FormBuilderValidators.required()],
-                                items: ['Hours', 'Days', 'Weeks', 'Months']
-                                    .map((service) => DropdownMenuItem(
-                                          child: Text('$service'),
-                                          value: service,
-                                        ))
-                                    .toList(),
                               ),
-                            ),
-                          ],
-                        ),
-                        FormBuilderTextField(
-                          keyboardType: TextInputType.number,
-                          attribute: 'service_open_positions',
-                          decoration: InputDecoration(
-                            labelText: 'Open Positions',
-                            hintText: 'How many positions are available?',
-                            icon: Icon(Icons.person),
+                            ],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: FormBuilderTextField(
-                                keyboardType: TextInputType.number,
-                                attribute: 'price_min',
-                                decoration: InputDecoration(
-                                  labelText: 'Budget From',
-                                  icon: Icon(Icons.payment),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
+                            attribute: 'service_open_positions',
+                            decoration: InputDecoration().copyWith(
+                              hasFloatingPlaceholder: false,
+                              labelText: 'Open Positions',
+                              hintText: 'How many positions are available?',
+                              prefixIcon: Icon(Icons.person),
+                            ),
+                            validators: [FormBuilderValidators.required()],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: kMainHorizontalPadding / 2),
+                                  child: FormBuilderTextField(
+                                    keyboardType: TextInputType.number,
+                                    attribute: 'price_min',
+                                    decoration: InputDecoration().copyWith(
+                                      labelText: 'Budget From',
+                                      hasFloatingPlaceholder: false,
+                                      prefixIcon: Icon(Icons.payment),
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                  ),
                                 ),
-                                validators: [FormBuilderValidators.required()],
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text('To'),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: FormBuilderTextField(
-                                keyboardType: TextInputType.number,
-                                attribute: 'price_max',
-                                decoration: InputDecoration(
-                                  labelText: 'Budget To',
+                              Text('To'),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding / 2),
+                                  child: FormBuilderTextField(
+                                    keyboardType: TextInputType.number,
+                                    attribute: 'price_max',
+                                    decoration: InputDecoration().copyWith(
+                                      hasFloatingPlaceholder: false,
+                                      labelText: 'Budget To',
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                  ),
                                 ),
-                                validators: [FormBuilderValidators.required()],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Upload Some Images',
+                          style: kHeadingTextStyle.copyWith(
+                              color: Colors.grey.shade500),
                         ),
                         FormBuilderImagePicker(
                           attribute: 'service_image',
-                          decoration: InputDecoration(labelText: 'Images'),
+                          decoration: InputDecoration(border: InputBorder.none),
                           iconColor: kPrimaryColor,
                           validators: [
                             FormBuilderValidators.required(),
@@ -221,22 +281,24 @@ class _RequestServicePageState extends State<RequestServicePage> {
                             }
                           ],
                         ),
-                        RaisedButton(
-                          child: Text("Submit"),
-                          onPressed: () {
-                            if (_fbKey.currentState.saveAndValidate()) {
-                              print(_fbKey.currentState.value);
-                            }
-                          },
-                        ),
                       ],
                     ),
                   ),
-                  //SECOND FORM PAGE
                 ],
               ),
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.send,
+            size: 28,
+          ),
+          onPressed: () {
+            if (_fbKey.currentState.saveAndValidate()) {
+              print(_fbKey.currentState.value);
+            }
+          },
         ),
       ),
     );

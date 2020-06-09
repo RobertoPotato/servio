@@ -5,6 +5,7 @@ import 'package:servio/components/company_card.dart';
 import 'package:servio/components/horizontal_buttons.dart';
 import 'package:servio/components/job_items_vertical.dart';
 import 'package:servio/screens/client_post_service.dart';
+import 'package:servio/components/search_delegate.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
             ),
             onPressed: () {
               //todo implement search functionality
+              //showSearch(context: context, delegate: ServiceSearchDelegate());
             },
           ),
           IconButton(

@@ -17,6 +17,11 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         accentColor: kAccentColor,
         scaffoldBackgroundColor: kScaffoldBackgroundColor,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+        ),
       ),
       initialRoute: MainParentScreen.id,
       routes: {
