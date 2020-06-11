@@ -17,10 +17,12 @@ class _RequestServicePageState extends State<RequestServicePage> {
   bool showSegmentedControl = true;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  /*todo uncomment if needed:
   final GlobalKey<FormFieldState> _specifyTextFieldKey =
       GlobalKey<FormFieldState>();
 
   ValueChanged _onChanged = (val) => print(val);
+  */
 
   @override
   void initState() {

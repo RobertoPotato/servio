@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/company_card.dart';
 import 'package:servio/components/horizontal_buttons.dart';
-import 'package:servio/components/job_items_vertical.dart';
+// todo uncomment when needed: import 'package:servio/components/job_items_vertical.dart';
 import 'package:servio/screens/client_post_service.dart';
-import 'package:servio/components/search_delegate.dart';
+// todo uncomment when needed: import 'package:servio/components/search_delegate.dart';
 import 'package:servio/components/bid_card.dart';
 
 class HomeScreen extends StatelessWidget {
