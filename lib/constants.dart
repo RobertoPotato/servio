@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Colors.teal;
 const kAccentColor = Colors.lightBlueAccent;
 const kScaffoldBackgroundColor = Colors.white;
+const kColorButtons = Colors.blue;
 
 //TEXT
 const kLoremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 const kLoremIpsumShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+const kExampleRatingText = 4.5;
+const kExampleBidPrice = 999.0;
+const kExampleNameMale = 'John Doe';
+const kExampleNameFemale = 'Jane Doe';
+const kNumberTotal = '1/4';
 
 //SIZES
 const kMainHorizontalPadding = 12.0;

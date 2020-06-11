@@ -6,6 +6,7 @@ import 'package:servio/components/horizontal_buttons.dart';
 import 'package:servio/components/job_items_vertical.dart';
 import 'package:servio/screens/client_post_service.dart';
 import 'package:servio/components/search_delegate.dart';
+import 'package:servio/components/bid_card.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -152,7 +153,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Column(
+              /*Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(kMainHorizontalPadding),
@@ -205,7 +206,18 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ],
-              ), //has vertically scrolling widgets
+              ),*/
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    BidCard(),
+                    BidCard(),
+                    BidCard(),
+                  ],
+                ),
+              )
             ],
           ),
         ),
