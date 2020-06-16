@@ -25,7 +25,7 @@ class ReviewCard extends StatelessWidget {
       child: Container(
         width: 320.0,
         child: Card(
-          elevation: kElevationValue,
+          elevation: kElevationValue/2,
           child: InkWell(
             onTap: () {
               //todo Navigate to job details screen

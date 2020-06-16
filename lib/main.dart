@@ -5,6 +5,7 @@ import 'screens/login_screen.dart';
 import 'screens/parent_screen.dart';
 import 'constants.dart';
 import 'screens/client_post_service.dart';
+import 'screens/bid_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id : (context) => RequestServicePage(),
+        BidScreen.id : (context) => BidScreen(),
         //This is a comment
       },
     );

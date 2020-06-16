@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/company_card.dart';
 import 'package:servio/components/horizontal_buttons.dart';
-// todo uncomment when needed: import 'package:servio/components/job_items_vertical.dart';
+import 'package:servio/components/job_items_vertical.dart';
 import 'package:servio/screens/client_post_service.dart';
 // todo uncomment when needed: import 'package:servio/components/search_delegate.dart';
-import 'package:servio/components/bid_card.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'home';
@@ -153,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              /*Column(
+              Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(kMainHorizontalPadding),
@@ -206,18 +204,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),*/
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    BidCard(),
-                    BidCard(),
-                    BidCard(),
-                  ],
-                ),
-              )
+              ),
             ],
           ),
         ),
