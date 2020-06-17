@@ -13,6 +13,8 @@ class MaterialText extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 1.0),
         child: Text(
           text.toString(),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
       elevation: kElevationValue / 2,

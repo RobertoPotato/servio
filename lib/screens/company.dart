@@ -3,6 +3,7 @@ import '../components/review_card.dart';
 import '../constants.dart';
 import '../components/horizontal_buttons.dart';
 import 'map_page.dart';
+import 'package:servio/components/my_divider.dart';
 
 class CompanyScreen extends StatelessWidget {
   CompanyScreen(
@@ -94,12 +95,7 @@ class CompanyScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
-                indent: kMainHorizontalPadding,
-                endIndent: kMainHorizontalPadding,
-                thickness: 2.0,
-                color: kPrimaryColor,
-              ),
+              MyDivider(thickness: 2.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: kMainHorizontalPadding),
