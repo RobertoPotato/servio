@@ -5,6 +5,7 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/review_card.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:servio/components/card_title_text.dart';
 
 class ProfileScreen extends StatelessWidget {
   static String id = 'profile';
@@ -41,26 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 height: 20.0,
               ),
               //BIO
-              Padding(
-                padding: const EdgeInsets.all(kMainHorizontalPadding),
-                child: Card(
-                    elevation: kElevationValue/2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(kMainHorizontalPadding),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Bio',
-                            style: kHeadingTextStyle,
-                          ),
-                          Text(
-                            kLoremIpsum,
-                            style: kMainBlackTextStyle,
-                          ),
-                        ],
-                      ),
-                    ),),
-              ),
+              CardWithTitleAndText(title: 'Bio', text: kLoremIpsum,),
               //CONTACTS
               Padding(
                 padding: const EdgeInsets.all(kMainHorizontalPadding),
@@ -227,6 +209,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              //EXTRA OPTIONS
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: kMainHorizontalPadding),
@@ -261,7 +244,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              //OTHER ACTIONS
             ],
           ),
         ),
