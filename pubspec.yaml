@@ -26,6 +26,8 @@ dependencies:
   geolocator: ^5.3.1
   google_maps_flutter: ^0.5.28+1
   flutter_form_builder: ^3.10.1
+  carousel_slider: ^2.2.1
+  settings_ui: ^0.3.0
 
 dev_dependencies:
   flutter_test:

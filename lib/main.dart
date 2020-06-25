@@ -7,6 +7,8 @@ import 'constants.dart';
 import 'screens/request_service.dart';
 import 'screens/bid_screen.dart';
 import 'screens/alerts_details_screens/bid_detail.dart';
+import 'screens/alerts_details_screens/job_detail.dart';
+import 'screens/settings_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+
       //todo change initial route back to MainParentScreen.id
       initialRoute: MainParentScreen.id,
       routes: {
@@ -35,6 +38,8 @@ class MyApp extends StatelessWidget {
         RequestServicePage.id : (context) => RequestServicePage(),
         BidScreen.id : (context) => BidScreen(),
         BidDetails.id : (context) => BidDetails(),
+        JobDetails.id : (context) => JobDetails(),
+        SettingsScreen.id : (context) => SettingsScreen()
       },
     );
   }

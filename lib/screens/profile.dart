@@ -6,6 +6,7 @@ import 'package:servio/components/review_card.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/components/card_title_text.dart';
+import 'package:servio/screens/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static String id = 'profile';
@@ -233,6 +234,9 @@ class ProfileScreen extends StatelessWidget {
                           text: 'Settings',
                           icon: Icons.settings,
                           materialColor: kMySettingsColor,
+                          onTap: (){
+                            Navigator.pushNamed(context, SettingsScreen.id);
+                          },
                         ),
                         IconButtonWithText(
                           text: 'Log Out',

@@ -168,24 +168,6 @@ class CompanyScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              InkWell(
-                onTap: () {
-                  //todo Implement hire company functionality
-                  print('Hire company pressed');
-                },
-                child: Container(
-                  color: kAccentColor,
-                  width: double.infinity,
-                  height: 50.0,
-                  child: Center(
-                    child: Text(
-                      'HIRE',
-                      style: kTestTextStyleWhite,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

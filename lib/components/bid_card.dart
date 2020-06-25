@@ -10,13 +10,13 @@ class BidCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: kMainHorizontalPadding,
           vertical: kMainHorizontalPadding / 2),
-      child: InkWell(
-        onTap: () {
-          //todo add data to pass as well as methods to use
-          Navigator.pushNamed(context, BidDetails.id);
-        },
-        child: Card(
-          elevation: kElevationValue,
+      child: Card(
+        elevation: kElevationValue,
+        child: InkWell(
+          onTap: () {
+            //todo add data to pass as well as methods to use
+            Navigator.pushNamed(context, BidDetails.id);
+          },
           child: Container(
             height: 150.0,
             child: Row(

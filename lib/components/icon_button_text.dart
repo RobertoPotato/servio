@@ -22,7 +22,7 @@ class IconButtonWithText extends StatelessWidget {
         color: materialColor, // button color
         child: InkWell(
           splashColor: Colors.white, // splash color
-          onTap: () {}, // button pressed
+          onTap: onTap, // button pressed
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
