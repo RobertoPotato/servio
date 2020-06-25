@@ -7,6 +7,7 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/job_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:servio/screens/make_bid_screen.dart';
 
 class JobDetails extends StatefulWidget {
   static String id = 'job_details';
@@ -127,6 +128,9 @@ class _JobDetailsState extends State<JobDetails> {
                           text: 'Bid',
                           icon: Icons.sentiment_very_satisfied,
                           materialColor: kMyBidsColor,
+                          onTap: (){
+                            Navigator.pushNamed(context, MakeBidScreen.id);
+                          },
                         ),
                         IconButtonWithText(
                           text: 'Profile',

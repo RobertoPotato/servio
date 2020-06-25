@@ -29,6 +29,7 @@ const kExamplePhone = '+254 777000777';
 const kNumberTotal = '1/4';
 const kClient = 'Client';
 const kAgent = 'Agent';
+const kBidNotice = 'The client will receive your profile information when you bid for their work';
 
 //SIZES
 const kMainHorizontalPadding = 12.0;
