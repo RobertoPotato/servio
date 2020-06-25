@@ -16,7 +16,7 @@ class HorizontalButtons extends StatelessWidget {
           top: kMainHorizontalPadding,
           bottom: kMainHorizontalPadding + 6),
       child: Material(
-        elevation: kElevationValue,
+        elevation: kElevationValue/2,
         color: kPrimaryColor,
         borderRadius: BorderRadius.circular(40.0),
         child: InkWell(

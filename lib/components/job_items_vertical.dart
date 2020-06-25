@@ -22,7 +22,7 @@ class VerticalJobCards extends StatelessWidget {
         width: double.infinity,
         height: 100,
         child: Card(
-          elevation: kElevationValue,
+          elevation: kElevationValue/2,
           child: InkWell(
             onTap: (){
               //todo Navigate to job details screen

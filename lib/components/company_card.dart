@@ -48,7 +48,7 @@ class CompanyCard extends StatelessWidget {
       child: Container(
         width: width,
         child: Card(
-          elevation: kElevationValue,
+          elevation: kElevationValue/2,
           child: InkWell(
             onTap: () {
               Navigator.push(
