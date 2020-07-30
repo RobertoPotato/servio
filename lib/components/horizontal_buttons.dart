@@ -12,11 +12,11 @@ class HorizontalButtons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(
           left: kMainHorizontalPadding,
-          right: kMainHorizontalPadding/2,
+          right: kMainHorizontalPadding / 2,
           top: kMainHorizontalPadding,
           bottom: kMainHorizontalPadding + 6),
       child: Material(
-        elevation: kElevationValue/2,
+        elevation: kElevationValue / 2,
         color: kPrimaryColor,
         borderRadius: BorderRadius.circular(40.0),
         child: InkWell(

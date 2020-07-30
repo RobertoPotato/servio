@@ -4,6 +4,7 @@ import 'package:servio/screens/alerts.dart';
 import 'package:servio/screens/favorites.dart';
 import 'package:servio/screens/profile.dart';
 import 'package:servio/constants.dart';
+import 'package:servio/screens/demo_http.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -23,7 +24,8 @@ class _MainParentScreenState extends State<MainParentScreen> {
   }
 
   var _screens = <Widget>[
-    HomeScreen(),
+    //HomeScreen(),
+    Categories(),
     AlertsScreen(),
     FavoritesScreen(),
     ProfileScreen()
@@ -36,8 +38,8 @@ class _MainParentScreenState extends State<MainParentScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
+            icon: Icon(Icons.category), //todo Return this => icon: Icon(Icons.home),
+            title: Text('Categories'),
             backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(

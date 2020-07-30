@@ -32,10 +32,10 @@ class CompanyCard extends StatelessWidget {
   ];
 
   final List<String> servicesOffered = [
-    'First Review',
-    'Second Review',
-    'Third Review',
-    'Fourth Review',
+    'First Service',
+    'Second Service',
+    'Third Service',
+    'Fourth Service',
   ];
 
   @override

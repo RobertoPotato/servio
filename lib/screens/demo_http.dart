@@ -1,0 +1,92 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:servio/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class Category {
+  final int id;
+  final String title;
+  final String description;
+  final String imageUrl;
+  final String themeColor;
+
+  Category(
+      {this.id, this.title, this.description, this.imageUrl, this.themeColor});
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      imageUrl: json['imageUrl'],
+      themeColor: json['themeColor'],
+    );
+  }
+}
+
+class Categories extends StatefulWidget {
+  @override
+  _CategoriesState createState() => _CategoriesState();
+}
+
+class _CategoriesState extends State<Categories> {
+  Future<Category> futureCategory;
+
+  List data;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureCategory = fetchCategory();
+  }
+
+  Future<Category> fetchCategory() async {
+    var url = 'http://192.168.100.39:3000/api/v1/categories';
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      data = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return Category.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load categories');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Categories'),
+        ),
+        body: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: kElevationValue,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding,
+                    vertical: kMainHorizontalPadding / 2),
+                child: Column(
+                  children: <Widget>[
+                    Text(data[index]['title']),
+                    Text(data[index]['description']),
+                    Text(data[index]['imageUrl']),
+                    Text(data[index]['themeColor']),
+                  ],
+                ),
+              ),
+            );
+          },
+          itemCount: data == null ? 0 : data.length,
+        ),
+      ),
+    );
+  }
+}
