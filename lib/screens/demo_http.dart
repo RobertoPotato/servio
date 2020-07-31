@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:servio/screens/demo_http_details.dart';
 
 class Category {
   final int id;
@@ -36,7 +37,6 @@ class _CategoriesState extends State<Categories> {
   List data;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureCategory = fetchCategory();
   }
@@ -67,19 +67,39 @@ class _CategoriesState extends State<Categories> {
         ),
         body: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: kElevationValue,
+            return InkWell(
+              onTap: () {
+                print(
+                    "selected item: ${data[index]['id']}"); //show the id of the item that has been clicked in the terminal
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => CategoryServices(
+                      mId: data[index]['id']
+                    ),
+                  ),
+                );
+              },
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: kMainHorizontalPadding,
-                    vertical: kMainHorizontalPadding / 2),
-                child: Column(
-                  children: <Widget>[
-                    Text(data[index]['title']),
-                    Text(data[index]['description']),
-                    Text(data[index]['imageUrl']),
-                    Text(data[index]['themeColor']),
-                  ],
+                    vertical: kMainHorizontalPadding / 4),
+                child: Card(
+                  elevation: kElevationValue / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: Column(
+                      children: <Widget>[
+                        Text(data[index]['id'].toString()),
+                        Text(data[index]['title']),
+                        Text(data[index]['description']),
+                        Text(data[index]['imageUrl']),
+                        Text(data[index]['themeColor']),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );
