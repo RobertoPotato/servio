@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         RequestServicePage.id : (context) => RequestServicePage(),
         MakeBidScreen.id : (context) => MakeBidScreen(),
         BidDetails.id : (context) => BidDetails(),
-        JobDetails.id : (context) => JobDetails(),
+        //JobDetails.id : (context) => JobDetails(),
         SettingsScreen.id : (context) => SettingsScreen(),
         InfoDetailsScreen.id : (context) => InfoDetailsScreen(),
         MakeBidScreen.id : (context) => MakeBidScreen(),

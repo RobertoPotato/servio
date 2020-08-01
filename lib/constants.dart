@@ -79,3 +79,29 @@ const kTestTextStyleBlack = TextStyle(
   fontSize: 20.0,
   letterSpacing: 1.2,
 );
+
+int hexColConvert(String color) {
+  String text = color; //get the color
+  String repWith =
+      '0xFF'; //initialize the first chars to use for full opacity ie 0x 'FF'
+  List<String> textArray = new List(); //declare an empty list
+
+  textArray = text.split(
+      ''); //split the color data referenced by the text variable into an array of characters
+  bool res =
+  textArray.remove('#'); //from the array, remove this specific item
+  textArray.insert(0,
+      repWith); //replace the 0th index item with the 0xFF value we created
+  var concat =
+  StringBuffer(); //create a string buffer to use to cast the array into a string
+
+  textArray.forEach((element) {
+    concat.write(element);
+  }); //cast the array into a string buffer
+
+  String col =
+  concat.toString(); //convert the string buffer into a usable string
+
+  return int.parse(
+      col); //parse the string into an integer and return that value
+}

@@ -79,12 +79,11 @@ class _RequestServicePageState extends State<RequestServicePage> {
                         Padding(
                           padding: const EdgeInsets.all(kMainHorizontalPadding),
                           child: FormBuilderTextField(
-                            attribute: 'county',
+                            attribute: 'service_title',
                             decoration: InputDecoration().copyWith(
-                              hasFloatingPlaceholder: false,
-                              hintText: 'County',
-                              labelText: 'County',
-                              prefixIcon: Icon(Icons.map),
+                              hintText: 'Title',
+                              labelText: 'Title',
+                              prefixIcon: Icon(Icons.work),
                             ),
                             validators: [FormBuilderValidators.required()],
                           ),
@@ -113,12 +112,14 @@ class _RequestServicePageState extends State<RequestServicePage> {
                         Padding(
                           padding: const EdgeInsets.all(kMainHorizontalPadding),
                           child: FormBuilderTextField(
-                            attribute: 'service_title',
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 7,
+                            attribute: 'service_description',
                             decoration: InputDecoration().copyWith(
-                              hintText: 'Title',
-                              labelText: 'Title',
-                              hasFloatingPlaceholder: false,
-                              prefixIcon: Icon(Icons.work),
+                              //hasFloatingPlaceholder: false,
+                              labelText: 'Description',
+                              hintText: 'Describe the service',
+                              prefixIcon: Icon(Icons.note_add),
                             ),
                             validators: [FormBuilderValidators.required()],
                           ),
@@ -130,7 +131,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                             decoration: InputDecoration().copyWith(
                               prefixIcon: Icon(Icons.supervisor_account),
                             ),
-                            hint: Text('Employment Type'),
+                            hint: Text('Terms'),
                             validators: [FormBuilderValidators.required()],
                             items: ['Part Time', 'Full time', 'Unspecified']
                                 .map((service) => DropdownMenuItem(
@@ -138,21 +139,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                       value: service,
                                     ))
                                 .toList(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderTextField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 3,
-                            attribute: 'service_description',
-                            decoration: InputDecoration().copyWith(
-                              hasFloatingPlaceholder: false,
-                              labelText: 'Description',
-                              hintText: 'Describe the service',
-                              prefixIcon: Icon(Icons.note_add),
-                            ),
-                            validators: [FormBuilderValidators.required()],
                           ),
                         ),
                         Padding(
@@ -167,7 +153,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     keyboardType: TextInputType.number,
                                     attribute: 'service_duration',
                                     decoration: InputDecoration().copyWith(
-                                      hasFloatingPlaceholder: false,
                                       labelText: 'Duration',
                                       hintText: '2/4/7',
                                       prefixIcon: Icon(Icons.access_time),
@@ -207,20 +192,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderTextField(
-                            keyboardType: TextInputType.number,
-                            attribute: 'service_open_positions',
-                            decoration: InputDecoration().copyWith(
-                              hasFloatingPlaceholder: false,
-                              labelText: 'Open Positions',
-                              hintText: 'How many positions are available?',
-                              prefixIcon: Icon(Icons.person),
-                            ),
-                            validators: [FormBuilderValidators.required()],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -233,7 +204,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     attribute: 'price_min',
                                     decoration: InputDecoration().copyWith(
                                       labelText: 'Budget From',
-                                      hasFloatingPlaceholder: false,
                                       prefixIcon: Icon(Icons.payment),
                                     ),
                                     validators: [
@@ -251,7 +221,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     keyboardType: TextInputType.number,
                                     attribute: 'price_max',
                                     decoration: InputDecoration().copyWith(
-                                      hasFloatingPlaceholder: false,
                                       labelText: 'Budget To',
                                     ),
                                     validators: [

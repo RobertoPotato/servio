@@ -3,12 +3,14 @@ import 'package:servio/screens/demo_http.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:servio/screens/alerts_details_screens/job_detail.dart';
 
 class Service {
   final int id;
   final String title;
   final String description;
-  final double budget;
+  final double budgetMin;
+  final double budgetMax;
   final String terms;
   final String imageUrl;
   final int userId;
@@ -20,7 +22,8 @@ class Service {
       {this.id,
       this.title,
       this.description,
-      this.budget,
+      this.budgetMin,
+      this.budgetMax,
       this.terms,
       this.imageUrl,
       this.userId,
@@ -33,7 +36,8 @@ class Service {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      budget: json['budget'],
+      budgetMin: json['budgetMin'],
+      budgetMax: json['budgetMax'],
       terms: json['terms'],
       imageUrl: json['imageUrl'],
       userId: json['userId'],
@@ -46,8 +50,10 @@ class Service {
 
 class CategoryServices extends StatefulWidget {
   final int mId;
+  final String categoryTitle;
 
-  CategoryServices({this.mId});
+  CategoryServices({this.mId, this.categoryTitle});
+
   @override
   _CategoryServicesState createState() => _CategoryServicesState();
 }
@@ -55,7 +61,6 @@ class CategoryServices extends StatefulWidget {
 class _CategoryServicesState extends State<CategoryServices> {
   Future<Service> futureService;
   List services;
-  var categoryId = 4;
 
   @override
   void initState() {
@@ -65,7 +70,8 @@ class _CategoryServicesState extends State<CategoryServices> {
   }
 
   Future<Service> fetchServices() async {
-    var url = 'http://192.168.100.39:3000/api/v1/services/fromcategory/${widget.mId}';
+    var url =
+        'http://192.168.100.39:3000/api/v1/services/fromcategory/${widget.mId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
@@ -82,16 +88,40 @@ class _CategoryServicesState extends State<CategoryServices> {
     }
   }
 
+  String budget(index){
+    if(services[index]['budgetMin'] > services[index]['budgetMax']){
+      return "${services[index]['budgetMax']} - ${services[index]['budgetMin']}";
+    } else{
+      return "${services[index]['budgetMin']} - ${services[index]['budgetMax']}";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Services"),
+        title: Text(widget.categoryTitle),
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => JobDetails(
+                    userId: services[index]['userId'],
+                    serviceId: services[index]['id'],
+                    categoryTitle: widget.categoryTitle,
+                    title: services[index]['title'],
+                    description: services[index]['description'],
+                    budget: budget(index),
+                    terms: services[index]['terms'],
+                    imageUrl: services[index]['imageUrl'],
+                  ),
+                ),
+              );
               print(
                   "selected item: ${services[index]['id']}"); //show the id of the item that has been clicked in the terminal
             },
@@ -107,12 +137,17 @@ class _CategoryServicesState extends State<CategoryServices> {
                       vertical: kMainHorizontalPadding / 2),
                   child: Column(
                     children: <Widget>[
+                      Image.network(
+                          'https://cdn.pixabay.com/photo/2016/04/25/18/07/halcyon-1352522_960_720.jpg'), //TODO return this item to the url entry => ${services[index]['imageUrl']}
                       Text(services[index]['id'].toString()),
-                      Text(services[index]['title']),
+                      Text(
+                        services[index]['title'],
+                        style: kMainBlackTextStyle,
+                      ),
                       Text(services[index]['description']),
                       Text(services[index]['imageUrl']),
-                      Text(services[index]['budget'].toString()),
-                      Text(services[index]['terms']),
+                      Text(budget(index)),
+                      Text("Job Terms: ${services[index]['terms']}"),
                     ],
                   ),
                 ),

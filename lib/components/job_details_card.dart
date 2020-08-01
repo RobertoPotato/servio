@@ -4,12 +4,12 @@ import 'package:servio/constants.dart';
 import 'my_vertical_divider.dart';
 
 class JobDetailsCard extends StatelessWidget {
-  const JobDetailsCard({this.duration, this.openPositions, this.budgetRange, this.jobTerms}) ;
+  const JobDetailsCard({this.county, this.town, this.budgetRange, this.terms}) ;
 
-  final duration;
-  final openPositions;
+  final county;
+  final town;
   final budgetRange;
-  final jobTerms;
+  final terms;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class JobDetailsCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: MaterialText(
-                    text: '$duration',
+                    text: '$county County',
                   ),
                   flex: 1,
                 ),
                 MyVerticalDivider(height: 10.0,),
                 Expanded(
                   child: MaterialText(
-                    text: '$openPositions Open Position(s)',
+                    text: '$town Town',
                   ),
                   flex: 1,
                 ),
@@ -50,7 +50,7 @@ class JobDetailsCard extends StatelessWidget {
                 MyVerticalDivider(height: 10.0,),
                 Expanded(
                   child: MaterialText(
-                    text: '$jobTerms',
+                    text: '$terms',
                   ),
                   flex: 1,
                 ),

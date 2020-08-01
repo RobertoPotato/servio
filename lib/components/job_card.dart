@@ -17,7 +17,7 @@ class JobCard extends StatelessWidget {
           padding: const EdgeInsets.all(kMainHorizontalPadding / 2),
           child: InkWell(
             onTap: (){
-              Navigator.pushNamed(context, JobDetails.id);
+              //Navigator.pushNamed(context, JobDetails.id);
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

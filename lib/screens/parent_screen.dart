@@ -24,7 +24,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
   }
 
   var _screens = <Widget>[
-    //HomeScreen(),
+    HomeScreen(),
     Categories(),
     AlertsScreen(),
     FavoritesScreen(),
@@ -37,6 +37,11 @@ class _MainParentScreenState extends State<MainParentScreen> {
       body: _screens[_selectedIndex],//body will be whatever screen is represented by the index
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home), //todo Return this => icon: Icon(Icons.home),
+            title: Text('Home'),
+            backgroundColor: kPrimaryColor,
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category), //todo Return this => icon: Icon(Icons.home),
             title: Text('Categories'),

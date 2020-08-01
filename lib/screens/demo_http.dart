@@ -60,6 +60,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -69,13 +70,12 @@ class _CategoriesState extends State<Categories> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                print(
-                    "selected item: ${data[index]['id']}"); //show the id of the item that has been clicked in the terminal
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => CategoryServices(
-                      mId: data[index]['id']
+                      mId: data[index]['id'],
+                      categoryTitle: data[index]['title'],
                     ),
                   ),
                 );
@@ -85,6 +85,7 @@ class _CategoriesState extends State<Categories> {
                     horizontal: kMainHorizontalPadding,
                     vertical: kMainHorizontalPadding / 4),
                 child: Card(
+                  color: Color(hexColConvert(data[index]['themeColor'])),
                   elevation: kElevationValue / 2,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
