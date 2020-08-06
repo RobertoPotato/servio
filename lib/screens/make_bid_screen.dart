@@ -6,7 +6,18 @@ import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/icon_button_text.dart';
 
 class MakeBidScreen extends StatefulWidget {
-  static String id = 'make_bid';
+  //static String id = 'make_bid';
+
+  final int serviceId;
+  final int userId;
+  final String serviceTitle;
+  final String serviceCategory;
+
+  MakeBidScreen(
+      {@required this.serviceId,
+      @required this.userId,
+      @required this.serviceTitle,
+      @required this.serviceCategory});
 
   @override
   _MakeBidScreenState createState() => _MakeBidScreenState();
@@ -30,7 +41,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
   ValueChanged _onChanged = (val) => print(val);
   */
 
-  @override
+/*  @override
   void initState() {
     super.initState();
     _pageController = PageController();
@@ -40,7 +51,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
+  }*/
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -64,110 +75,131 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _showSnack(BuildContext context) {
+      final snackBar = SnackBar(
+        content: Text("${widget.serviceTitle}"),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+
     return SafeArea(
       child: WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('$jobTitle'),
+            title: Builder(
+              builder: (context) => InkWell(
+                onTap: () {
+                  _showSnack(context);
+                },
+                child:
+                    Text('${widget.serviceCategory}: ${widget.serviceTitle}'),
+              ),
+            ),
           ),
           body: FormBuilder(
             key: _fbKey,
             initialValue: {
               'bid_date': DateTime.now(),
             },
-            child: PageView(
-              controller: _pageController,
-              children: <Widget>[
-                SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      CardWithTitleAndText(
-                        title: 'Notice',
-                        text: '$kBidNotice',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(kMainHorizontalPadding),
-                        child: FormBuilderTextField(
-                          keyboardType: TextInputType.number,
-                          attribute: 'bid_amount',
-                          decoration: InputDecoration().copyWith(
-                            hasFloatingPlaceholder: false,
-                            hintText: 'Bid Amount',
-                            labelText: 'Amount',
-                            prefixIcon: Icon(Icons.monetization_on),
-                          ),
-                          validators: [FormBuilderValidators.required()],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(kMainHorizontalPadding),
-                        child: FormBuilderDropdown(
-                          attribute: 'availability',
-                          decoration: InputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.access_time),
-                          ),
-                          hint: Text('Select your availability'),
-                          validators: [FormBuilderValidators.required()],
-                          items: [
-                            'Hourly',
-                            'Daily',
-                            'When Needed',
-                          ]
-                              .map((availability) => DropdownMenuItem(
-                                    child: Text('$availability'),
-                                    value: availability,
-                                  ))
-                              .toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(kMainHorizontalPadding),
-                        child: FormBuilderTextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          attribute: 'cover_letter',
-                          decoration: InputDecoration().copyWith(
-                            hasFloatingPlaceholder: false,
-                            labelText: 'Cover Letter',
-                            hintText: 'Describe what you have to offer',
-                            prefixIcon: Icon(Icons.mail),
-                          ),
-                          validators: [FormBuilderValidators.required()],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(kMainHorizontalPadding),
-                        child: FormBuilderCheckbox(
-                          initialValue: false,
-                          label: Text('Can Travel'),
-                          attribute: 'can_travel',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(kMainHorizontalPadding),
-                        child: FormBuilderCheckbox(
-                          initialValue: false,
-                          label: Text(
-                              'I have read and accepted all the client\'s terms'),
-                          attribute: 'accept_all',
-                          validators: [FormBuilderValidators.requiredTrue()],
-                        ),
-                      ),
-                      IconButtonWithText(
-                        text: 'Post',
-                        icon: Icons.send,
-                        onTap: () {
-                          if (_fbKey.currentState.saveAndValidate()) {
-                            print(_fbKey.currentState.value);
-                          }
-                        },
-                        materialColor: kMyBidsColor,
-                      )
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  CardWithTitleAndText(
+                    title: 'Notice',
+                    text: '$kBidNotice',
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: FormBuilderTextField(
+                      keyboardType: TextInputType.number,
+                      attribute: 'amount',
+                      decoration: InputDecoration().copyWith(
+                        hasFloatingPlaceholder: false,
+                        hintText: 'Bid Amount',
+                        labelText: 'Amount',
+                        prefixIcon: Icon(Icons.monetization_on),
+                      ),
+                      validators: [FormBuilderValidators.required()],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: FormBuilderDropdown(
+                      attribute: 'availability',
+                      decoration: InputDecoration().copyWith(
+                        prefixIcon: Icon(Icons.access_time),
+                      ),
+                      hint: Text('Select your availability'),
+                      validators: [FormBuilderValidators.required()],
+                      items: [
+                        'Hourly',
+                        'Daily',
+                        'When Needed',
+                      ]
+                          .map((availability) => DropdownMenuItem(
+                                child: Text('$availability'),
+                                value: availability,
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: FormBuilderTextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
+                      attribute: 'coverLetter',
+                      decoration: InputDecoration().copyWith(
+                        hasFloatingPlaceholder: false,
+                        labelText: 'Cover Letter',
+                        hintText: 'Describe what you have to offer',
+                        prefixIcon: Icon(Icons.mail),
+                      ),
+                      validators: [FormBuilderValidators.required()],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: FormBuilderCheckbox(
+                      initialValue: false,
+                      label: Text('Can Travel'),
+                      attribute: 'canTravel',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(kMainHorizontalPadding),
+                    child: FormBuilderCheckbox(
+                      initialValue: false,
+                      label: Text(
+                          'I have read and accepted all the client\'s terms'),
+                      attribute: 'acceptAll',
+                      validators: [FormBuilderValidators.requiredTrue()],
+                    ),
+                  ),
+                  IconButtonWithText(
+                    text: 'Post',
+                    icon: Icons.send,
+                    onTap: () {
+                      if (_fbKey.currentState.saveAndValidate()) {
+                        var userAndServiceIds = {
+                          "userId": widget.userId,
+                          "serviceId": widget.serviceId,
+                        };
+
+                        //create new map to hold form output as well as data passed through navigator
+                        var myBid = {};
+
+                        //use the addAll method to combine them
+                        myBid.addAll(userAndServiceIds);
+                        myBid.addAll(_fbKey.currentState.value);
+                        print(myBid);
+                      }
+                    },
+                    materialColor: kMyBidsColor,
+                  )
+                ],
+              ),
             ),
           ),
         ),

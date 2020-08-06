@@ -108,7 +108,12 @@ class _JobDetailsState extends State<JobDetails> {
                           icon: Icons.sentiment_very_satisfied,
                           materialColor: kMyBidsColor,
                           onTap: () {
-                            Navigator.pushNamed(context, MakeBidScreen.id);
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MakeBidScreen(
+                              serviceId: 1,
+                              serviceCategory: "${widget.categoryTitle}",
+                              serviceTitle: "${widget.title}",
+                              userId: 1, //TODO Implement function to get my user id (Currently logged-in user)
+                            )));
                           },
                         ),
                         IconButtonWithText(

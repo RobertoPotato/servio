@@ -5,6 +5,8 @@ import 'package:servio/components/my_divider.dart';
 import 'package:servio/screens/alerts_details_screens/job_detail.dart';
 
 class JobCard extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(

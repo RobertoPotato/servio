@@ -38,12 +38,11 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id : (context) => RequestServicePage(),
-        MakeBidScreen.id : (context) => MakeBidScreen(),
+        //MakeBidScreen.id : (context) => MakeBidScreen(),
         BidDetails.id : (context) => BidDetails(),
         //JobDetails.id : (context) => JobDetails(),
         SettingsScreen.id : (context) => SettingsScreen(),
         InfoDetailsScreen.id : (context) => InfoDetailsScreen(),
-        MakeBidScreen.id : (context) => MakeBidScreen(),
       },
     );
   }
