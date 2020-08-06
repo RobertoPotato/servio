@@ -21,6 +21,10 @@ class JobDetails extends StatefulWidget {
   final budget;
   final terms;
   final imageUrl;
+  final county;
+  final town;
+  final lat;
+  final long;
 
   JobDetails(
       {this.userId,
@@ -30,7 +34,12 @@ class JobDetails extends StatefulWidget {
       this.description,
       this.budget,
       this.terms,
-      this.imageUrl});
+      this.imageUrl,
+        this.county,
+        this.town,
+        this.lat,
+        this.long
+      });
 
   @override
   _JobDetailsState createState() => _JobDetailsState();
@@ -40,6 +49,7 @@ class _JobDetailsState extends State<JobDetails> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO print => print(widget.)
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -61,7 +71,7 @@ class _JobDetailsState extends State<JobDetails> {
           child: Column(
             children: <Widget>[
               Image.network(
-                  'https://cdn.pixabay.com/photo/2016/04/25/18/07/halcyon-1352522_960_720.jpg',
+                  widget.imageUrl,
                   fit: BoxFit
                       .cover), // TODO replace the image link with => widget.imageUrl
               MaterialText(
@@ -77,8 +87,8 @@ class _JobDetailsState extends State<JobDetails> {
                     horizontal: kMainHorizontalPadding,
                     vertical: kMainHorizontalPadding / 2),
                 child: JobDetailsCard(
-                  county: 'Nairobi',
-                  town: 'Kahawa',
+                  county: widget.county,
+                  town: widget.town,
                   budgetRange: widget.budget,
                   terms: widget.terms,
                 ),

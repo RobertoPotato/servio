@@ -17,6 +17,7 @@ class Service {
   final int categoryId;
   final int statusId;
   final String createdAt;
+  final address;
 
   Service(
       {this.id,
@@ -29,7 +30,8 @@ class Service {
       this.userId,
       this.categoryId,
       this.statusId,
-      this.createdAt});
+      this.createdAt,
+      this.address});
 
   factory Service.fromJson(Map<String, dynamic> json) {
     return Service(
@@ -44,6 +46,7 @@ class Service {
       categoryId: json['categoryId'],
       statusId: json['statusId'],
       createdAt: json['createdAt'],
+      address: json['Address'],
     );
   }
 }
@@ -71,7 +74,7 @@ class _CategoryServicesState extends State<CategoryServices> {
 
   Future<Service> fetchServices() async {
     var url =
-        'http://192.168.100.39:3000/api/v1/services/fromcategory/${widget.mId}';
+        'http://192.168.100.39:3000/api/v1/services/address/${widget.mId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
@@ -88,23 +91,23 @@ class _CategoryServicesState extends State<CategoryServices> {
     }
   }
 
-  String budget(index){
-    if(services[index]['budgetMin'] > services[index]['budgetMax']){
+  String budget(index) {
+    if (services[index]['budgetMin'] > services[index]['budgetMax']) {
       return "${services[index]['budgetMax']} - ${services[index]['budgetMin']}";
-    } else{
+    } else {
       return "${services[index]['budgetMin']} - ${services[index]['budgetMax']}";
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.categoryTitle),
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
+          var mAddress = services[index]['Address'];
           return InkWell(
             onTap: () {
               Navigator.push(
@@ -119,11 +122,15 @@ class _CategoryServicesState extends State<CategoryServices> {
                     budget: budget(index),
                     terms: services[index]['terms'],
                     imageUrl: services[index]['imageUrl'],
+                    county: mAddress['county'],
+                    town: mAddress['town'],
+                    lat: mAddress['lat'],
+                    long: mAddress['long'],
                   ),
                 ),
               );
               print(
-                  "selected item: ${services[index]['id']}"); //show the id of the item that has been clicked in the terminal
+                  "Town: ${mAddress['town']}, county: ${mAddress['county']}, lat: ${ mAddress['lat']}, long: ${mAddress['long']}");
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -138,7 +145,7 @@ class _CategoryServicesState extends State<CategoryServices> {
                   child: Column(
                     children: <Widget>[
                       Image.network(
-                          'https://cdn.pixabay.com/photo/2016/04/25/18/07/halcyon-1352522_960_720.jpg'), //TODO return this item to the url entry => ${services[index]['imageUrl']}
+                          '${services[index]['imageUrl']}'),
                       Text(services[index]['id'].toString()),
                       Text(
                         services[index]['title'],
@@ -160,3 +167,6 @@ class _CategoryServicesState extends State<CategoryServices> {
     );
   }
 }
+
+//TODO don't show service items that dont have an address value.
+//TODO these can be given an inactive status id and ignored when doing a fetch
