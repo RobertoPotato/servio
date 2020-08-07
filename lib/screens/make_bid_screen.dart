@@ -4,10 +4,11 @@ import 'package:servio/constants.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:http/http.dart' as http;
+import 'package:servio/models/Bid.dart';
+import 'dart:convert';
 
 class MakeBidScreen extends StatefulWidget {
-  //static String id = 'make_bid';
-
   final int serviceId;
   final int userId;
   final String serviceTitle;
@@ -23,8 +24,34 @@ class MakeBidScreen extends StatefulWidget {
   _MakeBidScreenState createState() => _MakeBidScreenState();
 }
 
-var jobId = 'id of job passed through the navigator';
-var jobTitle = 'Title of job being bid for'; //also passed through navigator
+Future<Bid> createBid(double amount, String coverLetter, bool canTravel,
+    String availability, String currency, int userId, int serviceId) async {
+  final String url = "http://192.168.100.39:3000/api/v1/bids/";
+
+  final response = await http.post(Uri.encodeFull(url),
+      body: json.encode({
+        "amount": amount,
+        "coverLetter": coverLetter,
+        "canTravel": canTravel,
+        "availability": availability,
+        "currency": currency,
+        "userId": userId,
+        "serviceId": serviceId,
+      }),
+      //necessary for transporting json to server. Specify what data is being sent
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      });
+
+  if (response.statusCode == 201) {
+    final String responseString = response.body;
+
+    return bidFromJson(responseString);
+  } else {
+    return null;
+  }
+}
 
 class _MakeBidScreenState extends State<MakeBidScreen> {
   PageController _pageController;
@@ -34,24 +61,6 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
   bool showSegmentedControl = true;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  /*todo uncomment if needed:
-  final GlobalKey<FormFieldState> _specifyTextFieldKey =
-      GlobalKey<FormFieldState>();
-
-  ValueChanged _onChanged = (val) => print(val);
-  */
-
-/*  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }*/
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -120,7 +129,10 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                         labelText: 'Amount',
                         prefixIcon: Icon(Icons.monetization_on),
                       ),
-                      validators: [FormBuilderValidators.required()],
+                      validators: [
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric()
+                      ],
                     ),
                   ),
                   Padding(
@@ -180,20 +192,29 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                   IconButtonWithText(
                     text: 'Post',
                     icon: Icons.send,
-                    onTap: () {
+                    onTap: () async {
                       if (_fbKey.currentState.saveAndValidate()) {
-                        var userAndServiceIds = {
-                          "userId": widget.userId,
-                          "serviceId": widget.serviceId,
-                        };
-
-                        //create new map to hold form output as well as data passed through navigator
-                        var myBid = {};
-
                         //use the addAll method to combine them
-                        myBid.addAll(userAndServiceIds);
-                        myBid.addAll(_fbKey.currentState.value);
-                        print(myBid);
+                        final formData = _fbKey.currentState.value;
+
+                        final double amount = double.parse(formData[
+                            'amount']); //convert the value from string to double
+                        final String coverLetter = formData['coverLetter'];
+                        final bool canTravel = false;
+                        final String availability = formData['availability'];
+                        final String currency = formData['currency'];
+                        final int userId = widget.userId;
+                        final int serviceId = widget.serviceId;
+
+                        //createBid();
+                        final Bid bid = await createBid(
+                            amount,
+                            coverLetter,
+                            canTravel,
+                            availability,
+                            currency,
+                            userId,
+                            serviceId);
                       }
                     },
                     materialColor: kMyBidsColor,

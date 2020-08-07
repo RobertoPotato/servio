@@ -42,7 +42,7 @@ class _CategoriesState extends State<Categories> {
   }
 
   Future<Category> fetchCategory() async {
-    var url = 'http://192.168.100.39:3000/api/v1/categories';
+    var url = '$kBaseUrl/v1/categories';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
     final jsonResponse = json.decode(response.body);

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+//BASE URL
+const kBaseUrl = "https://192.168.100.39:3000/api";
 
 //COLORS
 const kPrimaryColor = Color(0xFF3d2352);
