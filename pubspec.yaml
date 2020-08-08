@@ -29,6 +29,7 @@ dependencies:
   carousel_slider: ^2.2.1
   settings_ui: ^0.3.0
   http: ^0.12.2
+  flutter_chips_input: ^1.9.0-dev.1
 
 dev_dependencies:
   flutter_test:
