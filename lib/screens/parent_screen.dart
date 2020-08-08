@@ -28,38 +28,102 @@ class _MainParentScreenState extends State<MainParentScreen> {
     Categories(),
     AlertsScreen(),
     FavoritesScreen(),
-    ProfileScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex],//body will be whatever screen is represented by the index
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            Container(
+              height: 250.0,
+              child: DrawerHeader(
+                child: Image.asset(
+                  'images/business_woman.jpg',
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              leading: Icon(Icons.person),
+              onTap: (){
+                Navigator.pushNamed(context, ProfileScreen.id);
+              },
+            ),
+            ListTile(
+              title: Text('Favorites'),
+              leading: Icon(Icons.favorite),
+              onTap: (){
+                Navigator.pushNamed(context, FavoritesScreen.id);
+              },
+            ),
+            ListTile(
+              title: Text('Alerts'),
+              leading: Icon(Icons.notifications),
+              onTap: (){
+                Navigator.pushNamed(context, AlertsScreen.id);
+              },
+            ),
+            ListTile(
+              title: Text('Messages'),
+              leading: Icon(Icons.chat),
+            ),
+            ListTile(
+              title: Text('My Services'),
+              leading: Icon(Icons.dashboard),
+            ),
+            ListTile(
+              title: Text('My Bids'),
+              leading: Icon(Icons.payment),
+            ),
+            ListTile(
+              title: Text('Stats'),
+              leading: Icon(Icons.grade),
+            ),
+            ListTile(
+              title: Text('Help'),
+              leading: Icon(Icons.help),
+            ),
+            ListTile(
+              title: Text('Settings'),
+              leading: Icon(Icons.settings),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FlatButton(
+                  color: kRedAlert,
+                  onPressed: () {
+                    print('Log user out');
+                  },
+                  child: Text(
+                    'Log Out',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      body: _screens[
+          _selectedIndex], //body will be whatever screen is represented by the index
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home), //todo Return this => icon: Icon(Icons.home),
+            icon: Icon(Icons.home),
             title: Text('Home'),
             backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.category), //todo Return this => icon: Icon(Icons.home),
+            icon: Icon(Icons.category),
             title: Text('Categories'),
-            backgroundColor: kPrimaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            title: Text('Alerts'),
-            backgroundColor: kPrimaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text('Favorites'),
-            backgroundColor: kPrimaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
             backgroundColor: kPrimaryColor,
           ),
         ],

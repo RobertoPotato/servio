@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 const kBaseUrl = "http://192.168.100.39:3000/api";
 
 //COLORS
+//primary color
+//secondary color
+//accent color
+
+//TODO remove all unnecessary colors and remain with only these three colors
 const kPrimaryColor = Color(0xFF3d2352);
 const kAccentColor = Colors.lightBlueAccent;
 const kScaffoldBackgroundColor = Colors.white;
@@ -38,6 +43,10 @@ const kBidNotice = 'The client will receive your profile information when you bi
 const kMainHorizontalPadding = 12.0;
 const kElevationValue = 10.0;
 
+//TODO Have few text styles
+//primary text style
+//secondary text style
+//accent text style
 //TEXT STYLES
 const kHeadingTextStyle = TextStyle(
   fontSize: 20,

@@ -23,12 +23,11 @@ class _AlertsScreenState extends State<AlertsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
               tabs: <Widget>[
-                Tab(text: kJobs),
                 Tab(text: kBids),
                 Tab(text: kInformation),
               ],
@@ -36,8 +35,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
           ),
           body: TabBarView(
             children: <Widget>[
-              //JOBS TAB
-              JobsTab(),
               //BIDS TAB
               BidsTab(),
               //ALERTS TAB
