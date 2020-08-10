@@ -6,9 +6,16 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 
-class BidDetails extends StatelessWidget {
+class BidDetails extends StatefulWidget {
   static String id = 'bid_detail';
+
+  @override
+  _BidDetailsState createState() => _BidDetailsState();
+}
+
+class _BidDetailsState extends State<BidDetails> {
   var companyIsVerified = true;
+
   var isFavorite = true;
 
   @override

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servio/constants.dart';
-import 'package:servio/screens/alert_screens/jobs_tab.dart';
-import 'package:servio/screens/alert_screens/bids_tab.dart';
-import 'package:servio/screens/alert_screens/info_tab.dart';
+import 'package:servio/components/info_card.dart';
 
 /*
 * This page will show alerts (jobs that have been posted)
@@ -22,27 +19,22 @@ class _AlertsScreenState extends State<AlertsScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: DefaultTabController(
-        length: 2,
         child: Scaffold(
           appBar: AppBar(
-            bottom: TabBar(
-              tabs: <Widget>[
-                Tab(text: kBids),
-                Tab(text: kInformation),
+           title: Text("Info"),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                InfoCard(),
+                InfoCard(),
+                InfoCard(),
+                InfoCard(),
+                InfoCard(),
               ],
             ),
-          ),
-          body: TabBarView(
-            children: <Widget>[
-              //BIDS TAB
-              BidsTab(),
-              //ALERTS TAB
-              InfoTab()
-            ],
-          ),
+          )
         ),
-      ),
     );
   }
 }

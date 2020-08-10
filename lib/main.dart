@@ -5,15 +5,14 @@ import 'screens/login_screen.dart';
 import 'screens/parent_screen.dart';
 import 'constants.dart';
 import 'screens/request_service.dart';
-import 'screens/make_bid_screen.dart';
 import 'screens/alerts_details_screens/bid_detail.dart';
-import 'screens/alerts_details_screens/job_detail.dart';
 import 'screens/settings_screen.dart';
 import 'screens/alerts_details_screens/info_detail.dart';
-import 'screens/make_bid_screen.dart';
 import 'screens/profile.dart';
 import 'screens/favorites.dart';
 import 'screens/alerts.dart';
+import 'screens/bids.dart';
+import 'screens/my_services.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,14 +40,14 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id: (context) => RequestServicePage(),
-        //MakeBidScreen.id : (context) => MakeBidScreen(),
         BidDetails.id: (context) => BidDetails(),
-        //JobDetails.id : (context) => JobDetails(),
         SettingsScreen.id: (context) => SettingsScreen(),
         InfoDetailsScreen.id: (context) => InfoDetailsScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
         FavoritesScreen.id :  (context) => FavoritesScreen(),
         AlertsScreen.id : (context) => AlertsScreen(),
+        Bids.id : (context) => Bids(),
+        MyServices.id : (context) => MyServices(),
       },
     );
   }

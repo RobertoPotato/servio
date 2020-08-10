@@ -4,6 +4,13 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/screens/alerts_details_screens/bid_detail.dart';
 
 class BidCard extends StatelessWidget {
+  final String position;
+  final int amount;
+  final String userName;
+  final String description;
+
+  BidCard({@required this.amount, @required this.userName, @required this.description, @required this.position});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -11,83 +18,71 @@ class BidCard extends StatelessWidget {
           horizontal: kMainHorizontalPadding,
           vertical: kMainHorizontalPadding / 2),
       child: Card(
-        elevation: kElevationValue,
-        child: InkWell(
-          onTap: () {
-            //todo add data to pass as well as methods to use
-            Navigator.pushNamed(context, BidDetails.id);
-          },
-          child: Container(
-            height: 150.0,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: kMainHorizontalPadding),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                MaterialText(
-                                  text: kNumberTotal,
-                                  color: Colors.red,
-                                ),
-                              ],
+        elevation: kElevationValue / 2,
+        child: Container(
+          height: 150.0,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kMainHorizontalPadding),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: MaterialText(
+                              text: position,
+                              color: kMyJobsColor,
                             ),
-                            Row(
-                              children: <Widget>[
-                                Text('Rating:  '),
-                                MaterialText(
-                                  text: kExampleRatingText,
-                                  color: Colors.green,
-                                ),
-                              ],
+                            flex: 1,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Expanded(
+                            child: MaterialText(
+                              text: "Amount: $amount",
+                              color: Colors.blue,
                             ),
-                            Row(
-                              children: <Widget>[
-                                Text('Bid:  '),
-                                MaterialText(
-                                  text: kExampleBidPrice,
-                                  color: Colors.blue,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                                child: Text(
-                              kExampleNameMale,
+                            flex: 2,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Expanded(
+                            child: Text(
+                              userName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                            )),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                kLoremIpsum,
-                                maxLines: 5,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+                              style: kHeadingTextStyle,
+                              textAlign: TextAlign.end,
+                            ),
+                            flex: 3,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Flexible(
+                            child: Text(
+                              description,
+                              maxLines: 5,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

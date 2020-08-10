@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:servio/screens/demo_http_details.dart';
+import 'package:servio/screens/category-services.dart';
 
 class Category {
   final int id;
@@ -60,7 +60,6 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -85,7 +84,7 @@ class _CategoriesState extends State<Categories> {
                     horizontal: kMainHorizontalPadding,
                     vertical: kMainHorizontalPadding / 4),
                 child: Card(
-                  color: Color(hexColConvert(data[index]['themeColor'])),
+                  //color: Color(hexColConvert(data[index]['themeColor'])),
                   elevation: kElevationValue / 2,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -94,7 +93,15 @@ class _CategoriesState extends State<Categories> {
                     child: Column(
                       children: <Widget>[
                         Text(data[index]['id'].toString()),
-                        Text(data[index]['title']),
+                        Text(
+                          data[index]['title'],
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                Color(hexColConvert(data[index]['themeColor'])),
+                          ),
+                        ),
                         Text(data[index]['description']),
                         Text(data[index]['imageUrl']),
                         Text(data[index]['themeColor']),

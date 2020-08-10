@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 //TODO change to https after certificates have been configured
 const kBaseUrl = "http://192.168.100.39:3000/api";
 
+//STATIC USER ID
+const kUserId = 3;
+
 //COLORS
 //primary color
 //secondary color
@@ -100,7 +103,6 @@ int hexColConvert(String color) {
 
   textArray = text.split(
       ''); //split the color data referenced by the text variable into an array of characters
-  bool res =
   textArray.remove('#'); //from the array, remove this specific item
   textArray.insert(0,
       repWith); //replace the 0th index item with the 0xFF value we created

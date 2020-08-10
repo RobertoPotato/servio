@@ -1,0 +1,65 @@
+import 'dart:convert';
+
+Service serviceFromJson(String str) => Service.fromJson(json.decode(str));
+
+String serviceToJson(Service data) => json.encode(data.toJson());
+
+class Service {
+  Service({
+    this.id,
+    this.title,
+    this.description,
+    this.budgetMin,
+    this.budgetMax,
+    this.terms,
+    this.imageUrl,
+    this.userId,
+    this.categoryId,
+    this.statusId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  String title;
+  String description;
+  double budgetMin;
+  double budgetMax;
+  String terms;
+  String imageUrl;
+  int userId;
+  int categoryId;
+  int statusId;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
+    id: json["id"],
+    title: json["title"],
+    description: json["description"],
+    budgetMin: json["budgetMin"].toDouble(),
+    budgetMax: json["budgetMax"].toDouble(),
+    terms: json["terms"],
+    imageUrl: json["imageUrl"],
+    userId: json["userId"],
+    categoryId: json["categoryId"],
+    statusId: json["statusId"],
+    createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "description": description,
+    "budgetMin": budgetMin,
+    "budgetMax": budgetMax,
+    "terms": terms,
+    "imageUrl": imageUrl,
+    "userId": userId,
+    "categoryId": categoryId,
+    "statusId": statusId,
+    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
+  };
+}

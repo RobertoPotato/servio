@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
@@ -6,8 +5,6 @@ import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/job_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/screens/make_bid_screen.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 
 class JobDetails extends StatefulWidget {

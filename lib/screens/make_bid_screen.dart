@@ -54,7 +54,6 @@ Future<Bid> createBid(double amount, String coverLetter, bool canTravel,
 }
 
 class _MakeBidScreenState extends State<MakeBidScreen> {
-  PageController _pageController;
   var data;
   bool autoValidate = true;
   bool readOnly = false;
@@ -200,7 +199,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                         final double amount = double.parse(formData[
                             'amount']); //convert the value from string to double
                         final String coverLetter = formData['coverLetter'];
-                        final bool canTravel = false;
+                        final bool canTravel = formData['canTravel'];
                         final String availability = formData['availability'];
                         final String currency = formData['currency'];
                         final int userId = widget.userId;

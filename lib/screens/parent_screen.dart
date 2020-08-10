@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:servio/screens/home_screen.dart';
 import 'package:servio/screens/alerts.dart';
 import 'package:servio/screens/favorites.dart';
+import 'package:servio/screens/my_services.dart';
 import 'package:servio/screens/profile.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/screens/demo_http.dart';
+import 'package:servio/screens/categories.dart';
+import 'package:servio/screens/bids.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -26,8 +28,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
   var _screens = <Widget>[
     HomeScreen(),
     Categories(),
-    AlertsScreen(),
-    FavoritesScreen(),
   ];
 
   @override
@@ -73,10 +73,16 @@ class _MainParentScreenState extends State<MainParentScreen> {
             ListTile(
               title: Text('My Services'),
               leading: Icon(Icons.dashboard),
+              onTap: (){
+                Navigator.pushNamed(context, MyServices.id);
+              },
             ),
             ListTile(
               title: Text('My Bids'),
               leading: Icon(Icons.payment),
+              onTap: (){
+                Navigator.pushNamed(context, Bids.id);
+              },
             ),
             ListTile(
               title: Text('Stats'),
@@ -115,20 +121,19 @@ class _MainParentScreenState extends State<MainParentScreen> {
       body: _screens[
           _selectedIndex], //body will be whatever screen is represented by the index
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: kPrimaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
-            backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
             title: Text('Categories'),
-            backgroundColor: kPrimaryColor,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black54,
+        selectedItemColor: kScaffoldBackgroundColor,
         onTap: _onItemTapped,
       ),
     );
