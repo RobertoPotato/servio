@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/material_text.dart';
-import 'package:servio/screens/alerts_details_screens/bid_detail.dart';
 
 class BidCard extends StatelessWidget {
   final String position;
   final int amount;
   final String userName;
   final String description;
+  final String currency;
 
-  BidCard({@required this.amount, @required this.userName, @required this.description, @required this.position});
+  BidCard(
+      {@required this.amount,
+      @required this.userName,
+      @required this.description,
+      @required this.position,
+      @required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -30,40 +34,55 @@ class BidCard extends StatelessWidget {
                       horizontal: kMainHorizontalPadding),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Expanded(
-                            child: MaterialText(
-                              text: position,
-                              color: kMyJobsColor,
-                            ),
-                            flex: 1,
-                          ),
+                          Text(position),
                           SizedBox(
-                            width: 10.0,
+                            width: 5.0,
                           ),
                           Expanded(
-                            child: MaterialText(
-                              text: "Amount: $amount",
-                              color: Colors.blue,
-                            ),
-                            flex: 2,
-                          ),
-                          SizedBox(
-                            width: 10.0,
-                          ),
-                          Expanded(
-                            child: Text(
-                              userName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: kHeadingTextStyle,
-                              textAlign: TextAlign.end,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.payment,
+                                  color: kMyBidsColor,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    "$currency: $amount",
+                                    style: kBottomNavText,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             ),
                             flex: 3,
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.assignment_ind,
+                                  color: kMyBidsColor,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    userName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: kHeadingTextStyle.copyWith(
+                                        fontSize: 16.0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            flex: 5,
                           ),
                         ],
                       ),
@@ -72,7 +91,7 @@ class BidCard extends StatelessWidget {
                           Flexible(
                             child: Text(
                               description,
-                              maxLines: 5,
+                              maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                             ),
                           )

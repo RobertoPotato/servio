@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:servio/models/BidWithUserName.dart';
 import 'package:servio/constants.dart';
 import 'dart:convert';
+import 'package:servio/screens/alerts_details_screens/bid_detail.dart';
 
 class MyServicesBids extends StatefulWidget {
   static String id = "bids";
@@ -59,12 +60,31 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                 onTap: () {
                   //TODO Navigate to bid details page
                   print("Bid has been clicked");
+                  var bidsDataArr = bidsWithUserNames[index];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => BidDetails(
+                        userId: bidsDataArr['userId'],
+                        amount: bidsDataArr['amount'].toDouble(),
+                        coverLetter: bidsDataArr['coverLetter'],
+                        userName:
+                            "${bidsWithUserNames[index]['User']['firstName']} ${bidsWithUserNames[index]['User']['lastName']} ",
+                        updatedAt: bidsDataArr['updatedAt'],
+                        canTravel: bidsDataArr['canTravel'],
+                        currency: bidsDataArr['currency'],
+                        availability: bidsDataArr['availability'],
+                      ),
+                    ),
+                  );
                 },
                 child: BidCard(
+                  currency: bidsWithUserNames[index]['currency'],
                   amount: bidsWithUserNames[index]['amount'],
                   userName:
                       "${bidsWithUserNames[index]['User']['firstName']} ${bidsWithUserNames[index]['User']['lastName']} ",
-                  description: bidsWithUserNames[index]['coverLetter'], position: "${index + 1}/${bidsWithUserNames.length}",
+                  description: bidsWithUserNames[index]['coverLetter'],
+                  position: "${index + 1}/${bidsWithUserNames.length}",
                 ),
               );
             }),

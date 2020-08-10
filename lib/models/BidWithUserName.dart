@@ -20,7 +20,7 @@ class BidWithUserName {
   });
 
   int id;
-  int amount;
+  double amount;
   String coverLetter;
   bool canTravel;
   String availability;
@@ -33,7 +33,7 @@ class BidWithUserName {
 
   factory BidWithUserName.fromJson(Map<String, dynamic> json) => BidWithUserName(
     id: json["id"],
-    amount: json["amount"],
+    amount: json["amount"].toDouble(),
     coverLetter: json["coverLetter"],
     canTravel: json["canTravel"],
     availability: json["availability"],

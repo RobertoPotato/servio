@@ -5,6 +5,7 @@ const kBaseUrl = "http://192.168.100.39:3000/api";
 
 //STATIC USER ID
 const kUserId = 3;
+const kNetworkImage = "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
 
 //COLORS
 //primary color

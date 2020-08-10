@@ -5,7 +5,6 @@ import 'screens/login_screen.dart';
 import 'screens/parent_screen.dart';
 import 'constants.dart';
 import 'screens/request_service.dart';
-import 'screens/alerts_details_screens/bid_detail.dart';
 import 'screens/settings_screen.dart';
 import 'screens/alerts_details_screens/info_detail.dart';
 import 'screens/profile.dart';
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id: (context) => RequestServicePage(),
-        BidDetails.id: (context) => BidDetails(),
         SettingsScreen.id: (context) => SettingsScreen(),
         InfoDetailsScreen.id: (context) => InfoDetailsScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
