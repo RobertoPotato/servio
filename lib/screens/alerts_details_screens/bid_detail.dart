@@ -9,6 +9,7 @@ import 'package:servio/components/my_vertical_divider.dart';
 import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
+import 'package:servio/screens/profile_user.dart';
 
 class BidDetails extends StatefulWidget {
   final double amount;
@@ -50,7 +51,7 @@ class _BidDetailsState extends State<BidDetails> {
     futureProfile = fetchProfile();
   }
 
-  Future<ProfileWithTierAndRole> fetchProfile() async{
+  Future<ProfileWithTierAndRole> fetchProfile() async {
     var url = "$kBaseUrl/v1/profiles/${widget.userId}";
 
     final response = await http
@@ -73,9 +74,10 @@ class _BidDetailsState extends State<BidDetails> {
         body: FutureBuilder<ProfileWithTierAndRole>(
           future: futureProfile,
           builder: (context, snapshot) {
-            if(snapshot.hasData) {
+            if (snapshot.hasData) {
               return NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
                       expandedHeight: 370.0,
@@ -85,7 +87,7 @@ class _BidDetailsState extends State<BidDetails> {
                         centerTitle: true,
                         title: Text(
                           widget.userName,
-                          style: TextStyle(color: Colors.white, fontSize: 15.0),
+                          style: TextStyle(color: Colors.white, fontSize: 18.0),
                         ),
                         //TODO change placeholder image to show when getting actual image from the network
                         background: FadeInImage.assetNetwork(
@@ -108,19 +110,18 @@ class _BidDetailsState extends State<BidDetails> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-
                           isFavorite
                               ? Icon(
-                            Icons.favorite,
-                            color: kRedAlert,
-                            size: 30.0,
-                          )
+                                  Icons.favorite,
+                                  color: kRedAlert,
+                                  size: 30.0,
+                                )
                               : Icon(
-                            Icons.favorite_border,
-                            size: 30.0,
-                          ),
+                                  Icons.favorite_border,
+                                  size: 30.0,
+                                ),
                           MaterialText(
-                            text: widget.amount,
+                            text: "${widget.currency} ${widget.amount}",
                             color: kMyBidsColor,
                             fontStyle: kTestTextStyleWhite,
                           ),
@@ -172,8 +173,9 @@ class _BidDetailsState extends State<BidDetails> {
                                 children: <Widget>[
                                   Icon(
                                     Icons.verified_user,
-                                    color:
-                                    snapshot.data.isVerified ? Colors.blue : Colors.grey,
+                                    color: snapshot.data.isVerified
+                                        ? Colors.blue
+                                        : Colors.grey,
                                     size: 28.0,
                                   ),
                                   Text(snapshot.data.isVerified
@@ -238,6 +240,40 @@ class _BidDetailsState extends State<BidDetails> {
                                 materialColor: kMyBidsColor,
                               ),
                               IconButtonWithText(
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30.0),
+                                              topRight: Radius.circular(30.0),
+                                            ),
+                                          ),
+                                          child: UserProfile(
+                                            userName: widget.userName,
+                                            avatar: snapshot.data.avatar,
+                                            roleTitle: snapshot.data.role.title,
+                                            roleDescription:
+                                                snapshot.data.role.description,
+                                            updatedAt: snapshot.data.updatedAt
+                                                .toIso8601String(),
+                                            isVerified:
+                                                snapshot.data.isVerified,
+                                            picture: snapshot.data.picture,
+                                            bio: snapshot.data.bio,
+                                            tierTitle: snapshot.data.tier.title,
+                                            tierDescription:
+                                                snapshot.data.tier.description,
+                                            tierBadgeUrl:
+                                                snapshot.data.tier.badgeUrl,
+                                            phoneNumber:
+                                                snapshot.data.phoneNumber,
+                                          ),
+                                        );
+                                      });
+                                },
                                 text: 'Profile',
                                 icon: Icons.person,
                                 materialColor: kMyJobsColor,
@@ -254,11 +290,17 @@ class _BidDetailsState extends State<BidDetails> {
                     ),
                   ],
                 ),
-              )/*Text(snapshot.data.bio)*/;
-            } else if(snapshot.hasError){
-              return Text("${snapshot.error}");
-            } return Center(child: CircularProgressIndicator());
-
+              );
+            } else if (snapshot.hasError) {
+              //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
+              return Center(
+                child: Text(
+                    "Trouble fetching this resource. Try another one ${snapshot.error}", style: kHeadingTextStyle,),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),

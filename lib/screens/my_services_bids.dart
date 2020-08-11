@@ -59,8 +59,8 @@ class _MyServicesBidsState extends State<MyServicesBids> {
               return InkWell(
                 onTap: () {
                   //TODO Navigate to bid details page
-                  print("Bid has been clicked");
                   var bidsDataArr = bidsWithUserNames[index];
+                  print("Bid has been clicked. id: ${bidsDataArr['userId']}");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
