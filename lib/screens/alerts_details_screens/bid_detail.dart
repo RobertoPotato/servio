@@ -35,7 +35,6 @@ class BidDetails extends StatefulWidget {
   _BidDetailsState createState() => _BidDetailsState();
 }
 
-//TODO Push the profile data to the profiles page upon navigation using the snapshot.data construct
 class _BidDetailsState extends State<BidDetails> {
   var companyIsVerified = true;
   //TODO use setState to change state of the favorite icon depending on whether or not its marked as a favorite bid
@@ -46,7 +45,6 @@ class _BidDetailsState extends State<BidDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureProfile = fetchProfile();
   }
@@ -60,7 +58,7 @@ class _BidDetailsState extends State<BidDetails> {
     final jsonResponse = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      //print("DATA ==> ${ProfileWithTierAndRole.fromJson(jsonResponse[0])}");
+      //print("DATA ==> ${ProfileWithTierAndRole.fromJson(jsonResponse)}");
       return ProfileWithTierAndRole.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load Profile With Tier and Roles');
@@ -294,8 +292,20 @@ class _BidDetailsState extends State<BidDetails> {
             } else if (snapshot.hasError) {
               //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
               return Center(
-                child: Text(
-                    "Trouble fetching this resource. Try another one ${snapshot.error}", style: kHeadingTextStyle,),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("images/undraw_page_not_found.png"),
+                    Text("Unable to find what you're looking for", style: kTestTextStyleBlack,),
+                    FlatButton(
+                      color: kRedAlert,
+                      textColor: Colors.white,
+                      onPressed: (){
+                        Navigator.pop(context);
+                      }, child: Text("Go Back", style: kTestTextStyleWhite,),
+                    )
+                  ],
+                ),
               );
             }
             return Center(

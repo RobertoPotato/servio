@@ -7,7 +7,6 @@ import 'constants.dart';
 import 'screens/request_service.dart';
 import 'screens/settings_screen.dart';
 import 'screens/alerts_details_screens/info_detail.dart';
-import 'screens/profile.dart';
 import 'screens/favorites.dart';
 import 'screens/alerts.dart';
 import 'screens/bids.dart';
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         primaryColor: kPrimaryColor,
-        //canvasColor: Colors.transparent,
         accentColor: kAccentColor,
         scaffoldBackgroundColor: kScaffoldBackgroundColor,
         inputDecorationTheme: InputDecorationTheme(
@@ -42,7 +40,6 @@ class MyApp extends StatelessWidget {
         RequestServicePage.id: (context) => RequestServicePage(),
         SettingsScreen.id: (context) => SettingsScreen(),
         InfoDetailsScreen.id: (context) => InfoDetailsScreen(),
-        ProfileScreen.id: (context) => ProfileScreen(),
         FavoritesScreen.id :  (context) => FavoritesScreen(),
         AlertsScreen.id : (context) => AlertsScreen(),
         Bids.id : (context) => Bids(),

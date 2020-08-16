@@ -41,62 +41,91 @@ class _MainParentScreenState extends State<MainParentScreen> {
               Container(
                 height: 250.0,
                 child: DrawerHeader(
-                  child: Image.asset(
-                    'images/business_woman.jpg',
-                    fit: BoxFit.fitWidth,
+                  //images/Alien-Butt.gif
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/Alien-Butt.gif"),
+                        fit: BoxFit.cover
+                      ),
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
                   ),
                 ),
               ),
               ListTile(
                 title: Text('Profile'),
-                leading: Icon(Icons.person),
-                onTap: (){
-                  Navigator.pushNamed(context, ProfileScreen.id);
+                leading: Icon(
+                  Icons.person,
+                  color: Colors.teal,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ProfileScreen(
+                        userId: kUserId,
+                      ),
+                    ),
+                  );
                 },
               ),
               ListTile(
-                title: Text('Favorites'),
-                leading: Icon(Icons.favorite),
-                onTap: (){
+                title: Text('Favorites(Coming Soon)'),
+                leading: Icon(
+                  Icons.favorite,
+                  color: kRedAlert,
+                ),
+                trailing: Icon(Icons.timer),
+                onTap: () {
                   Navigator.pushNamed(context, FavoritesScreen.id);
                 },
               ),
               ListTile(
-                title: Text('Alerts'),
-                leading: Icon(Icons.notifications),
-                onTap: (){
+                title: Text('Alerts(Coming Soon)'),
+                leading: Icon(
+                  Icons.notifications,
+                  color: Colors.blueAccent,
+                ),
+                trailing: Icon(Icons.timer),
+                onTap: () {
                   Navigator.pushNamed(context, AlertsScreen.id);
                 },
               ),
               ListTile(
-                title: Text('Messages'),
-                leading: Icon(Icons.chat),
+                title: Text('Messages(Coming Soon)'),
+                leading: Icon(
+                  Icons.chat,
+                  color: Colors.tealAccent,
+                ),
+                trailing: Icon(Icons.timer),
               ),
               ListTile(
                 title: Text('My Services'),
-                leading: Icon(Icons.dashboard),
-                onTap: (){
+                leading: Icon(Icons.dashboard, color: Colors.redAccent),
+                onTap: () {
                   Navigator.pushNamed(context, MyServices.id);
                 },
               ),
               ListTile(
                 title: Text('My Bids'),
-                leading: Icon(Icons.payment),
-                onTap: (){
+                leading: Icon(Icons.payment, color: Colors.greenAccent),
+                onTap: () {
                   Navigator.pushNamed(context, Bids.id);
                 },
               ),
               ListTile(
-                title: Text('Stats'),
-                leading: Icon(Icons.grade),
+                title: Text('Stats(Coming Soon)'),
+                leading: Icon(Icons.grade, color: Colors.lightBlueAccent),
+                trailing: Icon(Icons.timer),
               ),
               ListTile(
                 title: Text('Help'),
-                leading: Icon(Icons.help),
+                leading: Icon(Icons.help, color: kPrimaryColor),
               ),
               ListTile(
                 title: Text('Settings'),
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.settings, color: Colors.blueGrey),
               ),
               Container(
                 alignment: Alignment.bottomCenter,
