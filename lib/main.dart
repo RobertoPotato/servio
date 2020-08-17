@@ -9,7 +9,6 @@ import 'screens/settings_screen.dart';
 import 'screens/alerts_details_screens/info_detail.dart';
 import 'screens/favorites.dart';
 import 'screens/alerts.dart';
-import 'screens/bids.dart';
 import 'screens/my_services.dart';
 
 void main() => runApp(MyApp());
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
         InfoDetailsScreen.id: (context) => InfoDetailsScreen(),
         FavoritesScreen.id :  (context) => FavoritesScreen(),
         AlertsScreen.id : (context) => AlertsScreen(),
-        Bids.id : (context) => Bids(),
         MyServices.id : (context) => MyServices(),
       },
     );

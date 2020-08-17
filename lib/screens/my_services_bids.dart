@@ -88,21 +88,6 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                 ),
               );
             }),
-
-        /*SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              BidCard(),
-              BidCard(),
-              BidCard(),
-              BidCard(),
-              BidCard(),
-              BidCard(),
-              BidCard(),
-              BidCard(),
-            ],
-          ),
-        ),*/
       ),
     );
   }

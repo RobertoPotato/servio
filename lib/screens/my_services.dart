@@ -7,7 +7,7 @@ import 'package:servio/screens/my_services_bids.dart';
 
 class MyServices extends StatefulWidget {
   static String id = "myServices";
-  //TODO Replace static ID value with one obtained from user information
+  //TODO Replace static ID value (kUserId) with one obtained from user information
   @override
   _MyServicesState createState() => _MyServicesState();
 }

@@ -111,7 +111,12 @@ class _MainParentScreenState extends State<MainParentScreen> {
                 title: Text('My Bids'),
                 leading: Icon(Icons.payment, color: Colors.greenAccent),
                 onTap: () {
-                  Navigator.pushNamed(context, Bids.id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Bids(userId: kUserId,),
+                    ),
+                  );
                 },
               ),
               ListTile(
