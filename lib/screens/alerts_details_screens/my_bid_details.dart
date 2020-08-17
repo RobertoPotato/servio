@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:servio/constants.dart';
+import 'package:servio/components/card_title_text.dart';
+import 'package:servio/components/material_text.dart';
 
 class MyBidDetails extends StatelessWidget {
   final bid;
@@ -10,31 +14,130 @@ class MyBidDetails extends StatelessWidget {
       @required this.bidService,
       @required this.serviceStatus});
 
-  /*String budget(index) {
-    if (bid['budgetMin'] > services[index]['budgetMax']) {
-      return "${services[index]['budgetMax']} - ${services[index]['budgetMin']}";
+  String budget(min, max) {
+    if (min > max) {
+      return "$max - $min";
     } else {
-      return "${services[index]['budgetMin']} - ${services[index]['budgetMax']}";
+      return "$min - $max";
     }
-  }*/
+  }
+
+  String isBidInRange(min, max, amt) {
+    if (amt < min) {
+      return "Your bid was below the asking price";
+    } else if (amt > max) {
+      return "Your bid was above the asking price";
+    } else
+      return "Your bid was within the customer's budget range";
+  }
 
   @override
   Widget build(BuildContext context) {
-    print("Bid amount: ${bid["amount"]}");
+    _showSnack(BuildContext context, String text) {
+      final snackBar = SnackBar(
+        content: Text(text),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("My Bid Details"),
+          title: Builder(
+            builder: (context) => InkWell(
+              onTap: () {
+                _showSnack(
+                  context,
+                  (bidService["title"]),
+                );
+              },
+              child: Text(bidService["title"]),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                Container(
-                  child: Text("The Bid's Details"),
+                Padding(
+                  padding: const EdgeInsets.all(kMainHorizontalPadding),
+                  child: MaterialText(
+                    text:
+                        "Your bid amount was ${bid["currency"]} ${bid["amount"]}",
+                    color: kMyBidsColor,
+                    fontStyle: kTestTextStyleWhite,
+                  ),
                 ),
-                Container(
-                  child: Text("The Service's Details including Status"),
+                CardWithTitleAndText(
+                  title: "Cover Letter",
+                  text: bid["coverLetter"],
+                ),
+                ListTile(
+                  trailing: Icon(Icons.card_travel, color: Colors.blueAccent),
+                  title: bid["canTravel"]
+                      ? Text("You mentioned you can travel")
+                      : Text("You mentioned you can't travel"),
+                  subtitle: Text(kTravelPromptExplanation),
+                ),
+                ListTile(
+                  trailing: Icon(Icons.access_time, color: Colors.blueAccent),
+                  title: Text("Your availability: ${bid["availability"]}"),
+                  subtitle: Text("This shows your preferred availability"),
+                ),
+                ListTile(
+                  trailing:
+                      Icon(Icons.compare_arrows, color: Colors.blueAccent),
+                  title: Text(
+                    isBidInRange(bidService["budgetMin"],
+                        bidService["budgetMax"], bid["amount"]),
+                  ),
+                  subtitle: Text("Something you may like to know..."),
+                ),
+                ListTile(
+                  title: Text("Status: ${serviceStatus["title"]}"),
+                  subtitle: Text(kStatusExplanation),
+                  trailing: Builder(
+                    builder: (context) => InkWell(
+                      child: Icon(Icons.help_outline, color: Colors.blueAccent),
+                      onTap: () {
+                        _showSnack(context, kStatusExplanation);
+                      },
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    MaterialText(
+                      text:
+                          "The client's budget: ${budget(bidService["budgetMin"], bidService["budgetMax"])}",
+                      color: kMyBidsColor,
+                      fontStyle: kTestTextStyleWhite,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(kMainHorizontalPadding),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(kBorderRadius),
+                        elevation: kElevationValue / 2,
+                        child: Container(
+                          height: 300,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    kNetworkImage /*bidService["imageUrl"]*/),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(kBorderRadius),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: CardWithTitleAndText(
+                        title: "Description",
+                        text: bidService["description"],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

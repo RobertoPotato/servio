@@ -7,7 +7,6 @@ import 'package:servio/constants.dart';
 import 'alerts_details_screens/my_bid_details.dart';
 
 class Bids extends StatefulWidget {
-  static String id = "bids";
   final int userId;
 
   Bids({@required this.userId});
@@ -40,7 +39,6 @@ class _BidsState extends State<Bids> {
       bids = json.decode(response.body);
     });
 
-    print(jsonResponse);
     if (response.statusCode == 200) {
       return BidWithServiceAndStatus.fromJson(jsonResponse[0]);
     } else {

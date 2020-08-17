@@ -23,6 +23,10 @@ const kMyJobsColor = Color(0xFF02BBCA);
 const kMySettingsColor = Color(0xFFF39402);
 
 //TEXT
+const kStatusExplanation = "This is the current status of the service. It may change without notice";
+const kTravelPromptExplanation = "This is important in case the service would require you to travel";
+
+
 const kJobs = "Jobs";
 const kBids = "Bids";
 const kInformation = "Info";
@@ -46,6 +50,7 @@ const kBidNotice = 'The client will receive your profile information when you bi
 //SIZES
 const kMainHorizontalPadding = 12.0;
 const kElevationValue = 10.0;
+const kBorderRadius = 10.0;
 
 //TODO Have few text styles
 //primary text style
