@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:servio/constants.dart';
 
 class ReviewCard extends StatelessWidget {
@@ -19,13 +20,13 @@ class ReviewCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(
           left: kMainHorizontalPadding,
-          right: kMainHorizontalPadding/2,
+          right: kMainHorizontalPadding / 2,
           bottom: kMainHorizontalPadding,
           top: kMainHorizontalPadding),
       child: Container(
         width: 320.0,
         child: Card(
-          elevation: kElevationValue/2,
+          elevation: kElevationValue / 2,
           child: InkWell(
             onTap: () {
               //todo Navigate to job details screen
@@ -40,9 +41,13 @@ class ReviewCard extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      child: CircleAvatar(
-                        radius: 40.0,
-                        backgroundImage: AssetImage('images/$reviewerAvatar'),
+                      child: Text(
+                        rating.toString(),
+                        style: GoogleFonts.monoton(
+                          fontSize: 44,
+                          fontStyle: FontStyle.italic,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
@@ -64,21 +69,6 @@ class ReviewCard extends StatelessWidget {
                                   color: Colors.black54),
                               textAlign: TextAlign.center,
                               maxLines: 2,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  '$rating',
-                                  style: kHeadingTextStyle,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 24,
-                                  color: rating > 2.5
-                                      ? Colors.green
-                                      : Colors.deepOrange,
-                                ),
-                              ],
                             ),
                           ],
                         ),
