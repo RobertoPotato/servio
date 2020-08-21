@@ -7,11 +7,9 @@ class ReviewCard extends StatelessWidget {
   //todo refactor the names of the variables
   ReviewCard(
       {@required this.reviewerName,
-      @required this.reviewerAvatar,
       @required this.review,
       @required this.rating});
   final String reviewerName;
-  final String reviewerAvatar;
   final String review;
   final double rating;
 

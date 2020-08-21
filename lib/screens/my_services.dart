@@ -57,36 +57,16 @@ class _MyServicesState extends State<MyServices> {
         title: Text("My Services"),
       ),
       body: ListView.builder(
+        itemCount: services == null ? 0 : services.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              print("Service has been clicked");
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => MyServicesBids(serviceId: services[index]['id'],),
                 ),
               );
-
-              /*Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => JobDetails(
-                    userId: services[index]['userId'],
-                    serviceId: services[index]['id'],
-                    categoryTitle: widget.categoryTitle,
-                    title: services[index]['title'],
-                    description: services[index]['description'],
-                    budget: budget(index),
-                    terms: services[index]['terms'],
-                    imageUrl: services[index]['imageUrl'],
-                    county: mAddress['county'],
-                    town: mAddress['town'],
-                    lat: mAddress['lat'],
-                    long: mAddress['long'],
-                  ),
-                ),
-              );*/
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -117,7 +97,6 @@ class _MyServicesState extends State<MyServices> {
             ),
           );
         },
-        itemCount: services == null ? 0 : services.length,
       ),
     );
   }

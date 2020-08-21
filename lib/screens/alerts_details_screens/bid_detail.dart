@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
 import 'package:servio/screens/profile_user.dart';
+import 'package:servio/screens/errors/error_screen.dart';
 
 class BidDetails extends StatefulWidget {
   final double amount;
@@ -196,25 +197,21 @@ class _BidDetailsState extends State<BidDetails> {
                           ReviewCard(
                             reviewerName: 'John Doe',
                             review: kLoremIpsum,
-                            reviewerAvatar: 'owl.png',
                             rating: 4.5,
                           ),
                           ReviewCard(
                             reviewerName: 'Jane Doe',
                             review: kLoremIpsumShort,
-                            reviewerAvatar: 'owl.png',
                             rating: 2.0,
                           ),
                           ReviewCard(
                             reviewerName: 'Jack Doe',
                             review: kLoremIpsum,
-                            reviewerAvatar: 'owl.png',
                             rating: 4.5,
                           ),
                           ReviewCard(
                             reviewerName: 'Joan Doe',
                             review: kLoremIpsumShort,
-                            reviewerAvatar: 'owl.png',
                             rating: 4.5,
                           ),
                         ],
@@ -277,6 +274,9 @@ class _BidDetailsState extends State<BidDetails> {
                                 materialColor: kMyJobsColor,
                               ),
                               IconButtonWithText(
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
                                 text: 'Decline',
                                 icon: Icons.not_interested,
                                 materialColor: kRedAlert,
@@ -291,22 +291,7 @@ class _BidDetailsState extends State<BidDetails> {
               );
             } else if (snapshot.hasError) {
               //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("images/undraw_page_not_found.png"),
-                    Text("Unable to find what you're looking for", style: kTestTextStyleBlack,),
-                    FlatButton(
-                      color: kRedAlert,
-                      textColor: Colors.white,
-                      onPressed: (){
-                        Navigator.pop(context);
-                      }, child: Text("Go Back", style: kTestTextStyleWhite,),
-                    )
-                  ],
-                ),
-              );
+              return Error(message: "Unable to find what you're looking for", errorImage: "images/undraw_page_not_found.png",);
             }
             return Center(
               child: CircularProgressIndicator(),

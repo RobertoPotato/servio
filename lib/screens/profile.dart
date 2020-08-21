@@ -2,19 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
-import 'package:servio/components/review_card.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
+import 'package:servio/models/ReviewWithUser.dart';
 import 'package:servio/screens/settings_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:servio/components/StatsWidget.dart';
+import 'package:servio/components/list_of_reviews.dart';
+import 'package:servio/screens/bids.dart';
 
 //TODO Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
   final int userId;
-
   const ProfileScreen({@required this.userId});
 
   @override
@@ -24,12 +26,34 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final companyIsVerified = true;
   Future<ProfileWithTierAndRole> futureProfile;
+  Future<ReviewWithUser> futureReviews;
+  List reviews;
   List profile;
 
   @override
   void initState() {
     super.initState();
     futureProfile = fetchProfile();
+    futureReviews = fetchReviews();
+  }
+
+  Future<ReviewWithUser> fetchReviews() async {
+    var url = "$kBaseUrl/v1/reviews/foruser/${widget.userId}";
+
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      reviews = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return ReviewWithUser.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load Reviews with Users');
+    }
   }
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
@@ -41,7 +65,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final jsonResponse = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      //print("DATA ==> ${ProfileWithTierAndRole.fromJson(jsonResponse)}");
       return ProfileWithTierAndRole.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load Profile With Tier and Roles');
@@ -73,7 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       title: Text(
                         "My Profile",
-                        style: kAppBarTitle.copyWith(color: Colors.white, fontSize: 24.0),
+                        style: kAppBarTitle.copyWith(
+                            color: Colors.white, fontSize: 24.0),
                       ),
                     )
                   ];
@@ -163,89 +187,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     //REVIEWS
-                    Container(
-                      height: 160.0,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          ReviewCard(
-                            reviewerName: 'John Doe',
-                            review: kLoremIpsum,
-                            reviewerAvatar: 'owl.png',
-                            rating: 4.5,
+                    reviews.length == null || reviews.length == 0
+                        ? Center(child: MaterialText(text: "No reviews to show", color: Colors.white, fontStyle: kHeadingTextStyle,))
+                        : ListOfReviews(
+                            reviews: reviews,
                           ),
-                          ReviewCard(
-                            reviewerName: 'Jane Doe',
-                            review: kLoremIpsumShort,
-                            reviewerAvatar: 'owl.png',
-                            rating: 2.0,
-                          ),
-                          ReviewCard(
-                            reviewerName: 'Jack Doe',
-                            review: kLoremIpsum,
-                            reviewerAvatar: 'owl.png',
-                            rating: 4.5,
-                          ),
-                          ReviewCard(
-                            reviewerName: 'Joan Doe',
-                            review: kLoremIpsumShort,
-                            reviewerAvatar: 'owl.png',
-                            rating: 4.5,
-                          ),
-                        ],
-                      ),
-                    ),
                     //BRIEF STATS
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: kMainHorizontalPadding,
                           vertical: kMainHorizontalPadding / 2),
-                      child: Card(
-                        elevation: kElevationValue / 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text(kExampleRatingText.toString()),
-                                  Text('Rating')
-                                ],
-                              ),
-                              MyVerticalDivider(
-                                height: 28.0,
-                                width: 1.0,
-                                color: kPrimaryColor,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Text('${kPercentage.toString()}%'),
-                                  Text('Success rate')
-                                ],
-                              ),
-                              MyVerticalDivider(
-                                height: 28.0,
-                                width: 1.0,
-                                color: kPrimaryColor,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.verified_user,
-                                    color: snapshot.data.isVerified
-                                        ? Colors.blue
-                                        : Colors.grey,
-                                    size: 28.0,
-                                  ),
-                                  Text(snapshot.data.isVerified
-                                      ? 'Verified'
-                                      : 'Not Verified'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: StatsWidget(
+                        successrate: kPercentage.toDouble(),
+                        rating: kExampleRatingText,
+                        isVerified: snapshot.data.isVerified,
                       ),
                     ),
                     //EXTRA OPTIONS
@@ -259,6 +214,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               IconButtonWithText(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) => Bids(userId: widget.userId,),
+                                    ),
+                                  );
+                                },
                                 text: 'My Bids',
                                 icon: Icons.attach_money,
                                 materialColor: kMyBidsColor,
