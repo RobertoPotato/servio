@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 //BASE URL
 //TODO change to https after certificates have been configured
-const kBaseUrl = "http://192.168.100.39:3000/api";
+const kInUrl = "http://176.58.97.72:3000/api";
+const kLocUrl = "http://192.168.100.39:3000/api";
+
+const kBaseUrl = kInUrl;
 
 //STATIC USER ID
-const kUserId = 100; //Use 99 as a test case for user without any reviews
+const kUserId = 90; //Use 99 as a test case for user without any reviews
 const kNetworkImage = "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
 
 //COLORS
@@ -32,8 +35,7 @@ const kBids = "Bids";
 const kInformation = "Info";
 const kLoremIpsum =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-const kLoremIpsumShort =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+const kLoremIpsumShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 const kExampleRatingText = 4.5;
 const kExampleBidPrice = 999.0;
 const kPercentage = 99;

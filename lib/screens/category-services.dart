@@ -73,7 +73,7 @@ class _CategoryServicesState extends State<CategoryServices> {
 
   Future<Service> fetchServices() async {
     var url =
-        'http://192.168.100.39:3000/api/v1/services/address/${widget.mId}';
+        '$kBaseUrl/v1/services/address/${widget.mId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
