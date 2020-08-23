@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const kInUrl = "http://176.58.97.72:3000/api";
 const kLocUrl = "http://192.168.100.39:3000/api";
 
-const kBaseUrl = kInUrl;
+const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
 const kUserId = 90; //Use 99 as a test case for user without any reviews

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class RequestServicePage extends StatefulWidget {
   static String id = 'requestService';
@@ -8,32 +10,38 @@ class RequestServicePage extends StatefulWidget {
   _RequestServicePageState createState() => _RequestServicePageState();
 }
 
+class Service {
+  final int id;
+  final String title;
+  Service({@required this.id, @required this.title});
+}
+
 class _RequestServicePageState extends State<RequestServicePage> {
-  PageController _pageController;
   var data;
   bool autoValidate = true;
   bool readOnly = false;
-  bool showSegmentedControl = true;
+  var initialStatusId = 1;
+  File imageFile;
+
+  Future _getImageGallery() async {
+    PickedFile pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    this.setState(() {
+      imageFile = File(pickedFile.path);
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future _getImageCamera() async {
+    PickedFile pickedFile =
+        await ImagePicker().getImage(source: ImageSource.camera);
+    this.setState(() {
+      imageFile = File(pickedFile.path);
+    });
+    Navigator.of(context).pop();
+  }
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  /*todo uncomment if needed:
-  final GlobalKey<FormFieldState> _specifyTextFieldKey =
-      GlobalKey<FormFieldState>();
-
-  ValueChanged _onChanged = (val) => print(val);
-  */
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -57,6 +65,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(imageFile);
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
@@ -67,194 +76,155 @@ class _RequestServicePageState extends State<RequestServicePage> {
           child: Center(
             child: FormBuilder(
               key: _fbKey,
-              initialValue: {
-                'post_date': DateTime.now(),
-              },
-              child: PageView(
-                controller: _pageController,
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    FormBuilderTextField(
+                      attribute: 'title',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Title',
+                        labelText: 'Title',
+                        prefixIcon: Icon(Icons.work),
+                      ),
+                      validators: [FormBuilderValidators.required()],
+                    ),
+                    FormBuilderDropdown(
+                      attribute: 'categoryId',
+                      decoration: InputDecoration().copyWith(
+                        prefixIcon: Icon(Icons.category),
+                      ),
+                      hint: Text('Select Service Category'),
+                      validators: [FormBuilderValidators.required()],
+                      items: [
+                        Service(id: 1, title: 'Service one'),
+                        Service(id: 2, title: 'Service two'),
+                        Service(id: 3, title: 'Service three'),
+                        Service(id: 4, title: 'Service four'),
+                        Service(id: 5, title: 'Service five'),
+                      ]
+                          .map((service) => DropdownMenuItem(
+                                child: Text(service.title),
+                                value: service.id,
+                              ))
+                          .toList(),
+                    ),
+                    FormBuilderTextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 7,
+                      attribute: 'description',
+                      decoration: InputDecoration().copyWith(
+                        //hasFloatingPlaceholder: false,
+                        labelText: 'Description',
+                        hintText: 'Describe the service',
+                        prefixIcon: Icon(Icons.note_add),
+                      ),
+                      validators: [FormBuilderValidators.required()],
+                    ),
+                    FormBuilderDropdown(
+                      attribute: 'terms',
+                      decoration: InputDecoration().copyWith(
+                        prefixIcon: Icon(Icons.supervisor_account),
+                      ),
+                      hint: Text('Terms'),
+                      validators: [FormBuilderValidators.required()],
+                      items: ['Part Time', 'Full time', 'Unspecified']
+                          .map((service) => DropdownMenuItem(
+                                child: Text('$service'),
+                                value: service,
+                              ))
+                          .toList(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderTextField(
-                            attribute: 'service_title',
-                            decoration: InputDecoration().copyWith(
-                              hintText: 'Title',
-                              labelText: 'Title',
-                              prefixIcon: Icon(Icons.work),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                right: kMainHorizontalPadding / 2),
+                            child: FormBuilderTextField(
+                              onFieldSubmitted: (str) {
+                                Navigator.pop(context);
+                              },
+                              keyboardType: TextInputType.number,
+                              attribute: 'budgetMin',
+                              decoration: InputDecoration().copyWith(
+                                labelText: 'Budget From',
+                                prefixIcon: Icon(Icons.payment),
+                              ),
+                              validators: [FormBuilderValidators.required()],
                             ),
-                            validators: [FormBuilderValidators.required()],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderDropdown(
-                            attribute: 'service_category',
-                            decoration: InputDecoration().copyWith(
-                              prefixIcon: Icon(Icons.category),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: kMainHorizontalPadding / 2),
+                            child: FormBuilderTextField(
+                              keyboardType: TextInputType.number,
+                              attribute: 'budgetMax',
+                              decoration: InputDecoration().copyWith(
+                                labelText: 'Budget To',
+                              ),
+                              validators: [FormBuilderValidators.required()],
                             ),
-                            hint: Text('Select Service Category'),
-                            validators: [FormBuilderValidators.required()],
-                            items: [
-                              'Service 1',
-                              'Service 2',
-                              'Service 3'
-                            ] //todo these will be loaded from the services table in the db
-                                .map((service) => DropdownMenuItem(
-                                      child: Text('$service'),
-                                      value: service,
-                                    ))
-                                .toList(),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderTextField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 7,
-                            attribute: 'service_description',
-                            decoration: InputDecoration().copyWith(
-                              //hasFloatingPlaceholder: false,
-                              labelText: 'Description',
-                              hintText: 'Describe the service',
-                              prefixIcon: Icon(Icons.note_add),
-                            ),
-                            validators: [FormBuilderValidators.required()],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: FormBuilderDropdown(
-                            attribute: 'service_type',
-                            decoration: InputDecoration().copyWith(
-                              prefixIcon: Icon(Icons.supervisor_account),
-                            ),
-                            hint: Text('Terms'),
-                            validators: [FormBuilderValidators.required()],
-                            items: ['Part Time', 'Full time', 'Unspecified']
-                                .map((service) => DropdownMenuItem(
-                                      child: Text('$service'),
-                                      value: service,
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: kMainHorizontalPadding / 2),
-                                  child: FormBuilderTextField(
-                                    keyboardType: TextInputType.number,
-                                    attribute: 'service_duration',
-                                    decoration: InputDecoration().copyWith(
-                                      labelText: 'Duration',
-                                      hintText: '2/4/7',
-                                      prefixIcon: Icon(Icons.access_time),
-                                    ),
-                                    validators: [
-                                      FormBuilderValidators.required()
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: kMainHorizontalPadding / 2),
-                                  child: FormBuilderDropdown(
-                                    attribute: 'service_duration_time',
-                                    decoration: InputDecoration().copyWith(
-                                    ),
-                                    hint: Text('Select Period'),
-                                    validators: [
-                                      FormBuilderValidators.required()
-                                    ],
-                                    items: ['Hours', 'Days', 'Weeks', 'Months']
-                                        .map((service) => DropdownMenuItem(
-                                              child: Text('$service'),
-                                              value: service,
-                                            ))
-                                        .toList(),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: kMainHorizontalPadding / 2),
-                                  child: FormBuilderTextField(
-                                    keyboardType: TextInputType.number,
-                                    attribute: 'price_min',
-                                    decoration: InputDecoration().copyWith(
-                                      labelText: 'Budget From',
-                                      prefixIcon: Icon(Icons.payment),
-                                    ),
-                                    validators: [
-                                      FormBuilderValidators.required()
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Text('To'),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: kMainHorizontalPadding / 2),
-                                  child: FormBuilderTextField(
-                                    keyboardType: TextInputType.number,
-                                    attribute: 'price_max',
-                                    decoration: InputDecoration().copyWith(
-                                      labelText: 'Budget To',
-                                    ),
-                                    validators: [
-                                      FormBuilderValidators.required()
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          'Upload Some Images',
-                          style: kHeadingTextStyle.copyWith(
-                              color: Colors.grey.shade500),
-                        ),
-                        FormBuilderImagePicker(
-                          attribute: 'service_image',
-                          decoration: InputDecoration(border: InputBorder.none),
-                          iconColor: kPrimaryColor,
-                          validators: [
-                            FormBuilderValidators.required(),
-                            (images) {
-                              if (images.length < 2) {
-                                return "Two or more images required";
-                              }
-                              return null;
-                            }
-                          ],
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    Text(
+                      "Service Image",
+                      style: kHeadingTextStyle.copyWith(
+                          color: Colors.grey.shade500),
+                    ),
+                    imageFile == null
+                        ? Text(
+                            'Upload One Image',
+                            style: kHeadingTextStyle.copyWith(
+                                color: Colors.grey.shade500),
+                          )
+                        : Image.file(
+                            imageFile,
+                            width: 150.0,
+                            height: 150.0,
+                            fit: BoxFit.cover,
+                          ),
+                    FlatButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: 120.0,
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    FlatButton(
+                                      onPressed: () {
+                                        if (imageFile == null) {
+                                          _getImageGallery();
+                                        }
+                                      },
+                                      child: Text("Select from gallery"),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () {
+                                        if (imageFile == null) {
+                                          _getImageCamera();
+                                        }
+                                      },
+                                      child: Text("Launch camera"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: Text('Select Image'),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

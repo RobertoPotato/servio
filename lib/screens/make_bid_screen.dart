@@ -26,7 +26,7 @@ class MakeBidScreen extends StatefulWidget {
 
 Future<Bid> createBid(double amount, String coverLetter, bool canTravel,
     String availability, String currency, int userId, int serviceId) async {
-  final String url = "http://192.168.100.39:3000/api/v1/bids/";
+  final String url = "$kBaseUrl/v1/bids/";
 
   final response = await http.post(Uri.encodeFull(url),
       body: json.encode({

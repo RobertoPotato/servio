@@ -33,7 +33,7 @@ class _ListOfReviewsState extends State<ListOfReviews> {
             reviewerName:
                 "${widget.reviews[index]['User']['firstName']} ${widget.reviews[index]['User']['lastName']}",
             review: widget.reviews[index]["content"],
-            rating: widget.reviews[index]["stars"],
+            rating: widget.reviews[index]["stars"].toDouble(),
           );
         },
       ),
