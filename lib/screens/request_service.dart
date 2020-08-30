@@ -20,7 +20,7 @@ class Category {
   Category({@required this.id, @required this.title});
 }
 
-Future<Service> createService(
+Future<String> createService(
     String title,
     String description,
     double budgetMin,
@@ -29,10 +29,24 @@ Future<Service> createService(
     String imageUrl,
     int userId,
     int categoryId,
-    int statusId) async {
+    int statusId,
+    filename) async {
   final String url = "$kBaseUrl/v1/services";
-  final response = await http.post(Uri.encodeFull(url),
-      body: json.encode({
+  final request = await http.MultipartRequest('POST', Uri.parse(url));
+  request.files.add(await http.MultipartFile.fromPath('imageUrl', filename));
+  request.fields['title'] = title;
+  request.fields['description'] = description;
+  request.fields['budgetMin'] = budgetMin.toString();
+  request.fields['budgetMax'] = budgetMax.toString();
+  request.fields['terms'] = terms;
+  request.fields['userId'] = userId.toString();
+  request.fields['categoryId'] = categoryId.toString();
+  request.fields['statusId'] = statusId.toString();
+
+  var res = await request.send();
+  return res.reasonPhrase;
+
+  /*final fields = {
         "title": title,
         "description": description,
         "budgetMin": budgetMin,
@@ -42,18 +56,17 @@ Future<Service> createService(
         "userId": userId,
         "categoryId": categoryId,
         "statusId": statusId
-      }),
-      headers: {
+      };*/
+  /*headers: {
         "accept": "application/json",
         "content-type": "application/json"
-      });
+      });*/
 
-  if (response.statusCode == 201) {
-    final String responseString = response.body;
-    return serviceFromJson(responseString);
+  /*if (request.statusCode == 201) {
+    return request.reasonPhrase;
   } else {
     return null;
-  }
+  }*/
 }
 
 class _RequestServicePageState extends State<RequestServicePage> {
@@ -297,7 +310,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
               final categoryId = 2;
               final statusId = 2;
 
-              final Service service = await createService(
+              await createService(
                   title,
                   description,
                   budgetMin.toDouble(),
@@ -306,7 +319,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                   imageUrl,
                   userId,
                   categoryId,
-                  statusId);
+                  statusId,
+                  imageFile.path); //Path of the image to upload
             }
           },
         ),
