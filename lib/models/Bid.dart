@@ -23,7 +23,7 @@ class Bid {
   });
 
   int id;
-  int amount;
+  double amount;
   String coverLetter;
   bool canTravel;
   String availability;

@@ -3,7 +3,7 @@ import 'package:servio/constants.dart';
 
 class BidCard extends StatelessWidget {
   final String position;
-  final int amount;
+  final double amount;
   final String userName;
   final String description;
   final String currency;

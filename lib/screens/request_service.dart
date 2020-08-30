@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:servio/models/Service.dart';
+import 'package:http/http.dart' as http;
 
 class RequestServicePage extends StatefulWidget {
   static String id = 'requestService';
@@ -10,10 +14,46 @@ class RequestServicePage extends StatefulWidget {
   _RequestServicePageState createState() => _RequestServicePageState();
 }
 
-class Service {
+class Category {
   final int id;
   final String title;
-  Service({@required this.id, @required this.title});
+  Category({@required this.id, @required this.title});
+}
+
+Future<Service> createService(
+    String title,
+    String description,
+    double budgetMin,
+    double budgetMax,
+    String terms,
+    String imageUrl,
+    int userId,
+    int categoryId,
+    int statusId) async {
+  final String url = "$kBaseUrl/v1/services";
+  final response = await http.post(Uri.encodeFull(url),
+      body: json.encode({
+        "title": title,
+        "description": description,
+        "budgetMin": budgetMin,
+        "budgetMax": budgetMax,
+        "terms": terms,
+        "imageUrl": imageUrl,
+        "userId": userId,
+        "categoryId": categoryId,
+        "statusId": statusId
+      }),
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      });
+
+  if (response.statusCode == 201) {
+    final String responseString = response.body;
+    return serviceFromJson(responseString);
+  } else {
+    return null;
+  }
 }
 
 class _RequestServicePageState extends State<RequestServicePage> {
@@ -97,11 +137,11 @@ class _RequestServicePageState extends State<RequestServicePage> {
                       hint: Text('Select Service Category'),
                       validators: [FormBuilderValidators.required()],
                       items: [
-                        Service(id: 1, title: 'Service one'),
-                        Service(id: 2, title: 'Service two'),
-                        Service(id: 3, title: 'Service three'),
-                        Service(id: 4, title: 'Service four'),
-                        Service(id: 5, title: 'Service five'),
+                        Category(id: 1, title: 'Service one'),
+                        Category(id: 2, title: 'Service two'),
+                        Category(id: 3, title: 'Service three'),
+                        Category(id: 4, title: 'Service four'),
+                        Category(id: 5, title: 'Service five'),
                       ]
                           .map((service) => DropdownMenuItem(
                                 child: Text(service.title),
@@ -178,51 +218,61 @@ class _RequestServicePageState extends State<RequestServicePage> {
                           color: Colors.grey.shade500),
                     ),
                     imageFile == null
-                        ? Text(
-                            'Upload One Image',
-                            style: kHeadingTextStyle.copyWith(
-                                color: Colors.grey.shade500),
-                          )
+                        ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      height: 100.0,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          FlatButton(
+                                            onPressed: () {
+                                              if (imageFile == null) {
+                                                _getImageGallery();
+                                              }
+                                            },
+                                            child: Text("Select from gallery"),
+                                          ),
+                                          FlatButton(
+                                            onPressed: () {
+                                              if (imageFile == null) {
+                                                _getImageCamera();
+                                              }
+                                            },
+                                            child: Text("Launch camera"),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            },
+                            child: Icon(
+                              Icons.add_a_photo,
+                              size: 150.0,
+                              color: kPrimaryColor,
+                            ))
                         : Image.file(
                             imageFile,
                             width: 150.0,
                             height: 150.0,
                             fit: BoxFit.cover,
                           ),
-                    FlatButton(
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                height: 120.0,
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    FlatButton(
-                                      onPressed: () {
-                                        if (imageFile == null) {
-                                          _getImageGallery();
-                                        }
-                                      },
-                                      child: Text("Select from gallery"),
-                                    ),
-                                    FlatButton(
-                                      onPressed: () {
-                                        if (imageFile == null) {
-                                          _getImageCamera();
-                                        }
-                                      },
-                                      child: Text("Launch camera"),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            });
-                      },
-                      child: Text('Select Image'),
-                    )
+                    //Remove the selected image
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            imageFile = null;
+                          });
+                        },
+                        child: Icon(
+                          Icons.close,
+                          size: 24.0,
+                          color: kPrimaryColor,
+                        ))
                   ],
                 ),
               ),
@@ -234,9 +284,29 @@ class _RequestServicePageState extends State<RequestServicePage> {
             Icons.send,
             size: 28,
           ),
-          onPressed: () {
+          onPressed: () async {
             if (_fbKey.currentState.saveAndValidate()) {
-              print(_fbKey.currentState.value);
+              final formData = _fbKey.currentState.value;
+              final title = formData['title'];
+              final description = formData['description'];
+              final budgetMin = double.parse(formData['budgetMin']);
+              final budgetMax = double.parse(formData['budgetMax']);
+              final terms = formData['terms'];
+              final imageUrl = kNetworkImage /*formData['imageUrl']*/;
+              final userId = kUserId;
+              final categoryId = 2;
+              final statusId = 2;
+
+              final Service service = await createService(
+                  title,
+                  description,
+                  budgetMin.toDouble(),
+                  budgetMax.toDouble(),
+                  terms,
+                  imageUrl,
+                  userId,
+                  categoryId,
+                  statusId);
             }
           },
         ),

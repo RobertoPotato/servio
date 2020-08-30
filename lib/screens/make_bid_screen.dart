@@ -27,7 +27,6 @@ class MakeBidScreen extends StatefulWidget {
 Future<Bid> createBid(double amount, String coverLetter, bool canTravel,
     String availability, String currency, int userId, int serviceId) async {
   final String url = "$kBaseUrl/v1/bids/";
-
   final response = await http.post(Uri.encodeFull(url),
       body: json.encode({
         "amount": amount,
@@ -46,7 +45,6 @@ Future<Bid> createBid(double amount, String coverLetter, bool canTravel,
 
   if (response.statusCode == 201) {
     final String responseString = response.body;
-
     return bidFromJson(responseString);
   } else {
     return null;
@@ -201,13 +199,14 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                         final String coverLetter = formData['coverLetter'];
                         final bool canTravel = formData['canTravel'];
                         final String availability = formData['availability'];
-                        final String currency = formData['currency'];
+                        final String currency =
+                            kExampleCurrency /*TODO Uncomment This to avoid using default -> formData['currency']*/;
                         final int userId = widget.userId;
                         final int serviceId = widget.serviceId;
 
                         //createBid();
                         final Bid bid = await createBid(
-                            amount,
+                            amount.toDouble(),
                             coverLetter,
                             canTravel,
                             availability,

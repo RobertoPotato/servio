@@ -19,7 +19,7 @@ class BidWithServiceAndStatus {
     this.service,
   });
 
-  int amount;
+  double amount;
   String coverLetter;
   bool canTravel;
   String availability;
@@ -28,7 +28,7 @@ class BidWithServiceAndStatus {
   Service service;
 
   factory BidWithServiceAndStatus.fromJson(Map<String, dynamic> json) => BidWithServiceAndStatus(
-    amount: json["amount"],
+    amount: json["amount"].toDouble(),
     coverLetter: json["coverLetter"],
     canTravel: json["canTravel"],
     availability: json["availability"],

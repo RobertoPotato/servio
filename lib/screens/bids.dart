@@ -74,7 +74,7 @@ class _BidsState extends State<Bids> {
                 },
                 child: BidCard(
                   currency: currentBidIndex['currency'],
-                  amount: currentBidIndex['amount'],
+                  amount: currentBidIndex['amount'].toDouble(),
                   userName: "My Bid",
                   description: currentBidIndex['coverLetter'],
                   position: "${index + 1}/${bids.length}",

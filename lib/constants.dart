@@ -7,7 +7,7 @@ const kLocUrl = "http://192.168.100.39:3000/api";
 const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
-const kUserId = 90; //Use 99 as a test case for user without any reviews
+const kUserId = 72;
 const kNetworkImage = "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
 
 //COLORS
@@ -29,7 +29,7 @@ const kMySettingsColor = Color(0xFFF39402);
 const kStatusExplanation = "This is the current status of the service. It may change without notice";
 const kTravelPromptExplanation = "This is important in case the service would require you to travel";
 
-
+const kExampleCurrency = 'KES';
 const kJobs = "Jobs";
 const kBids = "Bids";
 const kInformation = "Info";

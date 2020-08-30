@@ -70,7 +70,7 @@ class _JobDetailsState extends State<JobDetails> {
               Image.network(
                   widget.imageUrl,
                   fit: BoxFit
-                      .cover), // TODO replace the image link with => widget.imageUrl
+                      .cover),
               MaterialText(
                 text: "Title: ${widget.title}", //title
                 fontStyle: kMainBlackTextStyle,
@@ -109,7 +109,7 @@ class _JobDetailsState extends State<JobDetails> {
                               serviceId: 1,
                               serviceCategory: "${widget.categoryTitle}",
                               serviceTitle: "${widget.title}",
-                              userId: 1, //TODO Implement function to get my user id (Currently logged-in user)
+                              userId: kUserId, //TODO Implement function to get my user id (Currently logged-in user)
                             )));
                           },
                         ),

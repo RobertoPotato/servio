@@ -8,9 +8,11 @@ import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
+import 'package:servio/models/ReviewWithUser.dart';
 import 'dart:convert';
 import 'package:servio/screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
+import 'package:servio/components/list_of_reviews.dart';
 
 class BidDetails extends StatefulWidget {
   final double amount;
@@ -42,12 +44,15 @@ class _BidDetailsState extends State<BidDetails> {
   var isFavorite = false;
 
   Future<ProfileWithTierAndRole> futureProfile;
+  Future<ReviewWithUser> futureReviews;
   List profile;
+  List reviews;
 
   @override
   void initState() {
     super.initState();
     futureProfile = fetchProfile();
+    futureReviews = fetchReviews();
   }
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
@@ -63,6 +68,25 @@ class _BidDetailsState extends State<BidDetails> {
       return ProfileWithTierAndRole.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load Profile With Tier and Roles');
+    }
+  }
+
+  Future<ReviewWithUser> fetchReviews() async {
+    var url = "$kBaseUrl/v1/reviews/foruser/${widget.userId}";
+
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      reviews = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return ReviewWithUser.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load Reviews with Users');
     }
   }
 
@@ -189,35 +213,29 @@ class _BidDetailsState extends State<BidDetails> {
                     ),
 
                     //FEW REVIEWS
-                    Container(
-                      height: 160.0,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: kMainHorizontalPadding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          ReviewCard(
-                            reviewerName: 'John Doe',
-                            review: kLoremIpsum,
-                            rating: 4.5,
+                          Text(
+                            'Reviews',
+                            style: kHeadingTextStyle,
                           ),
-                          ReviewCard(
-                            reviewerName: 'Jane Doe',
-                            review: kLoremIpsumShort,
-                            rating: 2.0,
-                          ),
-                          ReviewCard(
-                            reviewerName: 'Jack Doe',
-                            review: kLoremIpsum,
-                            rating: 4.5,
-                          ),
-                          ReviewCard(
-                            reviewerName: 'Joan Doe',
-                            review: kLoremIpsumShort,
-                            rating: 4.5,
+                          Text(
+                            'See All',
+                            style: kHeadingSubTextStyle,
                           ),
                         ],
                       ),
                     ),
-
+                    //REVIEWS
+                    reviews.length == null || reviews.length == 0
+                        ? Center(child: MaterialText(text: "No reviews to show", color: Colors.white, fontStyle: kHeadingTextStyle,))
+                        : ListOfReviews(
+                      reviews: reviews,
+                    ),
                     //ACTIONS
                     Padding(
                       padding: const EdgeInsets.symmetric(

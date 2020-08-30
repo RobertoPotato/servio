@@ -127,22 +127,6 @@ class UserProfile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButtonWithText(
-                  text: "Call",
-                  icon: Icons.call,
-                  materialColor: kMyBidsColor,
-                  onTap: () {
-                    print("Call User");
-                  },
-                ),
-                IconButtonWithText(
-                  text: "Chat",
-                  icon: Icons.chat,
-                  materialColor: kAccentColor,
-                  onTap: () {
-                    print("Message User");
-                  },
-                ),
-                IconButtonWithText(
                   text: "Done",
                   icon: Icons.close,
                   materialColor: kRedAlert,

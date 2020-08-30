@@ -80,7 +80,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                 },
                 child: BidCard(
                   currency: bidsWithUserNames[index]['currency'],
-                  amount: bidsWithUserNames[index]['amount'],
+                  amount: bidsWithUserNames[index]['amount'].toDouble(),
                   userName:
                       "${bidsWithUserNames[index]['User']['firstName']} ${bidsWithUserNames[index]['User']['lastName']} ",
                   description: bidsWithUserNames[index]['coverLetter'],
