@@ -3,6 +3,7 @@ import 'package:servio/constants.dart';
 import 'package:servio/models/Job.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:servio/components/job_card.dart';
 
 //find all jobs for which the current logged in user is the client
 //filter them by status ie Ongoing/active, pending and complete
@@ -55,11 +56,22 @@ class _CreatedJobsState extends State<CreatedJobs> {
         body: ListView.builder(
             itemCount: jobs == null ? 0 : jobs.length,
             itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-                  print("Job item clicked");
-                },
-                child: Text('This is job $index i posted'),
+              var jobStart = jobs[index]['createdAt'];
+              var client = jobs[index]['client'];
+              var agent = jobs[index]['agent'];
+              var bid = jobs[index]['Bid'];
+              var service = jobs[index]['Service'];
+              var status = jobs[index]['Status'];
+
+              //In this page, the user assumes the role of the client
+              return JobCard(
+                userIsClient: true,
+                client: client,
+                agent: agent,
+                bid: bid,
+                status: status,
+                jobStart: jobStart,
+                service: service,
               );
             }),
       ),
