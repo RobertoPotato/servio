@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+import 'package:servio/constants.dart';
+import 'package:servio/models/Job.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+//find all jobs for which the current logged in user is the agent
+//filter them by status ie Ongoing/active, pending and complete etc
+//default filter will be the active one. Other filters can be selected when needed.
+class AwardedJobs extends StatefulWidget {
+  final int loggedInUserId;
+
+  const AwardedJobs({@required this.loggedInUserId});
+  @override
+  _AwardedJobsState createState() => _AwardedJobsState();
+}
+
+class _AwardedJobsState extends State<AwardedJobs> {
+  Future<Job> futureJobs;
+  List jobs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureJobs = fetchJobs();
+  }
+
+  Future<Job> fetchJobs() async {
+    var url = "$kBaseUrl/v1/jobs/foragent/${widget.loggedInUserId}";
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      jobs = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return Job.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load my jobs');
+    }
+  }
+
+  //for budget conversions use the budget function located in constants
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Awarded to me...'),
+        ),
+        body: ListView.builder(
+            itemCount: jobs == null ? 0 : jobs.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  print("Job item clicked");
+                },
+                child: Text('This is job $index i applied'),
+              );
+            }),
+      ),
+    );
+  }
+}

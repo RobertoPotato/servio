@@ -7,6 +7,7 @@ import 'package:servio/screens/profile.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/categories.dart';
 import 'package:servio/screens/bids.dart';
+import 'package:servio/screens/job_screens/job_parent_screen.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -44,12 +45,10 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   //images/Alien-Butt.gif
                   child: Container(
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("images/Alien-Butt.gif"),
-                        fit: BoxFit.cover
-                      ),
-                      borderRadius: BorderRadius.circular(10.0)
-                    ),
+                        image: DecorationImage(
+                            image: AssetImage("images/Alien-Butt.gif"),
+                            fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(10.0)),
                   ),
                 ),
               ),
@@ -114,7 +113,21 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => Bids(userId: kUserId,),
+                      builder: (BuildContext context) => Bids(
+                        userId: kUserId,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('Jobs'),
+                leading: Icon(Icons.work, color: Colors.purple),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => JobParentScreen(),
                     ),
                   );
                 },

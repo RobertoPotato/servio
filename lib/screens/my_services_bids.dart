@@ -65,6 +65,8 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => BidDetails(
+                        serviceId: widget.serviceId,
+                        bidId: bidsDataArr['id'],
                         userId: bidsDataArr['userId'],
                         amount: bidsDataArr['amount'].toDouble(),
                         coverLetter: bidsDataArr['coverLetter'],

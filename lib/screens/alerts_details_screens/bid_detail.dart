@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
-import 'package:servio/components/review_card.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
@@ -13,16 +12,22 @@ import 'dart:convert';
 import 'package:servio/screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
+import 'package:servio/screens/alerts_details_screens/accept_bid.dart';
 
 class BidDetails extends StatefulWidget {
+  //TODO will get userId later from sharedpreferences. For now, use a static id
+
   final double amount;
   final String coverLetter;
   final bool canTravel;
   final String availability;
   final String currency;
+  //this is the agent's id. Client's ID will be loaded from SP
   final int userId;
   final String updatedAt;
   final String userName;
+  final int serviceId;
+  final int bidId;
 
   const BidDetails(
       {@required this.amount,
@@ -32,7 +37,9 @@ class BidDetails extends StatefulWidget {
       @required this.currency,
       @required this.userId,
       @required this.updatedAt,
-      @required this.userName});
+      @required this.userName,
+      @required this.serviceId,
+      @required this.bidId});
 
   @override
   _BidDetailsState createState() => _BidDetailsState();
@@ -92,6 +99,12 @@ class _BidDetailsState extends State<BidDetails> {
 
   @override
   Widget build(BuildContext context) {
+    _showSnack(BuildContext context, String text) {
+      final snackBar = SnackBar(
+        content: Text(text),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<ProfileWithTierAndRole>(
@@ -232,10 +245,15 @@ class _BidDetailsState extends State<BidDetails> {
                     ),
                     //REVIEWS
                     reviews.length == null || reviews.length == 0
-                        ? Center(child: MaterialText(text: "No reviews to show", color: Colors.white, fontStyle: kHeadingTextStyle,))
+                        ? Center(
+                            child: MaterialText(
+                            text: "No reviews to show",
+                            color: Colors.white,
+                            fontStyle: kHeadingTextStyle,
+                          ))
                         : ListOfReviews(
-                      reviews: reviews,
-                    ),
+                            reviews: reviews,
+                          ),
                     //ACTIONS
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -251,6 +269,23 @@ class _BidDetailsState extends State<BidDetails> {
                                 text: 'Accept',
                                 icon: Icons.sentiment_very_satisfied,
                                 materialColor: kMyBidsColor,
+                                onTap: () async {
+                                  try {
+                                     var acceptUserBid = await acceptBid(
+                                      PostJob(
+                                          kUserId,
+                                          widget.userId,
+                                          widget.bidId,
+                                          widget.serviceId,
+                                          kStatusId),
+                                    );
+
+                                     _showSnack(context, acceptUserBid);
+                                  }
+                                  catch (e){
+                                    print(e);
+                                  }
+                                },
                               ),
                               IconButtonWithText(
                                 onTap: () {
@@ -292,7 +327,7 @@ class _BidDetailsState extends State<BidDetails> {
                                 materialColor: kMyJobsColor,
                               ),
                               IconButtonWithText(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.pop(context);
                                 },
                                 text: 'Decline',
@@ -309,7 +344,10 @@ class _BidDetailsState extends State<BidDetails> {
               );
             } else if (snapshot.hasError) {
               //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
-              return Error(message: "Unable to find what you're looking for", errorImage: "images/undraw_page_not_found.png",);
+              return Error(
+                message: "Unable to find what you're looking for",
+                errorImage: "images/undraw_page_not_found.png",
+              );
             }
             return Center(
               child: CircularProgressIndicator(),

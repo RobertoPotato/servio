@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 //TODO change to https after certificates have been configured
 const kInUrl = "http://176.58.97.72:3000/api";
 const kLocUrl = "http://192.168.100.39:3000/api";
+const kSourceIp = "http://192.168.100.39";
+const kPort = 3000;
+
+//TODO Change as needed these and add them to the image url data
+const uploadedImageUrlBase = "$kSourceIp:$kPort";
 
 const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
 const kUserId = 72;
 const kNetworkImage = "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
+const kStatusId = 1;
 
 //COLORS
 //primary color
@@ -102,6 +108,14 @@ const kTestTextStyleBlack = TextStyle(
   fontSize: 20.0,
   letterSpacing: 1.2,
 );
+
+String budget(budgetMin, budgetMax) {
+    if (budgetMin > budgetMax) {
+      return "$budgetMax - $budgetMin";
+    } else {
+      return "$budgetMin - $budgetMax";
+    }
+  }
 
 int hexColConvert(String color) {
   String text = color; //get the color

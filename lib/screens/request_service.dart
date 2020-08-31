@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:servio/models/Service.dart';
 import 'package:http/http.dart' as http;
 
 class RequestServicePage extends StatefulWidget {
@@ -32,7 +29,7 @@ Future<String> createService(
     int statusId,
     filename) async {
   final String url = "$kBaseUrl/v1/services";
-  final request = await http.MultipartRequest('POST', Uri.parse(url));
+  final request = http.MultipartRequest('POST', Uri.parse(url)); //await http.MultipartRequest('POST', Uri.parse(url));
   request.files.add(await http.MultipartFile.fromPath('imageUrl', filename));
   request.fields['title'] = title;
   request.fields['description'] = description;
@@ -45,28 +42,6 @@ Future<String> createService(
 
   var res = await request.send();
   return res.reasonPhrase;
-
-  /*final fields = {
-        "title": title,
-        "description": description,
-        "budgetMin": budgetMin,
-        "budgetMax": budgetMax,
-        "terms": terms,
-        "imageUrl": imageUrl,
-        "userId": userId,
-        "categoryId": categoryId,
-        "statusId": statusId
-      };*/
-  /*headers: {
-        "accept": "application/json",
-        "content-type": "application/json"
-      });*/
-
-  /*if (request.statusCode == 201) {
-    return request.reasonPhrase;
-  } else {
-    return null;
-  }*/
 }
 
 class _RequestServicePageState extends State<RequestServicePage> {

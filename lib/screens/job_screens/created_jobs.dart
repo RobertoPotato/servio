@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:servio/constants.dart';
+import 'package:servio/models/Job.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+//find all jobs for which the current logged in user is the client
+//filter them by status ie Ongoing/active, pending and complete
+//default filter will be the active one. Others can be selected when needed.
+class CreatedJobs extends StatefulWidget {
+  final int loggedInUserId;
+
+  const CreatedJobs({@required this.loggedInUserId});
+
+  @override
+  _CreatedJobsState createState() => _CreatedJobsState();
+}
+
+class _CreatedJobsState extends State<CreatedJobs> {
+  Future<Job> futureJobs;
+  List jobs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureJobs = fetchJobs();
+  }
+
+  Future<Job> fetchJobs() async {
+    var url = "$kBaseUrl/v1/jobs/forclient/${widget.loggedInUserId}";
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      jobs = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return Job.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load my jobs');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Posted by me...'),
+        ),
+        body: ListView.builder(
+            itemCount: jobs == null ? 0 : jobs.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  print("Job item clicked");
+                },
+                child: Text('This is job $index i posted'),
+              );
+            }),
+      ),
+    );
+  }
+}
