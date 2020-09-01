@@ -21,7 +21,7 @@ class CardWithTitleAndText extends StatelessWidget {
               ),
               Text(
                 '$text',
-                style: kMainBlackTextStyle,
+                style: kMainBlackTextStyle.copyWith(color: Colors.grey[700], fontWeight: FontWeight.normal),
               ),
             ],
           ),

@@ -4,7 +4,6 @@ import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
-import 'package:servio/components/my_vertical_divider.dart';
 import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/models/ReviewWithUser.dart';
@@ -13,6 +12,7 @@ import 'package:servio/screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/alerts_details_screens/accept_bid.dart';
+import 'package:servio/components/StatsWidget.dart';
 
 class BidDetails extends StatefulWidget {
   //TODO will get userId later from sharedpreferences. For now, use a static id
@@ -105,6 +105,7 @@ class _BidDetailsState extends State<BidDetails> {
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<ProfileWithTierAndRole>(
@@ -172,57 +173,10 @@ class _BidDetailsState extends State<BidDetails> {
                     ),
 
                     //BIDDER'S STATS
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kMainHorizontalPadding,
-                      ),
-                      child: Card(
-                        elevation: kElevationValue / 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text(kExampleRatingText.toString()),
-                                  Text('Rating')
-                                ],
-                              ),
-                              MyVerticalDivider(
-                                height: 28.0,
-                                width: 1.0,
-                                color: kPrimaryColor,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Text('${kPercentage.toString()}%'),
-                                  Text('Success rate')
-                                ],
-                              ),
-                              MyVerticalDivider(
-                                height: 28.0,
-                                width: 1.0,
-                                color: kPrimaryColor,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.verified_user,
-                                    color: snapshot.data.isVerified
-                                        ? Colors.blue
-                                        : Colors.grey,
-                                    size: 28.0,
-                                  ),
-                                  Text(snapshot.data.isVerified
-                                      ? 'Verified'
-                                      : 'Not Verified'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    StatsWidget(
+                      rating: kExampleRatingText,
+                      isVerified: snapshot.data.isVerified,
+                      successrate: 99,
                     ),
 
                     //FEW REVIEWS
@@ -271,7 +225,7 @@ class _BidDetailsState extends State<BidDetails> {
                                 materialColor: kMyBidsColor,
                                 onTap: () async {
                                   try {
-                                     var acceptUserBid = await acceptBid(
+                                    var acceptUserBid = await acceptBid(
                                       PostJob(
                                           kUserId,
                                           widget.userId,
@@ -280,9 +234,8 @@ class _BidDetailsState extends State<BidDetails> {
                                           kStatusId),
                                     );
 
-                                     _showSnack(context, acceptUserBid);
-                                  }
-                                  catch (e){
+                                    _showSnack(context, acceptUserBid);
+                                  } catch (e) {
                                     print(e);
                                   }
                                 },
