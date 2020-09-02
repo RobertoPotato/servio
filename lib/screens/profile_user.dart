@@ -123,20 +123,6 @@ class UserProfile extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButtonWithText(
-                  text: "Done",
-                  icon: Icons.close,
-                  materialColor: kRedAlert,
-                  onTap: () {
-                    Navigator.pop(context);
-                    print("Close");
-                  },
-                ),
-              ],
-            ),
           ],
         ),
       ),

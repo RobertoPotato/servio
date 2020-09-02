@@ -188,7 +188,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     //REVIEWS
                     reviews.length == null || reviews.length == 0
-                        ? Center(child: MaterialText(text: "No reviews to show", color: Colors.white, fontStyle: kHeadingTextStyle,))
+                        ? Center(
+                            child: MaterialText(
+                            text: "No reviews to show",
+                            color: Colors.white,
+                            fontStyle: kHeadingTextStyle,
+                          ))
                         : ListOfReviews(
                             reviews: reviews,
                           ),
@@ -214,11 +219,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               IconButtonWithText(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (BuildContext context) => Bids(userId: widget.userId,),
+                                      builder: (BuildContext context) => Bids(
+                                        userId: widget.userId,
+                                      ),
                                     ),
                                   );
                                 },

@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final job = jobFromJson(jsonString);
+
 import 'dart:convert';
 
 Job jobFromJson(String str) => Job.fromJson(json.decode(str));
@@ -7,6 +11,8 @@ String jobToJson(Job data) => json.encode(data.toJson());
 class Job {
   Job({
     this.createdAt,
+    this.clientId,
+    this.agentId,
     this.client,
     this.agent,
     this.bid,
@@ -15,6 +21,8 @@ class Job {
   });
 
   DateTime createdAt;
+  int clientId;
+  int agentId;
   Ent client;
   Ent agent;
   Bid bid;
@@ -23,6 +31,8 @@ class Job {
 
   factory Job.fromJson(Map<String, dynamic> json) => Job(
     createdAt: DateTime.parse(json["createdAt"]),
+    clientId: json["clientId"],
+    agentId: json["agentId"],
     client: Ent.fromJson(json["client"]),
     agent: Ent.fromJson(json["agent"]),
     bid: Bid.fromJson(json["Bid"]),
@@ -32,6 +42,8 @@ class Job {
 
   Map<String, dynamic> toJson() => {
     "createdAt": createdAt.toIso8601String(),
+    "clientId": clientId,
+    "agentId": agentId,
     "client": client.toJson(),
     "agent": agent.toJson(),
     "Bid": bid.toJson(),

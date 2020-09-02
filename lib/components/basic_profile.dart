@@ -15,8 +15,8 @@ class BasicProfilePopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("name of the user: $name"),
-        Text("phone number of the user: $phoneNumber"),
+        Text("$name"),
+        Text("phone Number: $phoneNumber"),
         Text("avatar of the user: $avatar"),
         Text("User is verified?: $isVerified"),
       ],

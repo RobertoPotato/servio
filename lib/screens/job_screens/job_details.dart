@@ -4,6 +4,11 @@ import 'package:servio/constants.dart';
 import 'package:servio/components/basic_profile.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/material_text.dart';
+import 'package:servio/date_time.dart';
+import 'package:servio/models/ProfileWithTierAndRole.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:servio/screens/profile_user.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -12,6 +17,7 @@ class JobDetails extends StatefulWidget {
   final service;
   final status;
   final jobStart;
+  final int userId;
   final bool userIsClient;
 
   const JobDetails(
@@ -22,7 +28,9 @@ class JobDetails extends StatefulWidget {
       @required this.status,
       @required this.jobStart,
       //checks if the info coming is from the role of the current user being the client
-      @required this.userIsClient});
+      @required this.userIsClient,
+      @required this.userId});
+
   @override
   _JobDetailsState createState() => _JobDetailsState();
 }
@@ -33,6 +41,35 @@ class _JobDetailsState extends State<JobDetails> {
      in the popup banner and if user is agent then fetch the client's profile instead.
      all we do is use different URLs for each case
   * */
+
+  Future<ProfileWithTierAndRole> futureProfile;
+  List profile;
+  bool showSpinner = true;
+
+  @override
+  void initState() {
+    super.initState();
+    futureProfile = fetchProfile();
+  }
+
+  Future<ProfileWithTierAndRole> fetchProfile() async {
+    var url = "$kBaseUrl/v1/profiles/${widget.userId}";
+
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        showSpinner = false;
+      });
+      return ProfileWithTierAndRole.fromJson(jsonResponse);
+    } else {
+      throw Exception('Failed to load Profile With Tier and Roles');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _showSnack(BuildContext context, text) {
@@ -44,83 +81,142 @@ class _JobDetailsState extends State<JobDetails> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Builder(
-            builder: (context) => InkWell(
-              onTap: () {
-                _showSnack(
-                  context,
-                  widget.userIsClient
-                      ? 'Agent\'s name: ${widget.agent['firstName']} ${widget.agent['lastName']}'
-                      : 'Client\'s name: ${widget.client['firstName']} ${widget.client['lastName']}',
-                );
-              },
-              child: Text(
-                  widget.userIsClient
-                      ? 'Agent\'s name: ${widget.agent['firstName']} ${widget.agent['lastName']}'
-                      : 'Client\'s name: ${widget.client['firstName']} ${widget.client['lastName']}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis),
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text('This here is the details page for the jobs'),
-              Text('Agent/client profile'),
-              Text('Details about the service'),
-              Text('Status of the service'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButtonWithText(
-                    onTap: () {},
-                    text: 'Completed',
-                    icon: Icons.done,
-                    materialColor: kAccentColor,
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 370.0,
+                floating: false,
+                pinned: false,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background: Image.network(
+                    widget.service['imageUrl'],
+                    fit: BoxFit.cover,
                   ),
-                  IconButtonWithText(
-                    onTap: () {
-                      showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Column(
-                              children: [
-                                Container(
-                                  child: BasicProfilePopup(
-                                    isVerified: true,
-                                    phoneNumber: "0775603444",
-                                    avatar: 'Just a pic',
-                                    name: "Roberto Potato",
-                                  ),
-                                ),
-                                widget.userIsClient
-                                    ? CardWithTitleAndText(
-                                        title:
-                                            'Winning Bid: ${widget.bid['amount']}',
-                                        text:
-                                            "${widget.bid['coverLetter']} and is available ${widget.bid['availability']}",
-                                      )
-                                    : MaterialText(
-                                        text:
-                                            "Started on: ${widget.jobStart}",
-                                        color: kPrimaryColor,
-                                        fontStyle: kHeadingSubTextStyle
-                                            .copyWith(color: Colors.white),
-                                      ) /*Text(
-                                        "Show start date: ${widget.jobStart}"),*/
-                              ],
+                ),
+                title: InkWell(
+                  onTap: () {
+                    _showSnack(context, widget.status["description"]);
+                  },
+                  child: Text(
+                    "Job Status: ${widget.status["title"]}",
+                    style: kAppBarTitle.copyWith(
+                        color: Colors.white, fontSize: 24.0),
+                  ),
+                ),
+              )
+            ];
+          },
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kMainHorizontalPadding,
+                      vertical: kMainHorizontalPadding / 3),
+                  child: MaterialText(
+                    text: "${widget.service["title"]}",
+                    fontStyle: kTestTextStyleWhite,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                CardWithTitleAndText(
+                  title: "Project Description",
+                  text: "${widget.service["description"]}",
+                ),
+                //Show the terms of the job and when the job was created
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kMainHorizontalPadding,
+                      vertical: kMainHorizontalPadding / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      MaterialText(
+                        text: "${widget.service["terms"]}",
+                        fontStyle: kTestTextStyleWhite,
+                        color: kMyJobsColor,
+                      ),
+                      Flexible(
+                          child: Text(
+                        parseDate(widget.service["createdAt"]),
+                        style: kTestTextStyleBlack,
+                        maxLines: 4,
+                        overflow: TextOverflow.fade,
+                      )),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(kMainHorizontalPadding),
+                  child: Container(
+                    child: widget.userIsClient
+                        ? CardWithTitleAndText(
+                            title: 'Winning Bid: ${widget.bid['amount']}',
+                            text:
+                                "${widget.bid['coverLetter']} and is available ${widget.bid['availability']}",
+                          )
+                        : MaterialText(
+                            text: "Started on: ${parseDate(widget.jobStart)}",
+                            color: kPrimaryColor,
+                            fontStyle: kHeadingSubTextStyle.copyWith(
+                                color: Colors.white),
+                          ),
+                  ),
+                ),
+                showSpinner
+                    ? CircularProgressIndicator()
+                    : FutureBuilder<ProfileWithTierAndRole>(
+                        future: futureProfile,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return UserProfile(
+                              userName: widget.userIsClient
+                                  ? "${widget.agent['firstName']} ${widget.agent['lastName']}"
+                                  : "${widget.client['firstName']} ${widget.client['lastName']}",
+                              avatar: snapshot.data.avatar,
+                              roleTitle: snapshot.data.role.title,
+                              roleDescription: snapshot.data.role.description,
+                              updatedAt: parseDate(
+                                  snapshot.data.updatedAt.toIso8601String()),
+                              isVerified: snapshot.data.isVerified,
+                              picture: snapshot.data.picture,
+                              bio: snapshot.data.bio,
+                              tierTitle: snapshot.data.tier.title,
+                              tierDescription: snapshot.data.tier.description,
+                              tierBadgeUrl: snapshot.data.tier.badgeUrl,
+                              phoneNumber: snapshot.data.phoneNumber,
                             );
-                          });
-                    },
-                    text: 'Profile',
-                    icon: Icons.person,
-                    materialColor: kMyJobsColor,
-                  ),
-                ],
-              ),
-            ],
+                          } else if (snapshot.hasError) {
+                            return Text('Failed to load profile');
+                          }
+                          return Center(
+                            child:
+                                Container(child: CircularProgressIndicator()),
+                          );
+                        },
+                      ),
+
+                //Show the options available to the user based on the rol played in the job
+                Padding(
+                  padding: EdgeInsets.all(kMainHorizontalPadding),
+                  child: widget.userIsClient
+                      ? IconButtonWithText(
+                          onTap: () {},
+                          text: 'Close',
+                          icon: Icons.done,
+                          materialColor: kAccentColor,
+                        )
+                      : IconButtonWithText(
+                          onTap: () {},
+                          text: 'Completed',
+                          icon: Icons.thumb_up,
+                          materialColor: kAccentColor,
+                        ),
+                )
+              ],
+            ),
           ),
         ),
       ),

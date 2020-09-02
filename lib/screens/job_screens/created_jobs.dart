@@ -62,6 +62,7 @@ class _CreatedJobsState extends State<CreatedJobs> {
               var bid = jobs[index]['Bid'];
               var service = jobs[index]['Service'];
               var status = jobs[index]['Status'];
+              var userId = jobs[index]['agentId'];
 
               //In this page, the user assumes the role of the client
               return JobCard(
@@ -72,6 +73,7 @@ class _CreatedJobsState extends State<CreatedJobs> {
                 status: status,
                 jobStart: jobStart,
                 service: service,
+                userId: userId,
               );
             }),
       ),
