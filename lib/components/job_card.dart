@@ -10,8 +10,11 @@ class JobCard extends StatelessWidget {
   final service;
   final status;
   final jobStart;
-  final int userId;
+  final int clientId;
+  final int agentId;
   final bool userIsClient;
+  final int jobId;
+
 
   const JobCard(
       {@required this.client,
@@ -22,7 +25,9 @@ class JobCard extends StatelessWidget {
       @required this.jobStart,
       //checks if the info coming is from the role of the current user being the client
       @required this.userIsClient,
-      @required this.userId});
+      @required this.jobId,
+      @required this.clientId,
+      @required this.agentId});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,6 +40,7 @@ class JobCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (BuildContext context) => JobDetails(
+                jobId: jobId,
                 userIsClient: userIsClient,
                 status: status,
                 service: service,
@@ -42,7 +48,8 @@ class JobCard extends StatelessWidget {
                 bid: bid,
                 agent: agent,
                 jobStart: jobStart,
-                userId: userId,
+                clientId: clientId,
+                agentId: agentId,
               ),
             ),
           );

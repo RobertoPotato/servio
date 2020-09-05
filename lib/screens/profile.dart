@@ -14,6 +14,8 @@ import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids.dart';
 
+import 'job_screens/job_parent_screen.dart';
+
 //TODO Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
   final int userId;
@@ -237,6 +239,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 text: 'My Jobs',
                                 icon: Icons.work,
                                 materialColor: kMyJobsColor,
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) => JobParentScreen(),
+                                    ),
+                                  );
+                                },
                               ),
                               IconButtonWithText(
                                 text: 'Settings',

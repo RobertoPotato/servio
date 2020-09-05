@@ -10,6 +10,7 @@ String jobToJson(Job data) => json.encode(data.toJson());
 
 class Job {
   Job({
+    this.id,
     this.createdAt,
     this.clientId,
     this.agentId,
@@ -21,6 +22,7 @@ class Job {
   });
 
   DateTime createdAt;
+  int id;
   int clientId;
   int agentId;
   Ent client;
@@ -31,6 +33,7 @@ class Job {
 
   factory Job.fromJson(Map<String, dynamic> json) => Job(
     createdAt: DateTime.parse(json["createdAt"]),
+    id: json["id"],
     clientId: json["clientId"],
     agentId: json["agentId"],
     client: Ent.fromJson(json["client"]),
@@ -49,6 +52,7 @@ class Job {
     "Bid": bid.toJson(),
     "Service": service.toJson(),
     "Status": status.toJson(),
+    "id": id
   };
 }
 

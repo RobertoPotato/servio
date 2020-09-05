@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 //BASE URL
 //TODO change to https after certificates have been configured
 const kInUrl = "http://176.58.97.72:3000/api";
-const kLocUrl = "http://192.168.100.39:3000/api";
-const kSourceIp = "http://192.168.100.39";
+const kLocUrl = "http://192.168.100.3:3000/api";
+const kSourceIp = "http://192.168.100.3";
 const kPort = 3000;
 
 //TODO Change as needed these and add them to the image url data
@@ -13,7 +14,8 @@ const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
 const kUserId = 72;
-const kNetworkImage = "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
+const kNetworkImage =
+    "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
 const kStatusId = 1;
 
 //COLORS
@@ -32,8 +34,12 @@ const kMyJobsColor = Color(0xFF02BBCA);
 const kMySettingsColor = Color(0xFFF39402);
 
 //TEXT
-const kStatusExplanation = "This is the current status of the service. It may change without notice";
-const kTravelPromptExplanation = "This is important in case the service would require you to travel";
+const kStatusExplanation =
+    "This is the current status of the service. It may change without notice";
+const kTravelPromptExplanation =
+    "This is important in case the service would require you to travel";
+const kReviewOnSuccessfulCompletion =
+    "Congratulations. The job has been successfully completed. Status changes can be viewed as soon as the page is refreshed. Please take some time to review the ";
 
 const kExampleCurrency = 'KES';
 const kJobs = "Jobs";
@@ -41,7 +47,8 @@ const kBids = "Bids";
 const kInformation = "Info";
 const kLoremIpsum =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-const kLoremIpsumShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+const kLoremIpsumShort =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 const kExampleRatingText = 4.5;
 const kExampleBidPrice = 999.0;
 const kPercentage = 99;
@@ -53,7 +60,8 @@ const kExamplePhone = '+254 777000777';
 const kNumberTotal = '1/4';
 const kClient = 'Client';
 const kAgent = 'Agent';
-const kBidNotice = 'The client will receive your profile information when you bid for their work';
+const kBidNotice =
+    'The client will receive your profile information when you bid for their work';
 
 //SIZES
 const kMainHorizontalPadding = 12.0;
@@ -76,11 +84,10 @@ const kHeadingSubTextStyle = TextStyle(
 );
 
 const kMainBlackTextStyle = TextStyle(
-  color: Colors.black,
-  fontWeight: FontWeight.bold,
-  fontSize: 15.0,
-  height: 1.3
-);
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 15.0,
+    height: 1.3);
 
 const kBottomNavText = TextStyle(
   fontSize: 15,
@@ -110,12 +117,12 @@ const kTestTextStyleBlack = TextStyle(
 );
 
 String budget(budgetMin, budgetMax) {
-    if (budgetMin > budgetMax) {
-      return "$budgetMax - $budgetMin";
-    } else {
-      return "$budgetMin - $budgetMax";
-    }
+  if (budgetMin > budgetMax) {
+    return "$budgetMax - $budgetMin";
+  } else {
+    return "$budgetMin - $budgetMax";
   }
+}
 
 int hexColConvert(String color) {
   String text = color; //get the color
@@ -126,18 +133,18 @@ int hexColConvert(String color) {
   textArray = text.split(
       ''); //split the color data referenced by the text variable into an array of characters
   textArray.remove('#'); //from the array, remove this specific item
-  textArray.insert(0,
-      repWith); //replace the 0th index item with the 0xFF value we created
+  textArray.insert(
+      0, repWith); //replace the 0th index item with the 0xFF value we created
   var concat =
-  StringBuffer(); //create a string buffer to use to cast the array into a string
+      StringBuffer(); //create a string buffer to use to cast the array into a string
 
   textArray.forEach((element) {
     concat.write(element);
   }); //cast the array into a string buffer
 
   String col =
-  concat.toString(); //convert the string buffer into a usable string
+      concat.toString(); //convert the string buffer into a usable string
 
-  return int.parse(
-      col); //parse the string into an integer and return that value
+  return int.parse(col);
+  //parse the string into an integer and return that value
 }
