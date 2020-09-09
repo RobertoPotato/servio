@@ -1,61 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/material_text.dart';
-import 'package:servio/components/my_divider.dart';
-import 'package:servio/screens/alerts_details_screens/info_detail.dart';
+import 'package:servio/screens/alerts_screens/alert_detail.dart';
 
 class InfoCard extends StatelessWidget {
+  final bool isSeen;
+
+  InfoCard({@required this.isSeen});
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: kMainHorizontalPadding,
-          vertical: kMainHorizontalPadding / 2),
+      padding: const EdgeInsets.symmetric(vertical: kMainHorizontalPadding / 2, horizontal: kMainHorizontalPadding),
       child: Card(
-        elevation: kElevationValue / 2,
-        child: Padding(
-          padding: const EdgeInsets.all(kMainHorizontalPadding / 2),
-          child: InkWell(
-            onTap: (){
-              //todo add the data to be passed through
-              Navigator.pushNamed(context, InfoDetailsScreen.id);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: MaterialText(
-                        text: 'Sender: ADMIN',
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Subject: $kLoremIpsumShort',
-                      ),
-                    ),
-                  ],
-                ),
-                MyDivider(thickness: 1.0,),
-                Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        'DETAILS: $kLoremIpsumShort',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+        elevation: kElevationValue/2,
+        child: InkWell(
+          onTap: (){
+            print("List item clicked");
+            Navigator.pushNamed(context, AlertDetails.id);
+          },
+          child: ListTile(
+            title: Text(kLoremIpsumShort, maxLines: 2, overflow: TextOverflow.ellipsis,),
+            subtitle: Text(kLoremIpsum, maxLines: 2, overflow: TextOverflow.ellipsis,),
+            trailing: Icon(isSeen ? Icons.check_box : Icons.check_box_outline_blank, size: 34.0, color: kPrimaryColor),
           ),
         ),
       ),

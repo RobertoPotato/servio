@@ -4,10 +4,10 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/job_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
-import 'package:servio/screens/make_bid_screen.dart';
+import 'package:servio/screens/bids_screens/make_bid_screen.dart';
 
 
-class JobDetails extends StatefulWidget {
+class ServiceDetails extends StatefulWidget {
   //static String id = 'job_details';
 
   final userId;
@@ -23,7 +23,7 @@ class JobDetails extends StatefulWidget {
   final lat;
   final long;
 
-  JobDetails(
+  ServiceDetails(
       {this.userId,
       this.serviceId,
       this.categoryTitle,
@@ -39,10 +39,10 @@ class JobDetails extends StatefulWidget {
       });
 
   @override
-  _JobDetailsState createState() => _JobDetailsState();
+  _ServiceDetailsState createState() => _ServiceDetailsState();
 }
 
-class _JobDetailsState extends State<JobDetails> {
+class _ServiceDetailsState extends State<ServiceDetails> {
 
   @override
   Widget build(BuildContext context) {

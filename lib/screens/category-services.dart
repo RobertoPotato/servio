@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:servio/screens/alerts_details_screens/job_detail.dart';
+import 'package:servio/screens/service_screens/service_detail.dart';
 
 class Service {
   final int id;
@@ -112,7 +112,7 @@ class _CategoryServicesState extends State<CategoryServices> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => JobDetails(
+                  builder: (BuildContext context) => ServiceDetails(
                     userId: services[index]['userId'],
                     serviceId: services[index]['id'],
                     categoryTitle: widget.categoryTitle,

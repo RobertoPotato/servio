@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:servio/screens/home_screen.dart';
-import 'package:servio/screens/alerts.dart';
+import 'package:servio/screens/alerts_screens/alerts.dart';
 import 'package:servio/screens/favorites.dart';
-import 'package:servio/screens/my_services.dart';
+import 'package:servio/screens/service_screens/my_services.dart';
 import 'package:servio/screens/profile.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/categories.dart';
-import 'package:servio/screens/bids.dart';
+import 'package:servio/screens/bids_screens/bids.dart';
 import 'package:servio/screens/job_screens/job_parent_screen.dart';
 
 class MainParentScreen extends StatefulWidget {

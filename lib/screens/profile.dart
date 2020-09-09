@@ -12,7 +12,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
-import 'package:servio/screens/bids.dart';
+import 'package:servio/screens/bids_screens/bids.dart';
 
 import 'job_screens/job_parent_screen.dart';
 

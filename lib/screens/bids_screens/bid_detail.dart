@@ -11,7 +11,7 @@ import 'dart:convert';
 import 'package:servio/screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
-import 'package:servio/screens/alerts_details_screens/accept_bid.dart';
+import 'package:servio/screens/bids_screens/accept_bid.dart';
 import 'package:servio/components/StatsWidget.dart';
 
 class BidDetails extends StatefulWidget {

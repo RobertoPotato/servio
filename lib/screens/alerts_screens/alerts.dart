@@ -26,11 +26,11 @@ class _AlertsScreenState extends State<AlertsScreen> {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                InfoCard(),
-                InfoCard(),
-                InfoCard(),
-                InfoCard(),
-                InfoCard(),
+                InfoCard(isSeen: false,),
+                InfoCard(isSeen: false,),
+                InfoCard(isSeen: true,),
+                InfoCard(isSeen: true,),
+                InfoCard(isSeen: true,),
               ],
             ),
           )

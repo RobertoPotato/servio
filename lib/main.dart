@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
-import 'screens/register_screen.dart';
-import 'screens/login_screen.dart';
+import 'screens/auth_screens/register_screen.dart';
+import 'screens/auth_screens/login_screen.dart';
 import 'screens/parent_screen.dart';
 import 'constants.dart';
-import 'screens/request_service.dart';
+import 'screens/service_screens/request_service.dart';
 import 'screens/settings_screen.dart';
-import 'screens/alerts_details_screens/info_detail.dart';
+import 'screens/alerts_screens/alert_detail.dart';
 import 'screens/favorites.dart';
-import 'screens/alerts.dart';
-import 'screens/my_services.dart';
+import 'screens/alerts_screens/alerts.dart';
+import 'screens/service_screens/my_services.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id: (context) => RequestServicePage(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        InfoDetailsScreen.id: (context) => InfoDetailsScreen(),
+        AlertDetails.id: (context) => AlertDetails(),
         FavoritesScreen.id :  (context) => FavoritesScreen(),
         AlertsScreen.id : (context) => AlertsScreen(),
         MyServices.id : (context) => MyServices(),

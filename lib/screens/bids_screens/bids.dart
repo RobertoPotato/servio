@@ -4,7 +4,7 @@ import 'package:servio/models/BidWithServiceAndStatus.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:servio/constants.dart';
-import 'alerts_details_screens/my_bid_details.dart';
+import 'my_bid_details.dart';
 
 class Bids extends StatefulWidget {
   final int userId;

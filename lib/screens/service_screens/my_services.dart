@@ -3,7 +3,7 @@ import 'package:servio/models/Service.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:servio/screens/my_services_bids.dart';
+import 'package:servio/screens/service_screens/my_services_bids.dart';
 
 class MyServices extends StatefulWidget {
   static String id = "myServices";
