@@ -129,8 +129,6 @@ class _AlertDetailsState extends State<AlertDetails> {
             size: 28.0,
           ),
           onPressed: () {
-            print(
-                "Button Pressed Type: => ${widget.type}  Types: => ${Types.MY_SERVICES}");
             changeScreen();
           },
         ),
