@@ -1,16 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:servio/components/alert_card.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/company_card.dart';
-import 'package:servio/components/horizontal_buttons.dart';
-import 'package:servio/components/job_items_vertical.dart';
+import 'package:servio/models/Alert.dart';
 import 'package:servio/screens/service_screens/request_service.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 // todo uncomment when needed: import 'package:servio/components/search_delegate.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String id = 'home';
 
   @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Future<Alert> futureAlerts;
+  List alerts;
+  bool listOfAlertsIsAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAlerts = fetchAlerts();
+  }
+
+  Future<Alert> fetchAlerts() async {
+    var url = "$kBaseUrl/v1/alerts/foruser/$kUserId";
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    setState(() {
+      listOfAlertsIsAvailable = true;
+      alerts = json.decode(response.body);
+    });
+
+    if (response.statusCode == 200) {
+      return Alert.fromJson(jsonResponse[0]);
+    } else {
+      throw Exception('Failed to load Alerts');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //print(alerts);
     return Scaffold(
       appBar: AppBar(
         elevation: kElevationValue,
@@ -43,172 +79,22 @@ class HomeScreen extends StatelessWidget {
           style: kAppBarTitle,
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(kMainHorizontalPadding),
-                    child: Text(
-                      'Top Categories',
-                      style: kHeadingTextStyle,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Container(
-                    //color: Colors.white,
-                    height: 70.0,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        HorizontalButtons(
-                          buttonText: 'Example Service',
-                        ),
-                        HorizontalButtons(
-                          buttonText: 'Example Service',
-                        ),
-                        HorizontalButtons(
-                          buttonText: 'Example Service',
-                        ),
-                        HorizontalButtons(
-                          buttonText: 'Example Service',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(kMainHorizontalPadding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Now Hiring',
-                          style: kHeadingTextStyle,
-                        ),
-                        Text(
-                          'See All',
-                          style: kHeadingSubTextStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    //color: Colors.white,
-                    height: 200.0,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        CompanyCard(
-                          companyName: 'This Company',
-                          //servicesOffered,
-                          location: 'Mombasa',
-                          companyImage: 'hands.png',
-                          //reviews,
-                          companyIsVerified: true,
-                          successRate: 90.0,
-                          bio: kLoremIpsum,
-                        ),
-                        CompanyCard(
-                          companyName: 'Another Company',
-                          //servicesOffered,
-                          location: 'Kisumu',
-                          companyImage: 'agent_image.jpg',
-                          //reviews,
-                          companyIsVerified: false,
-                          successRate: 10.0,
-                          bio: kLoremIpsum,
-                        ),
-                        CompanyCard(
-                          companyName: 'Awesome Company in the country',
-                          //servicesOffered,
-                          location: 'Nairobi',
-                          companyImage: 'hands.png',
-                          //reviews,
-                          companyIsVerified: true,
-                          successRate: 30.0,
-                          bio: kLoremIpsum,
-                        ),
-                        CompanyCard(
-                          companyName: 'Another Company',
-                          //servicesOffered,
-                          location: 'Kabete',
-                          companyImage: 'agent_image.jpg',
-                          //reviews,
-                          companyIsVerified: true,
-                          successRate: 70.0,
-                          bio: kLoremIpsum,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(kMainHorizontalPadding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Categories for you',
-                          style: kHeadingTextStyle,
-                        ),
-                        Text(
-                          'See All',
-                          style: kHeadingSubTextStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    children: <Widget>[
-                      VerticalJobCards(
-                        companyImage: 'hands.png',
-                        companyName: 'Company Name',
-                        location: 'Location',
-                        openPositions: 10,
-                      ),
-                      VerticalJobCards(
-                        companyImage: 'hands.png',
-                        companyName: 'Company Name',
-                        location: 'Location',
-                        openPositions: 10,
-                      ),
-                      VerticalJobCards(
-                        companyImage: 'hands.png',
-                        companyName: 'Company Name',
-                        location: 'Location',
-                        openPositions: 10,
-                      ),
-                      VerticalJobCards(
-                        companyImage: 'hands.png',
-                        companyName: 'Company Name',
-                        location: 'Location',
-                        openPositions: 10,
-                      ),
-                      VerticalJobCards(
-                        companyImage: 'hands.png',
-                        companyName: 'Company Name',
-                        location: 'Location',
-                        openPositions: 10,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: listOfAlertsIsAvailable
+          ? ListView.builder(
+              itemCount: alerts == null ? 0 : alerts.length,
+              itemBuilder: (BuildContext context, int index) {
+                print(alerts[index]); //TODO For Testing
+                return AlertCard(
+                  isSeen: alerts[index]["isSeen"],
+                  title: alerts[index]["title"],
+                  payload: alerts[index]["payload"],
+                  id: alerts[index]["id"],
+                  date: alerts[index]["createdAt"],
+                  type: alerts[index]["type"],
+                  createdFor: alerts[index]["createdFor"],
+                );
+              })
+          : CircularProgressIndicator(),
     );
   }
 }

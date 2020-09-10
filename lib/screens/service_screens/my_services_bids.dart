@@ -22,7 +22,6 @@ class _MyServicesBidsState extends State<MyServicesBids> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureBidWithUserName = fetchBidsWithUserNames();
   }

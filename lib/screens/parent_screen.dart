@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:servio/screens/home_screen.dart';
-import 'package:servio/screens/alerts_screens/alerts.dart';
 import 'package:servio/screens/favorites.dart';
 import 'package:servio/screens/service_screens/my_services.dart';
 import 'package:servio/screens/profile.dart';
@@ -78,17 +77,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
                 trailing: Icon(Icons.timer),
                 onTap: () {
                   Navigator.pushNamed(context, FavoritesScreen.id);
-                },
-              ),
-              ListTile(
-                title: Text('Alerts(Coming Soon)'),
-                leading: Icon(
-                  Icons.notifications,
-                  color: Colors.blueAccent,
-                ),
-                trailing: Icon(Icons.timer),
-                onTap: () {
-                  Navigator.pushNamed(context, AlertsScreen.id);
                 },
               ),
               ListTile(

@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:servio/components/company_card.dart';
+import 'package:servio/constants.dart';
+
+class NowHiring extends StatelessWidget {
+  const NowHiring({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(kMainHorizontalPadding),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Now Hiring',
+                style: kHeadingTextStyle,
+              ),
+              Text(
+                'See All',
+                style: kHeadingSubTextStyle,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          //color: Colors.white,
+          height: 200.0,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              CompanyCard(
+                companyName: 'This Company',
+                //servicesOffered,
+                location: 'Mombasa',
+                companyImage: 'hands.png',
+                //reviews,
+                companyIsVerified: true,
+                successRate: 90.0,
+                bio: kLoremIpsum,
+              ),
+              CompanyCard(
+                companyName: 'Another Company',
+                //servicesOffered,
+                location: 'Kisumu',
+                companyImage: 'agent_image.jpg',
+                //reviews,
+                companyIsVerified: false,
+                successRate: 10.0,
+                bio: kLoremIpsum,
+              ),
+              CompanyCard(
+                companyName: 'Awesome Company in the country',
+                //servicesOffered,
+                location: 'Nairobi',
+                companyImage: 'hands.png',
+                //reviews,
+                companyIsVerified: true,
+                successRate: 30.0,
+                bio: kLoremIpsum,
+              ),
+              CompanyCard(
+                companyName: 'Another Company',
+                //servicesOffered,
+                location: 'Kabete',
+                companyImage: 'agent_image.jpg',
+                //reviews,
+                companyIsVerified: true,
+                successRate: 70.0,
+                bio: kLoremIpsum,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

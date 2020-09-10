@@ -7,6 +7,7 @@ class CardWithTitleAndText extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
+    //TODO Eventually well have to remove this padding
     return Padding(
       padding: const EdgeInsets.all(kMainHorizontalPadding),
       child: Card(

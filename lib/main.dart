@@ -6,9 +6,7 @@ import 'screens/parent_screen.dart';
 import 'constants.dart';
 import 'screens/service_screens/request_service.dart';
 import 'screens/settings_screen.dart';
-import 'screens/alerts_screens/alert_detail.dart';
 import 'screens/favorites.dart';
-import 'screens/alerts_screens/alerts.dart';
 import 'screens/service_screens/my_services.dart';
 
 void main() => runApp(MyApp());
@@ -38,9 +36,7 @@ class MyApp extends StatelessWidget {
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id: (context) => RequestServicePage(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        AlertDetails.id: (context) => AlertDetails(),
         FavoritesScreen.id :  (context) => FavoritesScreen(),
-        AlertsScreen.id : (context) => AlertsScreen(),
         MyServices.id : (context) => MyServices(),
       },
     );

@@ -13,7 +13,7 @@ const uploadedImageUrlBase = "$kSourceIp:$kPort";
 const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
-const kUserId = 72;
+const kUserId = 1;
 const kNetworkImage =
     "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
 const kStatusId = 1;
