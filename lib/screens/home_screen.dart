@@ -5,6 +5,8 @@ import 'package:servio/models/Alert.dart';
 import 'package:servio/screens/service_screens/request_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:servio/components/top_categories.dart';
+import 'package:servio/components/hiring.dart';
 // todo uncomment when needed: import 'package:servio/components/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -79,22 +81,55 @@ class _HomeScreenState extends State<HomeScreen> {
           style: kAppBarTitle,
         ),
       ),
-      body: listOfAlertsIsAvailable
-          ? ListView.builder(
-              itemCount: alerts == null ? 0 : alerts.length,
-              itemBuilder: (BuildContext context, int index) {
-                print(alerts[index]); //TODO For Testing
-                return AlertCard(
-                  isSeen: alerts[index]["isSeen"],
-                  title: alerts[index]["title"],
-                  payload: alerts[index]["payload"],
-                  id: alerts[index]["id"],
-                  date: alerts[index]["createdAt"],
-                  type: alerts[index]["type"],
-                  createdFor: alerts[index]["createdFor"],
-                );
-              })
-          : CircularProgressIndicator(),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: TopCategories(),
+          ),
+          SliverToBoxAdapter(
+            child: NowHiring(),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(kMainHorizontalPadding),
+              child: Text(
+                'Your Alerts',
+                style: kHeadingTextStyle,
+                textAlign: TextAlign.start,
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                (context, index) => AlertCard(
+                      isSeen: alerts[index]["isSeen"],
+                      title: alerts[index]["title"],
+                      payload: alerts[index]["payload"],
+                      id: alerts[index]["id"],
+                      date: alerts[index]["createdAt"],
+                      type: alerts[index]["type"],
+                      createdFor: alerts[index]["createdFor"],
+                    ),
+                childCount: alerts == null ? 0 : alerts.length),
+          ),
+        ],
+      ),
     );
   }
 }
+
+/*listOfAlertsIsAvailable
+? ListView.builder(
+itemCount: alerts == null ? 0 : alerts.length,
+itemBuilder: (BuildContext context, int index) {
+return AlertCard(
+isSeen: alerts[index]["isSeen"],
+title: alerts[index]["title"],
+payload: alerts[index]["payload"],
+id: alerts[index]["id"],
+date: alerts[index]["createdAt"],
+type: alerts[index]["type"],
+createdFor: alerts[index]["createdFor"],
+);
+})
+: CircularProgressIndicator(),*/
