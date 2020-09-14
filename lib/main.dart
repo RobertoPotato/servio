@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
 
       //todo change initial route back to MainParentScreen.id
-      initialRoute: MainParentScreen.id,
+      initialRoute: RegisterScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
