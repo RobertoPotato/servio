@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisterScreen extends StatefulWidget {
   static String id = 'register';
@@ -27,18 +29,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  Icon _iconToShow(){
-    if (passwordsMatch == null){
-      return Icon(Icons.check_box_outline_blank, color: kPrimaryColor,);
+  Icon _iconToShow() {
+    if (passwordsMatch == null) {
+      return Icon(
+        Icons.check_box_outline_blank,
+        color: kPrimaryColor,
+      );
     } else if (passwordsMatch == true) {
-      return Icon(Icons.check, color: kMyBidsColor,);
+      return Icon(
+        Icons.check,
+        color: kMyBidsColor,
+      );
     } else {
-      return Icon(Icons.warning, color: kMySettingsColor,);
+      return Icon(
+        Icons.warning,
+        color: kMySettingsColor,
+      );
     }
   }
 
-  registerUser(String firstName, String lastName, String email, String password, ){
+  Future registerUser(
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+  ) async {
     print("$firstName $lastName is registered");
+    final String url = "$kBaseUrl/v1/auth/register";
+    final response = await http.post(Uri.encodeFull(url),
+        body: json.encode({
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "password": password
+        }),
+        headers: {
+          "accept": "application/json",
+          "content-type": "application/json"
+        });
+    if(response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print("Request failed");
+    }
   }
 
   @override
@@ -88,19 +121,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   FormBuilderTextField(
                     attribute: 'password',
                     decoration: InputDecoration().copyWith(
-                        hintText: 'Password',
-                        labelText: 'Password',
-                        prefixIcon: _iconToShow(),
-                        ),
-                    validators: [FormBuilderValidators.required(), FormBuilderValidators.minLength(8)],
+                      hintText: 'Password',
+                      labelText: 'Password',
+                      prefixIcon: _iconToShow(),
+                    ),
+                    validators: [
+                      FormBuilderValidators.required(),
+                      FormBuilderValidators.minLength(8)
+                    ],
                   ),
                   FormBuilderTextField(
                     attribute: 'passwordRepeat',
                     decoration: InputDecoration().copyWith(
-                        hintText: 'Repeat Password',
-                        labelText: 'Repeat Password',
-                        prefixIcon: _iconToShow(),
-                        ),
+                      hintText: 'Repeat Password',
+                      labelText: 'Repeat Password',
+                      prefixIcon: _iconToShow(),
+                    ),
                     validators: [FormBuilderValidators.required()],
                   ),
                   Text("Password status")
@@ -109,17 +145,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             FlatButton(
               onPressed: () {
-                if (_fbKey.currentState.saveAndValidate()){
+                if (_fbKey.currentState.saveAndValidate()) {
                   final formData = _fbKey.currentState.value;
                   final firstName = formData['firstName'].toString().trim();
                   final lastName = formData['lastName'].toString().trim();
                   final email = formData['email'].toString().trim();
                   final password = formData['password'].toString().trim();
-                  final passwordRepeat = formData['passwordRepeat'].toString().trim();
+                  final passwordRepeat =
+                      formData['passwordRepeat'].toString().trim();
 
-                  if (_checkPasswordMatch(password, passwordRepeat)){
+                  if (_checkPasswordMatch(password, passwordRepeat)) {
                     print('Everything is safe, you can post');
                     registerUser(firstName, lastName, email, password);
+                    //TODO On complete, go to login screen and log in
                   } else {
                     print("Theres a problem registering user");
                   }
