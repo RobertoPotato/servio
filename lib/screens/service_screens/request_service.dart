@@ -30,10 +30,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
   File imageFile;
   var token;
 
-  Map<String, String> get headers => {
-        "x-auth-token": "Ze tokenzz",
-      };
-
   Future<String> createService(
       String token,
       String title,
@@ -51,7 +47,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
       'POST',
       Uri.parse(url),
     );
-    //request.headers.addAll(headers);
     request.headers.addAll({"x-auth-token": "$token"});
     request.files.add(await http.MultipartFile.fromPath('imageUrl', filename));
     request.fields['title'] = title;
@@ -68,7 +63,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
     if (res.statusCode == 200) {
       displayDialog(context, "Success", "Your request was saved successfully");
     }
-    ;
+    return "";
   }
 
   Future _getImageGallery() async {
@@ -340,7 +335,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                       } else {
                         return ErrorScreen(
                           message: 'Invalid Token',
-                          errorImage: 'null',
+                          errorImage: kErrorImage,
                         );
                       }
                     }),

@@ -18,8 +18,8 @@ import 'job_screens/job_parent_screen.dart';
 
 //TODO Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
-  final int userId;
-  const ProfileScreen({@required this.userId});
+  final String token;
+  const ProfileScreen({@required this.token});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -40,10 +40,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<ReviewWithUser> fetchReviews() async {
-    var url = "$kBaseUrl/v1/reviews/foruser/${widget.userId}";
+    var url = "$kBaseUrl/v1/reviews/mine";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -59,10 +59,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
-    var url = "$kBaseUrl/v1/profiles/${widget.userId}";
+    var url = "$kBaseUrl/v1/profiles/mine";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -226,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (BuildContext context) => Bids(
-                                        userId: widget.userId,
+                                        token: widget.token,
                                       ),
                                     ),
                                   );
@@ -239,11 +239,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 text: 'My Jobs',
                                 icon: Icons.work,
                                 materialColor: kMyJobsColor,
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (BuildContext context) => JobParentScreen(),
+                                      builder: (BuildContext context) =>
+                                          JobParentScreen(token: widget.token,),
                                     ),
                                   );
                                 },

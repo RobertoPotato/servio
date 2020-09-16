@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  static String id = 'favorites';
+  final String token;
+
+  FavoritesScreen({@required this.token});
 
   @override
   Widget build(BuildContext context) {

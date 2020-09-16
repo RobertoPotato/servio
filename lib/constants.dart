@@ -6,6 +6,7 @@ const kInUrl = "http://176.58.97.72:3000/api";
 const kLocUrl = "http://192.168.100.3:3000/api";
 const kSourceIp = "http://192.168.100.3";
 const kPort = 3000;
+const kErrorImage = "";
 
 //TODO Change as needed these and add them to the image url data
 const uploadedImageUrlBase = "$kSourceIp:$kPort";

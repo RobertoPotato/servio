@@ -5,6 +5,9 @@ import 'package:servio/screens/job_screens/created_jobs.dart';
 
 class JobParentScreen extends StatefulWidget {
   static String id = 'jobParentScreen';
+  final String token;
+
+  const JobParentScreen({@required this.token});
 
   @override
   _JobParentScreen createState() => _JobParentScreen();
@@ -23,8 +26,12 @@ class _JobParentScreen extends State<JobParentScreen> {
 
   var _screens = <Widget>[
     //TODO get the logged in user's id and use it here instead of kUserId
-    CreatedJobs(loggedInUserId: kUserId,),
-    AwardedJobs(loggedInUserId: kUserId,),
+    CreatedJobs(
+      loggedInUserId: kUserId,
+    ),
+    AwardedJobs(
+      loggedInUserId: kUserId,
+    ),
   ];
 
   @override

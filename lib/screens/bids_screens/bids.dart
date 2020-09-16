@@ -7,9 +7,9 @@ import 'package:servio/constants.dart';
 import 'my_bid_details.dart';
 
 class Bids extends StatefulWidget {
-  final int userId;
+  final String token;
 
-  Bids({@required this.userId});
+  Bids({@required this.token});
 
   @override
   _BidsState createState() => _BidsState();
@@ -28,10 +28,11 @@ class _BidsState extends State<Bids> {
   }
 
   Future<BidWithServiceAndStatus> fetchMyBids() async {
-    var url = "$kBaseUrl/v1/bids/foruser/${widget.userId}";
+    //User fetches bids made by them
+    var url = "$kBaseUrl/v1/bids/mine";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 

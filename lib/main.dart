@@ -6,8 +6,6 @@ import 'screens/parent_screen.dart';
 import 'constants.dart';
 import 'screens/service_screens/request_service.dart';
 import 'screens/settings_screen.dart';
-import 'screens/favorites.dart';
-import 'screens/service_screens/my_services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert' show json, base64, ascii;
 
@@ -77,8 +75,6 @@ class MyApp extends StatelessWidget {
         MainParentScreen.id: (context) => MainParentScreen(),
         RequestServicePage.id: (context) => RequestServicePage(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        FavoritesScreen.id: (context) => FavoritesScreen(),
-        MyServices.id: (context) => MyServices(),
       },
     );
   }
