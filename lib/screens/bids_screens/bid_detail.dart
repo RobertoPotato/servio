@@ -297,7 +297,7 @@ class _BidDetailsState extends State<BidDetails> {
               );
             } else if (snapshot.hasError) {
               //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
-              return Error(
+              return ErrorScreen(
                 message: "Unable to find what you're looking for",
                 errorImage: "images/undraw_page_not_found.png",
               );

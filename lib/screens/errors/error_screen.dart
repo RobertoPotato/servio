@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 
-class Error extends StatelessWidget {
+class ErrorScreen extends StatelessWidget {
   final String message;
   final String errorImage;
 
-  Error({@required this.message, @required this.errorImage});
+  ErrorScreen({@required this.message, @required this.errorImage});
   @override
   Widget build(BuildContext context) {
     return Center(
