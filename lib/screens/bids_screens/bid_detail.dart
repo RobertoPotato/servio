@@ -28,6 +28,7 @@ class BidDetails extends StatefulWidget {
   final String userName;
   final int serviceId;
   final int bidId;
+  final String token;
 
   const BidDetails(
       {@required this.amount,
@@ -39,7 +40,8 @@ class BidDetails extends StatefulWidget {
       @required this.updatedAt,
       @required this.userName,
       @required this.serviceId,
-      @required this.bidId});
+      @required this.bidId,
+      @required this.token});
 
   @override
   _BidDetailsState createState() => _BidDetailsState();
@@ -65,13 +67,12 @@ class _BidDetailsState extends State<BidDetails> {
   Future<ProfileWithTierAndRole> fetchProfile() async {
     var url = "$kBaseUrl/v1/profiles/${widget.userId}";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      //print("DATA ==> ${ProfileWithTierAndRole.fromJson(jsonResponse)}");
       return ProfileWithTierAndRole.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load Profile With Tier and Roles');
@@ -81,8 +82,8 @@ class _BidDetailsState extends State<BidDetails> {
   Future<ReviewWithUser> fetchReviews() async {
     var url = "$kBaseUrl/v1/reviews/foruser/${widget.userId}";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -198,13 +199,14 @@ class _BidDetailsState extends State<BidDetails> {
                       ),
                     ),
                     //REVIEWS
-                    reviews.length == null || reviews.length == 0
+                    reviews.length == 0 || reviews.length == null
                         ? Center(
                             child: MaterialText(
-                            text: "No reviews to show",
-                            color: Colors.white,
-                            fontStyle: kHeadingTextStyle,
-                          ))
+                              text: "No reviews to show",
+                              color: Colors.white,
+                              fontStyle: kHeadingTextStyle,
+                            ),
+                          )
                         : ListOfReviews(
                             reviews: reviews,
                           ),
@@ -296,15 +298,13 @@ class _BidDetailsState extends State<BidDetails> {
                 ),
               );
             } else if (snapshot.hasError) {
-              //TODO Maybe add a nice error graphic to display rather than throw the system error at the user
               return ErrorScreen(
-                message: "Unable to find what you're looking for",
+                message: "Unable to find what you're looking for. REASONS:\n${snapshot.error}",
                 errorImage: "images/undraw_page_not_found.png",
               );
+            } else {
+              return CircularProgressIndicator();
             }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
           },
         ),
       ),

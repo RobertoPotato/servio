@@ -19,26 +19,24 @@ class _JobParentScreen extends State<JobParentScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      //todo when a menu is clicked
       _selectedIndex = index;
     });
   }
 
-  var _screens = <Widget>[
-    //TODO get the logged in user's id and use it here instead of kUserId
-    CreatedJobs(
-      loggedInUserId: kUserId,
-    ),
-    AwardedJobs(
-      loggedInUserId: kUserId,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[
-          _selectedIndex], //body will be whatever screen is represented by the index
+      body: _selectedIndex == 0
+          ? CreatedJobs(
+              loggedInUserId: kUserId,
+              token: widget.token,
+            )
+          : AwardedJobs(
+              loggedInUserId: kUserId,
+              token: widget.token,
+            ),
+
+      //body will be whatever screen is represented by the index
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: kPrimaryColor,
         items: const <BottomNavigationBarItem>[

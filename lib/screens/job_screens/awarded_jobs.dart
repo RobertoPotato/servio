@@ -9,9 +9,10 @@ import 'package:servio/components/job_card.dart';
 //filter them by status ie Ongoing/active, pending and complete etc
 //default filter will be the active one. Other filters can be selected when needed.
 class AwardedJobs extends StatefulWidget {
+  final String token;
   final int loggedInUserId;
 
-  const AwardedJobs({@required this.loggedInUserId});
+  const AwardedJobs({@required this.loggedInUserId, @required this.token});
   @override
   _AwardedJobsState createState() => _AwardedJobsState();
 }
@@ -28,9 +29,12 @@ class _AwardedJobsState extends State<AwardedJobs> {
   }
 
   Future<Job> fetchJobs() async {
-    var url = "$kBaseUrl/v1/jobs/foragent/${widget.loggedInUserId}";
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    /* The 2 in this route is useless but removing it will cause it to fail
+     * on the server side
+    */
+    var url = "$kBaseUrl/v1/jobs/foragent/2";
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -49,6 +53,7 @@ class _AwardedJobsState extends State<AwardedJobs> {
 
   @override
   Widget build(BuildContext context) {
+    print("Awarded jobs: ${widget.token}");
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

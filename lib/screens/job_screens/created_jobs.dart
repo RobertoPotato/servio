@@ -10,8 +10,9 @@ import 'package:servio/components/job_card.dart';
 //default filter will be the active one. Others can be selected when needed.
 class CreatedJobs extends StatefulWidget {
   final int loggedInUserId;
+  final String token;
 
-  const CreatedJobs({@required this.loggedInUserId});
+  const CreatedJobs({@required this.loggedInUserId, @required this.token});
 
   @override
   _CreatedJobsState createState() => _CreatedJobsState();
@@ -29,9 +30,9 @@ class _CreatedJobsState extends State<CreatedJobs> {
   }
 
   Future<Job> fetchJobs() async {
-    var url = "$kBaseUrl/v1/jobs/forclient/${widget.loggedInUserId}";
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    var url = "$kBaseUrl/v1/jobs/client/2";
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 

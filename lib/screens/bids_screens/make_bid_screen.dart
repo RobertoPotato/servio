@@ -224,7 +224,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                               final int serviceId = widget.serviceId;
 
                               //createBid();
-                              final Bid bid = await createBid(
+                              createBid(
                                   snapshot.data,
                                   amount.toDouble(),
                                   coverLetter,

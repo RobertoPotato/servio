@@ -7,7 +7,7 @@ import 'package:servio/screens/service_screens/my_services_bids.dart';
 
 class MyServices extends StatefulWidget {
   static String id = "myServices";
- final String token;
+  final String token;
 
   const MyServices({@required this.token});
   @override
@@ -26,10 +26,10 @@ class _MyServicesState extends State<MyServices> {
   }
 
   Future<Service> fetchServices() async {
-    var url = "$kBaseUrl/v1/services/foruser/$kUserId";
+    var url = "$kBaseUrl/v1/services/foruser/999";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -66,7 +66,10 @@ class _MyServicesState extends State<MyServices> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => MyServicesBids(serviceId: services[index]['id'],),
+                  builder: (BuildContext context) => MyServicesBids(
+                    serviceId: services[index]['id'],
+                    token: widget.token,
+                  ),
                 ),
               );
             },

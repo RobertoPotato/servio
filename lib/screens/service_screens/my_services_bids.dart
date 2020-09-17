@@ -9,8 +9,9 @@ import 'package:servio/screens/bids_screens/bid_detail.dart';
 class MyServicesBids extends StatefulWidget {
   static String id = "bids";
   final int serviceId;
+  final String token;
 
-  MyServicesBids({this.serviceId});
+  MyServicesBids({@required this.serviceId, @required this.token});
 
   @override
   _MyServicesBidsState createState() => _MyServicesBidsState();
@@ -29,8 +30,8 @@ class _MyServicesBidsState extends State<MyServicesBids> {
   Future<BidWithUserName> fetchBidsWithUserNames() async {
     var url = "$kBaseUrl/v1/bids/formyservice/${widget.serviceId}";
 
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
     final jsonResponse = json.decode(response.body);
 
@@ -55,6 +56,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
         body: ListView.builder(
             itemCount: bidsWithUserNames == null ? 0 : bidsWithUserNames.length,
             itemBuilder: (BuildContext context, int index) {
+              print("Bids: $bidsWithUserNames");
               return InkWell(
                 onTap: () {
                   //TODO Navigate to bid details page
@@ -63,6 +65,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => BidDetails(
+                        token: widget.token,
                         serviceId: widget.serviceId,
                         bidId: bidsDataArr['id'],
                         userId: bidsDataArr['userId'],

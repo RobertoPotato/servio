@@ -12,9 +12,7 @@ Future<String> get jwtOrEmpty async {
 }
 
 bool verifyToken(String token) {
-  print("Verifying token: $token");
   var jwt = token.split(".");
-  print("JWT = $jwt");
   if (jwt.length != 3) {
     return false;
   } else {
