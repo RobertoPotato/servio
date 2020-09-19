@@ -14,7 +14,7 @@ class JobCard extends StatelessWidget {
   final int agentId;
   final bool userIsClient;
   final int jobId;
-
+  final String token;
 
   const JobCard(
       {@required this.client,
@@ -27,7 +27,8 @@ class JobCard extends StatelessWidget {
       @required this.userIsClient,
       @required this.jobId,
       @required this.clientId,
-      @required this.agentId});
+      @required this.agentId,
+      @required this.token});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,6 +51,7 @@ class JobCard extends StatelessWidget {
                 jobStart: jobStart,
                 clientId: clientId,
                 agentId: agentId,
+                token: token,
               ),
             ),
           );

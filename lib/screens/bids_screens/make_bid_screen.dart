@@ -15,13 +15,11 @@ final storage = FlutterSecureStorage();
 
 class MakeBidScreen extends StatefulWidget {
   final int serviceId;
-  final int userId;
   final String serviceTitle;
   final String serviceCategory;
 
   MakeBidScreen(
       {@required this.serviceId,
-      @required this.userId,
       @required this.serviceTitle,
       @required this.serviceCategory});
 
@@ -35,8 +33,7 @@ Future<Bid> createBid(
     String coverLetter,
     bool canTravel,
     String availability,
-    String currency,
-    int userId,
+    //String currency,
     int serviceId) async {
   final String url = "$kBaseUrl/v1/bids/";
   final response = await http.post(Uri.encodeFull(url),
@@ -45,7 +42,7 @@ Future<Bid> createBid(
         "coverLetter": coverLetter,
         "canTravel": canTravel,
         "availability": availability,
-        "currency": currency,
+        //"currency": currency,
         "serviceId": serviceId,
       }),
       //necessary for transporting json to server. Specify what data is being sent
@@ -218,9 +215,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                               final bool canTravel = formData['canTravel'];
                               final String availability =
                                   formData['availability'];
-                              final String currency =
-                                  kExampleCurrency /*TODO Uncomment This to avoid using default -> formData['currency']*/;
-                              final int userId = widget.userId;
+                              //final String currency = formData['currency'];
                               final int serviceId = widget.serviceId;
 
                               //createBid();
@@ -230,8 +225,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                                   coverLetter,
                                   canTravel,
                                   availability,
-                                  currency,
-                                  userId,
+                                  //currency,
                                   serviceId);
                             }
                           },

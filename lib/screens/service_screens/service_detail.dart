@@ -8,7 +8,6 @@ import 'package:servio/screens/bids_screens/make_bid_screen.dart';
 
 
 class ServiceDetails extends StatefulWidget {
-  //static String id = 'job_details';
 
   final userId;
   final serviceId;
@@ -46,7 +45,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO print => print(widget.)
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -109,11 +107,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                               serviceId: 1,
                               serviceCategory: "${widget.categoryTitle}",
                               serviceTitle: "${widget.title}",
-                              userId: kUserId, //TODO Implement function to get my user id (Currently logged-in user)
                             )));
                           },
                         ),
                         IconButtonWithText(
+                          //TODO Show profile on button press
                           text: 'Profile',
                           icon: Icons.person,
                           materialColor: kMyJobsColor,

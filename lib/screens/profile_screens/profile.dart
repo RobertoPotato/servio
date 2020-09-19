@@ -14,7 +14,7 @@ import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
 
-import 'job_screens/job_parent_screen.dart';
+import '../job_screens/job_parent_screen.dart';
 
 //TODO Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {

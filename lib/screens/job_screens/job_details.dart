@@ -7,7 +7,7 @@ import 'package:servio/date_time.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:servio/screens/profile_user.dart';
+import 'package:servio/screens/profile_screens/profile_user.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -20,6 +20,7 @@ class JobDetails extends StatefulWidget {
   final int jobId;
   final int clientId;
   final int agentId;
+  final String token;
 
   const JobDetails(
       {@required this.client,
@@ -32,7 +33,8 @@ class JobDetails extends StatefulWidget {
       @required this.userIsClient,
       @required this.jobId,
       @required this.clientId,
-      @required this.agentId});
+      @required this.agentId,
+      @required this.token});
 
   @override
   _JobDetailsState createState() => _JobDetailsState();
@@ -44,8 +46,8 @@ class _JobDetailsState extends State<JobDetails> {
      in the popup banner and if user is agent then fetch the client's profile instead.
      all we do is use different URLs for each case
   * */
-  int userId(bool userIsClient){
-    if (userIsClient){
+  int userId(bool userIsClient) {
+    if (userIsClient) {
       return widget.agentId;
     } else {
       return widget.clientId;
@@ -63,9 +65,9 @@ class _JobDetailsState extends State<JobDetails> {
     futureProfile = fetchProfile();
   }
 
-  Future<String> _markJobDone(int statusId) async{
+  Future<String> _markJobDone(int statusId) async {
     //post change to the url specified based on the job id an agentId
-    var url = "$kBaseUrl/v1/jobs/${widget.jobId}/${widget.agentId}/done";
+    var url = "$kBaseUrl/v1/jobs/${widget.jobId}/done";
 
     final response = await http.put(Uri.encodeFull(url),
         body: json.encode({
@@ -73,10 +75,11 @@ class _JobDetailsState extends State<JobDetails> {
         }),
         headers: {
           "accept": "application/json",
-          "content-type": "application/json"
+          "content-type": "application/json",
+          "x-auth-token": widget.token
         });
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       setState(() {
         showReviewModal = true;
       });
@@ -86,9 +89,9 @@ class _JobDetailsState extends State<JobDetails> {
     }
   }
 
-  Future<String> _markJobComplete(int statusId) async{
+  Future<String> _markJobComplete(int statusId) async {
     //post change to the url specified based on the job id an agentId
-    var url = "$kBaseUrl/v1/jobs/${widget.jobId}/${widget.clientId}/complete";
+    var url = "$kBaseUrl/v1/jobs/${widget.jobId}/complete";
 
     final response = await http.put(Uri.encodeFull(url),
         body: json.encode({
@@ -96,17 +99,16 @@ class _JobDetailsState extends State<JobDetails> {
         }),
         headers: {
           "accept": "application/json",
-          "content-type": "application/json"
+          "content-type": "application/json",
+          "x-auth-token": widget.token
         });
 
-    if(response.statusCode == 200) {
-
+    if (response.statusCode == 200) {
       return "Job has been marked as DONE";
     } else {
       return "unable to perform this action";
     }
   }
-
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
     var url = "$kBaseUrl/v1/profiles/${userId(widget.userIsClient)}";
@@ -262,20 +264,22 @@ class _JobDetailsState extends State<JobDetails> {
                 Padding(
                   padding: EdgeInsets.all(kMainHorizontalPadding),
                   child: widget.userIsClient
-                  //we are setting a static statusID for testing purposes only
+                      //we are setting a static statusID for testing purposes only
                       ? IconButtonWithText(
                           onTap: () async {
                             //Changes the status of the job to completed thus ending it.
-                           await _markJobComplete(2); //FIXME Switch to the actual intended status ID
+                            await _markJobComplete(
+                                2); //FIXME Switch to the actual intended status ID
                           },
                           text: 'Close',
                           icon: Icons.done,
                           materialColor: kAccentColor,
                         )
                       : IconButtonWithText(
-                          onTap: () async{
+                          onTap: () async {
                             //changes the status of the job to completed requesting client's input
-                            await _markJobDone(4); //FIXME Switch to the actual intended status ID
+                            await _markJobDone(
+                                4); //FIXME Switch to the actual intended status ID
                           },
                           text: 'Completed',
                           icon: Icons.thumb_up,

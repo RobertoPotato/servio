@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/screens/company.dart';
+import 'package:servio/screens/profile_screens/company_profile.dart';
 
 class CompanyCard extends StatelessWidget {
   CompanyCard(

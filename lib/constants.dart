@@ -7,6 +7,8 @@ const kLocUrl = "http://192.168.100.3:3000/api";
 const kSourceIp = "http://192.168.100.3";
 const kPort = 3000;
 const kErrorImage = "";
+const kPageNotFoundImage = "images/undraw_page_not_found.png";
+
 
 //TODO Change as needed these and add them to the image url data
 const uploadedImageUrlBase = "$kSourceIp:$kPort";

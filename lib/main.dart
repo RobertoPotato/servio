@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
 import 'screens/auth_screens/register_screen.dart';
 import 'screens/auth_screens/login_screen.dart';
 import 'screens/parent_screen.dart';
@@ -69,7 +68,6 @@ class MyApp extends StatelessWidget {
         },
       ),
       routes: {
-        HomeScreen.id: (context) => HomeScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainParentScreen.id: (context) => MainParentScreen(),

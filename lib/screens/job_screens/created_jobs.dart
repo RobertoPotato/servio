@@ -30,7 +30,7 @@ class _CreatedJobsState extends State<CreatedJobs> {
   }
 
   Future<Job> fetchJobs() async {
-    var url = "$kBaseUrl/v1/jobs/client/2";
+    var url = "$kBaseUrl/v1/jobs/forclient/2";
     final response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
@@ -69,6 +69,7 @@ class _CreatedJobsState extends State<CreatedJobs> {
 
               //In this page, the user assumes the role of the client
               return JobCard(
+                token: widget.token,
                 userIsClient: true,
                 client: client,
                 agent: agent,

@@ -8,10 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/models/ReviewWithUser.dart';
 import 'dart:convert';
-import 'package:servio/screens/profile_user.dart';
+import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
-import 'package:servio/screens/bids_screens/accept_bid.dart';
+import 'package:servio/screens/bids_screens/create_job.dart';
 import 'package:servio/components/StatsWidget.dart';
 
 class BidDetails extends StatefulWidget {
@@ -228,8 +228,9 @@ class _BidDetailsState extends State<BidDetails> {
                                 onTap: () async {
                                   try {
                                     var acceptUserBid = await acceptBid(
-                                      PostJob(
-                                          kUserId,
+                                      MJob(
+
+                                          widget.token,
                                           widget.userId,
                                           widget.bidId,
                                           widget.serviceId,
@@ -300,7 +301,7 @@ class _BidDetailsState extends State<BidDetails> {
             } else if (snapshot.hasError) {
               return ErrorScreen(
                 message: "Unable to find what you're looking for. REASONS:\n${snapshot.error}",
-                errorImage: "images/undraw_page_not_found.png",
+                errorImage: kPageNotFoundImage,
               );
             } else {
               return CircularProgressIndicator();

@@ -3,7 +3,7 @@ import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/home_screen.dart';
 import 'package:servio/screens/favorites.dart';
 import 'package:servio/screens/service_screens/my_services.dart';
-import 'package:servio/screens/profile.dart';
+import 'package:servio/screens/profile_screens/profile.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/categories.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
@@ -27,11 +27,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
       _selectedIndex = index;
     });
   }
-
-  var _screens = <Widget>[
-    HomeScreen(),
-    Categories(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +154,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                       title: Text('Settings'),
                       leading: Icon(Icons.settings, color: Colors.blueGrey),
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, SettingsScreen.id);
+                        Navigator.pushNamed(context, SettingsScreen.id);
                       },
                     ),
                     Container(
@@ -186,8 +180,15 @@ class _MainParentScreenState extends State<MainParentScreen> {
                 ),
               ),
             ),
-            body: _screens[
-                _selectedIndex], //body will be whatever screen is represented by the index
+            //body will be whatever screen is represented by the index and the
+            //token contained in snapshot.data
+            body: _selectedIndex == 0
+                ? HomeScreen(
+                    token: snapshot.data,
+                  )
+                : Categories(
+                    token: snapshot.data,
+                  ),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: kPrimaryColor,
               items: const <BottomNavigationBarItem>[

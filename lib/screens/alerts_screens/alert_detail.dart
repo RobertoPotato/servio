@@ -26,6 +26,7 @@ class AlertDetails extends StatefulWidget {
   final bool isSeen;
   final String type;
   final date;
+  final String token;
 
   AlertDetails(
       {@required this.isSeen,
@@ -34,7 +35,8 @@ class AlertDetails extends StatefulWidget {
       @required this.id,
       @required this.createdFor,
       @required this.type,
-      @required this.date});
+      @required this.date,
+      @required this.token});
 
   @override
   _AlertDetailsState createState() => _AlertDetailsState();
@@ -69,20 +71,21 @@ class _AlertDetailsState extends State<AlertDetails> {
   void initState() {
     // TODO: carry out post to update the alert's isSeen status to true
     super.initState();
-    _updateIsSeenStatus(widget.createdFor);
+    _updateIsSeenStatus(widget.id, widget.token);
   }
 
-  Future<String> _updateIsSeenStatus(int userId) async {
+  Future<String> _updateIsSeenStatus(int alertId, String token) async {
     //post change to the url specified based on the job id an agentId
-    var url = "$kBaseUrl/v1/alerts/${widget.id}/seen";
+    var url = "$kBaseUrl/v1/alerts/seen";
 
     final response = await http.put(Uri.encodeFull(url),
         body: json.encode({
-          "userId": userId,
+          "id": alertId,
         }),
         headers: {
           "accept": "application/json",
-          "content-type": "application/json"
+          "content-type": "application/json",
+          "x-auth-token": token
         });
 
     if (response.statusCode == 200) {

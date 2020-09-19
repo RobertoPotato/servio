@@ -51,10 +51,10 @@ class Service {
 }
 
 class CategoryServices extends StatefulWidget {
-  final int mId;
+  final int categoryId;
   final String categoryTitle;
 
-  CategoryServices({this.mId, this.categoryTitle});
+  CategoryServices({this.categoryId, this.categoryTitle});
 
   @override
   _CategoryServicesState createState() => _CategoryServicesState();
@@ -73,7 +73,7 @@ class _CategoryServicesState extends State<CategoryServices> {
 
   Future<Service> fetchServices() async {
     var url =
-        '$kBaseUrl/v1/services/address/${widget.mId}';
+        '$kBaseUrl/v1/services/address/${widget.categoryId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 

@@ -5,9 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/components/job_card.dart';
 
-//find all jobs for which the current logged in user is the agent
-//filter them by status ie Ongoing/active, pending and complete etc
-//default filter will be the active one. Other filters can be selected when needed.
+
 class AwardedJobs extends StatefulWidget {
   final String token;
   final int loggedInUserId;
@@ -74,6 +72,7 @@ class _AwardedJobsState extends State<AwardedJobs> {
 
               //In this page, the user assumes the role of the agent
               return JobCard(
+                token: widget.token,
                 userIsClient: false,
                 client: client,
                 agent: agent,

@@ -15,7 +15,6 @@ class JobParentScreen extends StatefulWidget {
 
 class _JobParentScreen extends State<JobParentScreen> {
   int _selectedIndex = 0;
-  int userId;
 
   void _onItemTapped(int index) {
     setState(() {

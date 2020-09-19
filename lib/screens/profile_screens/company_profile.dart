@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../components/review_card.dart';
-import '../constants.dart';
-import '../components/horizontal_buttons.dart';
-import 'map_page.dart';
+import '../../components/review_card.dart';
+import '../../constants.dart';
+import '../../components/horizontal_buttons.dart';
+import '../map_page.dart';
 import 'package:servio/components/my_divider.dart';
 
 class CompanyScreen extends StatelessWidget {

@@ -27,6 +27,10 @@ class Category {
 }
 
 class Categories extends StatefulWidget {
+
+  final String token;
+
+  const Categories({@required this.token});
   @override
   _CategoriesState createState() => _CategoriesState();
 }
@@ -66,6 +70,7 @@ class _CategoriesState extends State<Categories> {
           title: Text('Categories'),
         ),
         body: ListView.builder(
+          itemCount: data == null ? 0 : data.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
@@ -73,7 +78,7 @@ class _CategoriesState extends State<Categories> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => CategoryServices(
-                      mId: data[index]['id'],
+                      categoryId: data[index]['id'],
                       categoryTitle: data[index]['title'],
                     ),
                   ),
@@ -112,7 +117,6 @@ class _CategoriesState extends State<Categories> {
               ),
             );
           },
-          itemCount: data == null ? 0 : data.length,
         ),
       ),
     );

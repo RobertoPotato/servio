@@ -10,6 +10,7 @@ class AlertCard extends StatelessWidget {
   final bool isSeen;
   final String type;
   final date;
+  final String token;
 
   AlertCard(
       {@required this.isSeen,
@@ -18,7 +19,8 @@ class AlertCard extends StatelessWidget {
       @required this.id,
       @required this.createdFor,
       @required this.type,
-      @required this.date});
+      @required this.date,
+      @required this.token});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,6 +42,7 @@ class AlertCard extends StatelessWidget {
                   payload: payload,
                   date: date,
                   id: id,
+                  token: token,
                 ),
               ),
             );
