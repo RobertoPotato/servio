@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/auth_screens/register_screen.dart';
 import 'package:servio/screens/parent_screen.dart';
+import 'package:servio/screens/profile_screens/new_profile.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -27,6 +28,25 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool passwordsMatch;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  //Check to see that user has a profile
+  Future<String> getProfile(String token) async {
+    final String url = "$kBaseUrl/v1/profiles/mine";
+
+    final response = await http.get(Uri.encodeFull(url),
+        headers: {"Accept": "application/json", "x-auth-token": token});
+
+    final jsonResponse = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      storage.write(key: "hasProfile", value: "OK");
+      Navigator.pushNamed(context, MainParentScreen.id);
+      return "User has profile";
+    } else {
+      Navigator.pushNamed(context, NewProfile.id);
+      return "User has no profile";
+    }
+  }
 
   Future<String> logInUser(
     String email,
@@ -96,15 +116,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   var jwt = await logInUser(email, password);
                   if (jwt != null) {
                     storage.write(key: "x-auth-token", value: jwt);
+                    //getProfile(jwt);
                     Navigator.pushNamed(context, MainParentScreen.id);
                   }
                 }
               },
               child: Text('Log In'),
             ),
-            GestureDetector(onTap: (){
-              Navigator.pushNamed(context, RegisterScreen.id);
-            }  ,child: Text("Not yet registered? Register now")),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RegisterScreen.id);
+                },
+                child: Text("Not yet registered? Register now")),
           ],
         ),
       ),

@@ -82,90 +82,92 @@ class _RegisterScreenState extends State<RegisterScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            FormBuilder(
-              key: _fbKey,
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    attribute: 'firstName',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'First Name',
-                      labelText: 'First Name',
-                      //prefixIcon: Icon(Icons.work),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              FormBuilder(
+                key: _fbKey,
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                      attribute: 'firstName',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'First Name',
+                        labelText: 'First Name',
+                        //prefixIcon: Icon(Icons.work),
+                      ),
+                      validators: [FormBuilderValidators.required()],
                     ),
-                    validators: [FormBuilderValidators.required()],
-                  ),
-                  FormBuilderTextField(
-                    attribute: 'lastName',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Last Name',
-                      labelText: 'Last Name',
-                      //prefixIcon: Icon(Icons.work),
+                    FormBuilderTextField(
+                      attribute: 'lastName',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Last Name',
+                        labelText: 'Last Name',
+                        //prefixIcon: Icon(Icons.work),
+                      ),
+                      validators: [FormBuilderValidators.required()],
                     ),
-                    validators: [FormBuilderValidators.required()],
-                  ),
-                  FormBuilderTextField(
-                    attribute: 'email',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Email',
-                      labelText: 'Email',
-                      //prefixIcon: Icon(Icons.work),
+                    FormBuilderTextField(
+                      attribute: 'email',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Email',
+                        labelText: 'Email',
+                        //prefixIcon: Icon(Icons.work),
+                      ),
+                      validators: [
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.email()
+                      ],
                     ),
-                    validators: [
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.email()
-                    ],
-                  ),
-                  FormBuilderTextField(
-                    attribute: 'password',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Password',
-                      labelText: 'Password',
-                      prefixIcon: _iconToShow(),
+                    FormBuilderTextField(
+                      attribute: 'password',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Password',
+                        labelText: 'Password',
+                        prefixIcon: _iconToShow(),
+                      ),
+                      validators: [
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.minLength(8)
+                      ],
                     ),
-                    validators: [
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.minLength(8)
-                    ],
-                  ),
-                  FormBuilderTextField(
-                    attribute: 'passwordRepeat',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Repeat Password',
-                      labelText: 'Repeat Password',
-                      prefixIcon: _iconToShow(),
+                    FormBuilderTextField(
+                      attribute: 'passwordRepeat',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Repeat Password',
+                        labelText: 'Repeat Password',
+                        prefixIcon: _iconToShow(),
+                      ),
+                      validators: [FormBuilderValidators.required()],
                     ),
-                    validators: [FormBuilderValidators.required()],
-                  ),
-                  Text("Password status")
-                ],
+                    Text("Password status")
+                  ],
+                ),
               ),
-            ),
-            FlatButton(
-              onPressed: () {
-                if (_fbKey.currentState.saveAndValidate()) {
-                  final formData = _fbKey.currentState.value;
-                  final firstName = formData['firstName'].toString().trim();
-                  final lastName = formData['lastName'].toString().trim();
-                  final email = formData['email'].toString().trim();
-                  final password = formData['password'].toString().trim();
-                  final passwordRepeat =
-                      formData['passwordRepeat'].toString().trim();
+              FlatButton(
+                onPressed: () {
+                  if (_fbKey.currentState.saveAndValidate()) {
+                    final formData = _fbKey.currentState.value;
+                    final firstName = formData['firstName'].toString().trim();
+                    final lastName = formData['lastName'].toString().trim();
+                    final email = formData['email'].toString().trim();
+                    final password = formData['password'].toString().trim();
+                    final passwordRepeat =
+                        formData['passwordRepeat'].toString().trim();
 
-                  if (_checkPasswordMatch(password, passwordRepeat)) {
-                    print('Everything is safe, you can post');
-                    registerUser(firstName, lastName, email, password);
-                    //TODO On complete, go to login screen and log in
-                  } else {
-                    print("Theres a problem registering user");
+                    if (_checkPasswordMatch(password, passwordRepeat)) {
+                      print('Everything is safe, you can post');
+                      registerUser(firstName, lastName, email, password);
+                      //TODO On complete, go to login screen and log in
+                    } else {
+                      print("Theres a problem registering user");
+                    }
                   }
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ],
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
         ),
       ),
     );

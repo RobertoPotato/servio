@@ -108,7 +108,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(imageFile);
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
@@ -191,9 +190,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     padding: const EdgeInsets.only(
                                         right: kMainHorizontalPadding / 2),
                                     child: FormBuilderTextField(
-                                      onFieldSubmitted: (str) {
-                                        Navigator.pop(context);
-                                      },
                                       keyboardType: TextInputType.number,
                                       attribute: 'budgetMin',
                                       decoration: InputDecoration().copyWith(
@@ -268,7 +264,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                       Icons.add_a_photo,
                                       size: 150.0,
                                       color: kPrimaryColor,
-                                    ))
+                                    ),
+                                  )
                                 : Image.file(
                                     imageFile,
                                     width: 150.0,

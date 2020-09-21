@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-//BASE URL
+//Network Addresses
+const ipLoc = "192.168.100.3";
+const ipNet = "";
+const ip = ipLoc;
+
+const portLoc = "3000";
+const portNet = "";
+const port = portLoc;
 //TODO change to https after certificates have been configured
-const kInUrl = "http://176.58.97.72:3000/api";
-const kLocUrl = "http://192.168.100.3:3000/api";
-const kSourceIp = "http://192.168.100.3";
-const kPort = 3000;
+const kBaseUrl = "http://$ip:$port/api";
+const kImageBaseUrl = "http://$ip:$port/";
+
+
+
+
 const kErrorImage = "";
 const kPageNotFoundImage = "images/undraw_page_not_found.png";
-
-
-//TODO Change as needed these and add them to the image url data
-const uploadedImageUrlBase = "$kSourceIp:$kPort";
-
-const kBaseUrl = kLocUrl;
 
 //STATIC USER ID
 const kUserId = 1;
