@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:servio/constants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+//Contains various functions including the http request maker
+import 'register_helpers.dart';
+
+
 
 class RegisterScreen extends StatefulWidget {
   static String id = 'register';
@@ -26,51 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         passwordsMatch = true;
       });
       return true;
-    }
-  }
-
-  Icon _iconToShow() {
-    if (passwordsMatch == null) {
-      return Icon(
-        Icons.check_box_outline_blank,
-        color: kPrimaryColor,
-      );
-    } else if (passwordsMatch == true) {
-      return Icon(
-        Icons.check,
-        color: kMyBidsColor,
-      );
-    } else {
-      return Icon(
-        Icons.warning,
-        color: kMySettingsColor,
-      );
-    }
-  }
-
-  Future registerUser(
-    String firstName,
-    String lastName,
-    String email,
-    String password,
-  ) async {
-    print("$firstName $lastName is registered");
-    final String url = "$kBaseUrl/v1/auth/register";
-    final response = await http.post(Uri.encodeFull(url),
-        body: json.encode({
-          "firstName": firstName,
-          "lastName": lastName,
-          "email": email,
-          "password": password
-        }),
-        headers: {
-          "accept": "application/json",
-          "content-type": "application/json"
-        });
-    if(response.statusCode == 200) {
-      print(response.body);
-    } else {
-      print("Request failed");
     }
   }
 
@@ -124,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration().copyWith(
                         hintText: 'Password',
                         labelText: 'Password',
-                        prefixIcon: _iconToShow(),
+                        prefixIcon: iconToShow(passwordsMatch),
                       ),
                       validators: [
                         FormBuilderValidators.required(),
@@ -136,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration().copyWith(
                         hintText: 'Repeat Password',
                         labelText: 'Repeat Password',
-                        prefixIcon: _iconToShow(),
+                        prefixIcon: iconToShow(passwordsMatch),
                       ),
                       validators: [FormBuilderValidators.required()],
                     ),

@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/auth_screens/register_screen.dart';
 import 'package:servio/screens/parent_screen.dart';
-import 'package:servio/screens/profile_screens/new_profile.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -15,38 +14,11 @@ class LoginScreen extends StatefulWidget {
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
-
-  void displayDialog(ctxt, title, text) => showDialog(
-        context: ctxt,
-        builder: (ctxt) => AlertDialog(
-          title: Text(title),
-          content: Text(text),
-        ),
-      );
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool passwordsMatch;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-
-  //Check to see that user has a profile
-  Future<String> getProfile(String token) async {
-    final String url = "$kBaseUrl/v1/profiles/mine";
-
-    final response = await http.get(Uri.encodeFull(url),
-        headers: {"Accept": "application/json", "x-auth-token": token});
-
-    final jsonResponse = json.decode(response.body);
-
-    if (response.statusCode == 200) {
-      storage.write(key: "hasProfile", value: "OK");
-      Navigator.pushNamed(context, MainParentScreen.id);
-      return "User has profile";
-    } else {
-      Navigator.pushNamed(context, NewProfile.id);
-      return "User has no profile";
-    }
-  }
 
   Future<String> logInUser(
     String email,
@@ -110,14 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   final email = formData['email'].toString().trim();
                   final password = formData['password'].toString().trim();
 
-                  // Check if user has a profile
-                  //If not, go to create profile screen
-                  //If user has profile, fetch the profile and save it. On completion, go to main screen
                   var jwt = await logInUser(email, password);
                   if (jwt != null) {
-                    storage.write(key: "x-auth-token", value: jwt);
-                    //getProfile(jwt);
-                    Navigator.pushNamed(context, MainParentScreen.id);
+                    await storage.write(key: "x-auth-token", value: jwt).then(
+                          (value) =>
+                              Navigator.pushNamed(context, MainParentScreen.id),
+                        );
                   }
                 }
               },

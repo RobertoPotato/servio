@@ -6,15 +6,8 @@ final storage = FlutterSecureStorage();
 
 Future<String> get jwtOrEmpty async {
   var jwt = await storage.read(key: 'x-auth-token');
-
   if (jwt == null) return "";
   return verifyToken(jwt) ? jwt : "";
-}
-
-Future<String> get profileOkOrNull async{
-  var profileOk = await storage.read(key: 'hasProfile');
-  if(profileOk == null) return "";
-  return profileOk;
 }
 
 bool verifyToken(String token) {

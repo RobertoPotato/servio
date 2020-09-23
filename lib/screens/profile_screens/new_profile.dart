@@ -6,11 +6,10 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/errors/error_screen.dart';
+import 'package:servio/screens/parent_screen.dart';
 
 class NewProfile extends StatefulWidget {
   static String id = "new profile";
-  /*final String token;
-  NewProfile({@required this.token});*/
   @override
   _NewProfileState createState() => _NewProfileState();
 }
@@ -23,6 +22,7 @@ class Role {
 
 class _NewProfileState extends State<NewProfile> {
   File imageFile;
+
   Future<String> createProfile(String token, filename, String bio,
       String phoneNumber, int roleId) async {
     print("$phoneNumber $roleId");
@@ -39,15 +39,9 @@ class _NewProfileState extends State<NewProfile> {
     request.fields['roleId'] = roleId.toString();
 
     var res = await request.send();
-    print("Status: ${res.statusCode}");
     if (res.statusCode == 200) {
-      displayDialog(
-          context, "Success", "You have successfully set up your profile");
-    } else {
-      displayDialog(context, "Error",
-          "Could not complete your profile upload. Please try again");
+      await storage.write(key: "profile", value: 'OK').then((value) =>  Navigator.pushNamed(context, MainParentScreen.id),);
     }
-    return "";
   }
 
   Future _getImageGallery() async {

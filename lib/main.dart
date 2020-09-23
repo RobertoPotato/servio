@@ -7,19 +7,13 @@ import 'screens/service_screens/request_service.dart';
 import 'screens/settings_screen.dart';
 import 'screens/profile_screens/new_profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'dart:convert' show json, base64, ascii;
+import 'jwt_helpers.dart';
 
 final storage = FlutterSecureStorage();
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  Future<String> get jwtOrEmpty async {
-    var jwt = await storage.read(key: "x-auth-token");
-    if (jwt == null) return '';
-    return jwt;
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,31 +33,17 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: jwtOrEmpty,
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator();
-          if (snapshot.data != '') {
-            var str = snapshot.data;
-            var jwt = str.split(".");
-
-            if (jwt.length != 3) {
-              return LoginScreen();
-            } else {
-              //decode the jwt value at array index 1 => contains the payload
-              var payload = json.decode(
-                ascii.decode(
-                  base64.decode(
-                    base64.normalize(jwt[1]),
-                  ),
+          if (!snapshot.hasData)
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(kMainHorizontalPadding),
+                child: CircularProgressIndicator(
+                  semanticsLabel: "Loading...",
                 ),
-              );
-              if (DateTime.fromMillisecondsSinceEpoch(payload["exp"] * 1000)
-                  .isAfter(
-                DateTime.now(),
-              )) {
-                return MainParentScreen();
-              } else {
-                return LoginScreen();
-              }
-            }
+              ),
+            );
+          if (snapshot.data != '') {
+            return verifyToken(snapshot.data) ? MainParentScreen() : LoginScreen();
           } else
             return LoginScreen();
         },

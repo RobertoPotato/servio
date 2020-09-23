@@ -13,7 +13,6 @@ import 'package:http/http.dart' as http;
 import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
-
 import '../job_screens/job_parent_screen.dart';
 
 //TODO Use profileWithTierAndRole passing the logged in user id
@@ -40,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<ReviewWithUser> fetchReviews() async {
-    var url = "$kBaseUrl/v1/reviews/mine";
+    var url = "$kBaseUrl/v1/reviews/";
 
     final response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json", "x-auth-token": widget.token});
@@ -59,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
-    var url = "$kBaseUrl/v1/profiles/mine";
+    var url = "$kBaseUrl/v1/profiles/";
 
     final response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json", "x-auth-token": widget.token});
@@ -92,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
                         background: Image.network(
-                          snapshot.data.picture,
+                          "$kImageBaseUrl${snapshot.data.picture}",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -289,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        "Go Back",
+                        "Create Profile",
                         style: kTestTextStyleWhite,
                       ),
                     )

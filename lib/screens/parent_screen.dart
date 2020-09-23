@@ -10,6 +10,8 @@ import 'package:servio/screens/bids_screens/bids.dart';
 import 'package:servio/screens/job_screens/job_parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/screens/settings_screen.dart';
+import 'package:servio/screens/profile_screens/profile_helpers.dart';
+import 'package:servio/screens/profile_screens/new_profile.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -32,186 +34,204 @@ class _MainParentScreenState extends State<MainParentScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: jwtOrEmpty,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Center(child: CircularProgressIndicator());
-        if (snapshot.data != "") {
-          return Scaffold(
-            drawer: Container(
-              color: Colors.white, //TODO Background for sidebar
-              child: Drawer(
-                child: ListView(
-                  children: [
-                    Container(
-                      height: 250.0,
-                      child: DrawerHeader(
-                        //images/Alien-Butt.gif
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("images/Alien-Butt.gif"),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(10.0)),
+      builder: (context, jwtSnapshot) {
+        return FutureBuilder(
+          future: profileOrEmpty,
+          builder: (context, profileSnapshot) {
+            if (!jwtSnapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+            if (jwtSnapshot.data != "") {
+              print("JWT Snapshot${jwtSnapshot.data}");
+              return Scaffold(
+                drawer: Container(
+                  color: Colors.white, //TODO Background for sidebar
+                  child: Drawer(
+                    child: ListView(
+                      children: [
+                        Container(
+                          height: 250.0,
+                          child: DrawerHeader(
+                            //images/Alien-Butt.gif
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image:
+                                          AssetImage("images/Alien-Butt.gif"),
+                                      fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.circular(10.0)),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Profile'),
-                      leading: Icon(
-                        Icons.person,
-                        color: Colors.teal,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => ProfileScreen(
-                              token: snapshot.data,
-                            ),
+                        ListTile(
+                          title: Text('Profile'),
+                          leading: Icon(
+                            Icons.person,
+                            color: Colors.teal,
                           ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Favorites(Coming Soon)'),
-                      leading: Icon(
-                        Icons.favorite,
-                        color: kRedAlert,
-                      ),
-                      trailing: Icon(Icons.timer),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => FavoritesScreen(
-                              token: snapshot.data,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Messages(Coming Soon)'),
-                      leading: Icon(
-                        Icons.chat,
-                        color: Colors.tealAccent,
-                      ),
-                      trailing: Icon(Icons.timer),
-                    ),
-                    ListTile(
-                      title: Text('My Services'),
-                      leading: Icon(Icons.dashboard, color: Colors.redAccent),
-                      onTap: () {
-                        //MyServices
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => MyServices(
-                              token: snapshot.data,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('My Bids'),
-                      leading: Icon(Icons.payment, color: Colors.greenAccent),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => Bids(
-                              token: snapshot.data,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Jobs'),
-                      leading: Icon(Icons.work, color: Colors.purple),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => JobParentScreen(
-                              token: snapshot.data,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Stats(Coming Soon)'),
-                      leading: Icon(Icons.grade, color: Colors.lightBlueAccent),
-                      trailing: Icon(Icons.timer),
-                    ),
-                    ListTile(
-                      title: Text('Help'),
-                      leading: Icon(Icons.help, color: kPrimaryColor),
-                    ),
-                    ListTile(
-                      title: Text('Settings'),
-                      leading: Icon(Icons.settings, color: Colors.blueGrey),
-                      onTap: () {
-                        Navigator.pushNamed(context, SettingsScreen.id);
-                      },
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          color: kRedAlert,
-                          onPressed: () {
-                            print('Log user out');
+                          trailing: profileSnapshot.data != ''
+                              ? Text('')
+                              : Icon(
+                                  Icons.error,
+                                  color: kRedAlert,
+                                ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    profileOrNewProfile(
+                                        jwtSnapshot.data, profileSnapshot.data),
+                              ),
+                            );
                           },
-                          child: Text(
-                            'Log Out',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                        ),
+                        ListTile(
+                          title: Text('Favorites(Coming Soon)'),
+                          leading: Icon(
+                            Icons.favorite,
+                            color: kRedAlert,
+                          ),
+                          trailing: Icon(Icons.timer),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    FavoritesScreen(
+                                  token: jwtSnapshot.data,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('Messages(Coming Soon)'),
+                          leading: Icon(
+                            Icons.chat,
+                            color: Colors.tealAccent,
+                          ),
+                          trailing: Icon(Icons.timer),
+                        ),
+                        ListTile(
+                          title: Text('My Services'),
+                          leading:
+                              Icon(Icons.dashboard, color: Colors.redAccent),
+                          onTap: () {
+                            //MyServices
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => MyServices(
+                                  token: jwtSnapshot.data,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('My Bids'),
+                          leading:
+                              Icon(Icons.payment, color: Colors.greenAccent),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => Bids(
+                                  token: jwtSnapshot.data,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('Jobs'),
+                          leading: Icon(Icons.work, color: Colors.purple),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    JobParentScreen(
+                                  token: jwtSnapshot.data,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('Stats(Coming Soon)'),
+                          leading:
+                              Icon(Icons.grade, color: Colors.lightBlueAccent),
+                          trailing: Icon(Icons.timer),
+                        ),
+                        ListTile(
+                          title: Text('Help'),
+                          leading: Icon(Icons.help, color: kPrimaryColor),
+                        ),
+                        ListTile(
+                          title: Text('Settings'),
+                          leading: Icon(Icons.settings, color: Colors.blueGrey),
+                          onTap: () {
+                            Navigator.pushNamed(context, SettingsScreen.id);
+                          },
+                        ),
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FlatButton(
+                              color: kRedAlert,
+                              onPressed: () {
+                                print('Log user out');
+                              },
+                              child: Text(
+                                'Log Out',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            //body will be whatever screen is represented by the index and the
-            //token contained in snapshot.data
-            body: _selectedIndex == 0
-                ? HomeScreen(
-                    token: snapshot.data,
-                  )
-                : Categories(
-                    token: snapshot.data,
+                        )
+                      ],
+                    ),
                   ),
-            bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: kPrimaryColor,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('Home'),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.category),
-                  title: Text('Categories'),
+                //body will be whatever screen is represented by the index and the
+                //token contained in snapshot.data
+                body: _selectedIndex == 0
+                    ? HomeScreen(
+                        token: jwtSnapshot.data,
+                      )
+                    : Categories(
+                        token: jwtSnapshot.data,
+                      ),
+                bottomNavigationBar: BottomNavigationBar(
+                  backgroundColor: kPrimaryColor,
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      title: Text('Home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.category),
+                      title: Text('Categories'),
+                    ),
+                  ],
+                  currentIndex: _selectedIndex,
+                  selectedItemColor: kScaffoldBackgroundColor,
+                  onTap: _onItemTapped,
                 ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: kScaffoldBackgroundColor,
-              onTap: _onItemTapped,
-            ),
-          );
-        } else {
-          return ErrorScreen(
-            message: "Invalid Token",
-            errorImage: kErrorImage,
-          );
-        }
+              );
+            } else {
+              return ErrorScreen(
+                message: "Invalid Token",
+                errorImage: kErrorImage,
+              );
+            }
+          },
+        );
       },
     );
   }
