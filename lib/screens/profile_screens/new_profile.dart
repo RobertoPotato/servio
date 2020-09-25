@@ -44,6 +44,7 @@ class _NewProfileState extends State<NewProfile> {
             (value) => Navigator.pushNamed(context, MainParentScreen.id),
           );
     }
+    return ""; //TODO Might cause issues
   }
 
   Future _getImageGallery() async {

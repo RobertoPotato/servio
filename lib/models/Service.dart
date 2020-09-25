@@ -24,6 +24,7 @@ class Service {
     this.statusId,
     this.createdAt,
     this.updatedAt,
+    this.user,
   });
 
   int id;
@@ -40,6 +41,7 @@ class Service {
   int statusId;
   DateTime createdAt;
   DateTime updatedAt;
+  User user;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
     id: json["id"],
@@ -56,6 +58,7 @@ class Service {
     statusId: json["statusId"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
+    user: User.fromJson(json["User"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -73,5 +76,26 @@ class Service {
     "statusId": statusId,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
+    "User": user.toJson(),
+  };
+}
+
+class User {
+  User({
+    this.firstName,
+    this.lastName,
+  });
+
+  String firstName;
+  String lastName;
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    firstName: json["firstName"],
+    lastName: json["lastName"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "firstName": firstName,
+    "lastName": lastName,
   };
 }

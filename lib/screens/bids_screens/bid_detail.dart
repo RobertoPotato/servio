@@ -229,7 +229,6 @@ class _BidDetailsState extends State<BidDetails> {
                                   try {
                                     var acceptUserBid = await acceptBid(
                                       MJob(
-
                                           widget.token,
                                           widget.userId,
                                           widget.bidId,
@@ -300,7 +299,8 @@ class _BidDetailsState extends State<BidDetails> {
               );
             } else if (snapshot.hasError) {
               return ErrorScreen(
-                message: "Unable to find what you're looking for. REASONS:\n${snapshot.error}",
+                message:
+                    "Unable to find what you're looking for. REASONS:\n${snapshot.error}",
                 errorImage: kPageNotFoundImage,
               );
             } else {

@@ -60,13 +60,17 @@ class _CategoryServicesState extends State<CategoryServices> {
         title: Text(widget.categoryTitle),
       ),
       body: ListView.builder(
+        itemCount: services == null ? 0 : services.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
+              var user = services[index]['User'];
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => ServiceDetails(
+                    firstName: user['firstName'],
+                    lastName: user['lastName'],
                     userId: services[index]['userId'],
                     serviceId: services[index]['id'],
                     categoryTitle: widget.categoryTitle,
@@ -111,7 +115,6 @@ class _CategoryServicesState extends State<CategoryServices> {
             ),
           );
         },
-        itemCount: services == null ? 0 : services.length,
       ),
     );
   }

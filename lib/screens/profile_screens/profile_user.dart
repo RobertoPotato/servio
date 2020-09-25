@@ -30,6 +30,19 @@ class UserProfile extends StatelessWidget {
       @required this.roleTitle,
       @required this.roleDescription});
 
+  String getInitials(String fullNames){
+    var name = fullNames.trim();
+    var nameArr = name.split(" ");
+    if(nameArr.length >1) {
+      //First letter of the first string in array
+      var firstInitial = nameArr[0].toString()[0];
+      //First letter of the second string in array
+      var secondInitial = nameArr[1].toString()[0];
+
+      return "$firstInitial.$secondInitial";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -42,7 +55,10 @@ class UserProfile extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(avatar),
+                    backgroundColor: kPrimaryColor,
+                    child: Center(
+                      child: Text(getInitials(userName), style: kTestTextStyleWhite,),
+                    ),
                     radius: 40.0,
                   ),
                 ),
@@ -75,7 +91,9 @@ class UserProfile extends StatelessWidget {
                             ],
                           ),
                           MyVerticalDivider(
-                            height: 30, color: Colors.black54, width: 1.0,
+                            height: 30,
+                            color: Colors.black54,
+                            width: 1.0,
                           ),
                           Column(
                             children: <Widget>[
@@ -88,7 +106,9 @@ class UserProfile extends StatelessWidget {
                             ],
                           ),
                           MyVerticalDivider(
-                            height: 30, color: Colors.black54, width: 1.0,
+                            height: 30,
+                            color: Colors.black54,
+                            width: 1.0,
                           ),
                           Column(
                             children: <Widget>[

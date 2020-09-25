@@ -4,7 +4,12 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/job_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/screens/bids_screens/make_bid_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:servio/screens/profile_screens/profile_user.dart';
 
 class ServiceDetails extends StatefulWidget {
   final userId;
@@ -17,6 +22,8 @@ class ServiceDetails extends StatefulWidget {
   final imageUrl;
   final county;
   final town;
+  final firstName;
+  final lastName;
 
   ServiceDetails({
     this.userId,
@@ -29,6 +36,8 @@ class ServiceDetails extends StatefulWidget {
     this.imageUrl,
     this.county,
     this.town,
+    this.firstName,
+    this.lastName,
   });
 
   @override
@@ -36,6 +45,31 @@ class ServiceDetails extends StatefulWidget {
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
+  Future<ProfileWithTierAndRole> futureProfile;
+  List profile;
+
+  @override
+  void initState() {
+    super.initState();
+    futureProfile = fetchProfile();
+  }
+
+  //TODO Make it necessary to log in to view a user's profile
+  Future<ProfileWithTierAndRole> fetchProfile() async {
+    var url = "$kBaseUrl/v1/profiles/${widget.userId}";
+
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+
+    final jsonResponse = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return ProfileWithTierAndRole.fromJson(jsonResponse);
+    } else {
+      throw Exception('Failed to load Profile With Tier and Roles');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +92,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.network("$kImageBaseUrl${widget.imageUrl}", fit: BoxFit.cover),
+              Image.network("$kImageBaseUrl${widget.imageUrl}",
+                  fit: BoxFit.cover),
               MaterialText(
                 text: "Title: ${widget.title}", //title
                 fontStyle: kMainBlackTextStyle,
@@ -107,15 +142,78 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           },
                         ),
                         IconButtonWithText(
-                          //TODO Show profile on button press
+                          onTap: () {
+                            showModalBottomSheet<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return FutureBuilder(
+                                    future: futureProfile,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        if (snapshot.data != "") {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(30.0),
+                                                topRight: Radius.circular(30.0),
+                                              ),
+                                            ),
+                                            child: UserProfile(
+                                              userName:
+                                                  "${widget.firstName} ${widget.lastName}", //TODO Set Username
+                                              avatar: snapshot.data.avatar,
+                                              roleTitle:
+                                                  snapshot.data.role.title,
+                                              roleDescription: snapshot
+                                                  .data.role.description,
+                                              updatedAt: snapshot.data.updatedAt
+                                                  .toIso8601String(),
+                                              isVerified:
+                                                  snapshot.data.isVerified,
+                                              picture: snapshot.data.picture,
+                                              bio: snapshot.data.bio,
+                                              tierTitle:
+                                                  snapshot.data.tier.title,
+                                              tierDescription: snapshot
+                                                  .data.tier.description,
+                                              tierBadgeUrl:
+                                                  snapshot.data.tier.badgeUrl,
+                                              phoneNumber:
+                                                  snapshot.data.phoneNumber,
+                                            ),
+                                          );
+                                        }
+                                      }
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.face,
+                                              size: 54.0,
+                                              color: Colors.grey[700],
+                                            ),
+                                            Text(
+                                                "Can\'t find the user's profile information"),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                });
+                          },
                           text: 'Profile',
                           icon: Icons.person,
                           materialColor: kMyJobsColor,
                         ),
                         IconButtonWithText(
-                          text: 'Hide',
+                          text: 'Close',
                           icon: Icons.not_interested,
                           materialColor: kRedAlert,
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ],
                     ),
