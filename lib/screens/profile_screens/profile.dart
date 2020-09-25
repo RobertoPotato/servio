@@ -14,6 +14,7 @@ import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
 import '../job_screens/job_parent_screen.dart';
+import 'package:servio/screens/profile_screens/new_profile.dart';
 
 //TODO Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
@@ -278,14 +279,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Image.asset("images/undraw_page_not_found.png"),
                     Text(
-                      "Unable to find what you're looking for",
+                      "We can't seem to find a profile associated with your account",
                       style: kTestTextStyleBlack,
                     ),
                     FlatButton(
                       color: kRedAlert,
                       textColor: Colors.white,
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                NewProfile(),
+                          ),
+                        );
                       },
                       child: Text(
                         "Create Profile",

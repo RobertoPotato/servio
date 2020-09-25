@@ -6,9 +6,7 @@ import 'package:servio/components/job_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/screens/bids_screens/make_bid_screen.dart';
 
-
 class ServiceDetails extends StatefulWidget {
-
   final userId;
   final serviceId;
   final categoryTitle;
@@ -19,30 +17,25 @@ class ServiceDetails extends StatefulWidget {
   final imageUrl;
   final county;
   final town;
-  final lat;
-  final long;
 
-  ServiceDetails(
-      {this.userId,
-      this.serviceId,
-      this.categoryTitle,
-      this.title,
-      this.description,
-      this.budget,
-      this.terms,
-      this.imageUrl,
-        this.county,
-        this.town,
-        this.lat,
-        this.long
-      });
+  ServiceDetails({
+    this.userId,
+    this.serviceId,
+    this.categoryTitle,
+    this.title,
+    this.description,
+    this.budget,
+    this.terms,
+    this.imageUrl,
+    this.county,
+    this.town,
+  });
 
   @override
   _ServiceDetailsState createState() => _ServiceDetailsState();
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,10 +58,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.network(
-                  widget.imageUrl,
-                  fit: BoxFit
-                      .cover),
+              Image.network("$kImageBaseUrl${widget.imageUrl}", fit: BoxFit.cover),
               MaterialText(
                 text: "Title: ${widget.title}", //title
                 fontStyle: kMainBlackTextStyle,
@@ -103,11 +93,17 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           icon: Icons.sentiment_very_satisfied,
                           materialColor: kMyBidsColor,
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MakeBidScreen(
-                              serviceId: 1,
-                              serviceCategory: "${widget.categoryTitle}",
-                              serviceTitle: "${widget.title}",
-                            )));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    MakeBidScreen(
+                                  serviceId: 1,
+                                  serviceCategory: "${widget.categoryTitle}",
+                                  serviceTitle: "${widget.title}",
+                                ),
+                              ),
+                            );
                           },
                         ),
                         IconButtonWithText(

@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final service = serviceFromJson(jsonString);
+
 import 'dart:convert';
 
 Service serviceFromJson(String str) => Service.fromJson(json.decode(str));
@@ -13,6 +17,8 @@ class Service {
     this.budgetMax,
     this.terms,
     this.imageUrl,
+    this.county,
+    this.town,
     this.userId,
     this.categoryId,
     this.statusId,
@@ -27,6 +33,8 @@ class Service {
   double budgetMax;
   String terms;
   String imageUrl;
+  String county;
+  String town;
   int userId;
   int categoryId;
   int statusId;
@@ -41,6 +49,8 @@ class Service {
     budgetMax: json["budgetMax"].toDouble(),
     terms: json["terms"],
     imageUrl: json["imageUrl"],
+    county: json["county"],
+    town: json["town"],
     userId: json["userId"],
     categoryId: json["categoryId"],
     statusId: json["statusId"],
@@ -56,6 +66,8 @@ class Service {
     "budgetMax": budgetMax,
     "terms": terms,
     "imageUrl": imageUrl,
+    "county": county,
+    "town": town,
     "userId": userId,
     "categoryId": categoryId,
     "statusId": statusId,

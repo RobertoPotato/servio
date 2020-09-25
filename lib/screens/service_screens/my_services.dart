@@ -85,7 +85,7 @@ class _MyServicesState extends State<MyServices> {
                       vertical: kMainHorizontalPadding / 2),
                   child: Column(
                     children: <Widget>[
-                      Image.network('${services[index]['imageUrl']}'),
+                      Image.network('$kImageBaseUrl${services[index]['imageUrl']}'),
                       Text(services[index]['id'].toString()),
                       Text(
                         services[index]['title'],

@@ -3,52 +3,7 @@ import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/screens/service_screens/service_detail.dart';
-
-class Service {
-  final int id;
-  final String title;
-  final String description;
-  final double budgetMin;
-  final double budgetMax;
-  final String terms;
-  final String imageUrl;
-  final int userId;
-  final int categoryId;
-  final int statusId;
-  final String createdAt;
-  final address;
-
-  Service(
-      {this.id,
-      this.title,
-      this.description,
-      this.budgetMin,
-      this.budgetMax,
-      this.terms,
-      this.imageUrl,
-      this.userId,
-      this.categoryId,
-      this.statusId,
-      this.createdAt,
-      this.address});
-
-  factory Service.fromJson(Map<String, dynamic> json) {
-    return Service(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      budgetMin: json['budgetMin'],
-      budgetMax: json['budgetMax'],
-      terms: json['terms'],
-      imageUrl: json['imageUrl'],
-      userId: json['userId'],
-      categoryId: json['categoryId'],
-      statusId: json['statusId'],
-      createdAt: json['createdAt'],
-      address: json['Address'],
-    );
-  }
-}
+import 'package:servio/models/Service.dart';
 
 class CategoryServices extends StatefulWidget {
   final int categoryId;
@@ -73,7 +28,7 @@ class _CategoryServicesState extends State<CategoryServices> {
 
   Future<Service> fetchServices() async {
     var url =
-        '$kBaseUrl/v1/services/address/${widget.categoryId}';
+        '$kBaseUrl/v1/services/category/${widget.categoryId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
@@ -106,7 +61,6 @@ class _CategoryServicesState extends State<CategoryServices> {
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          var mAddress = services[index]['Address'];
           return InkWell(
             onTap: () {
               Navigator.push(
@@ -121,15 +75,11 @@ class _CategoryServicesState extends State<CategoryServices> {
                     budget: budget(index),
                     terms: services[index]['terms'],
                     imageUrl: services[index]['imageUrl'],
-                    county: mAddress['county'],
-                    town: mAddress['town'],
-                    lat: mAddress['lat'],
-                    long: mAddress['long'],
+                    county: services[index]['county'],
+                    town: services[index]['town'],
                   ),
                 ),
               );
-              print(
-                  "Town: ${mAddress['town']}, county: ${mAddress['county']}, lat: ${ mAddress['lat']}, long: ${mAddress['long']}");
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -144,7 +94,7 @@ class _CategoryServicesState extends State<CategoryServices> {
                   child: Column(
                     children: <Widget>[
                       Image.network(
-                          '${services[index]['imageUrl']}'),
+                          '$kImageBaseUrl${services[index]['imageUrl']}'),
                       Text(services[index]['id'].toString()),
                       Text(
                         services[index]['title'],

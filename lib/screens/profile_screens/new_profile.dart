@@ -40,7 +40,9 @@ class _NewProfileState extends State<NewProfile> {
 
     var res = await request.send();
     if (res.statusCode == 200) {
-      await storage.write(key: "profile", value: 'OK').then((value) =>  Navigator.pushNamed(context, MainParentScreen.id),);
+      await storage.write(key: "profile", value: 'OK').then(
+            (value) => Navigator.pushNamed(context, MainParentScreen.id),
+          );
     }
   }
 

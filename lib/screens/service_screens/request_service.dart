@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 import 'package:servio/components/material_text.dart';
+import 'list_of_counties.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -33,6 +34,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
   var token;
 
   Future<String> createService(
+      String county,
+      String town,
       String token,
       String title,
       String description,
@@ -51,6 +54,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
     );
     request.headers.addAll({"x-auth-token": "$token"});
     request.files.add(await http.MultipartFile.fromPath('imageUrl', filename));
+    request.fields['county'] = county;
+    request.fields['town'] = town;
     request.fields['title'] = title;
     request.fields['description'] = description;
     request.fields['budgetMin'] = budgetMin.toString();
@@ -168,10 +173,12 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     Category(id: 4, title: 'Service four'),
                                     Category(id: 5, title: 'Service five'),
                                   ]
-                                      .map((service) => DropdownMenuItem(
-                                            child: Text(service.title),
-                                            value: service.id,
-                                          ))
+                                      .map(
+                                        (service) => DropdownMenuItem(
+                                          child: Text(service.title),
+                                          value: service.id,
+                                        ),
+                                      )
                                       .toList(),
                                 ),
                                 FormBuilderTextField(
@@ -204,6 +211,35 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 value: service,
                                               ))
                                           .toList(),
+                                ),
+                                FormBuilderDropdown(
+                                  attribute: 'county',
+                                  decoration: InputDecoration().copyWith(
+                                    prefixIcon: Icon(Icons.category),
+                                  ),
+                                  hint: Text('Select your county'),
+                                  validators: [
+                                    FormBuilderValidators.required()
+                                  ],
+                                  items: counties
+                                      .map(
+                                        (county) => DropdownMenuItem(
+                                          child: Text(county),
+                                          value: county,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                FormBuilderTextField(
+                                  attribute: 'town',
+                                  decoration: InputDecoration().copyWith(
+                                    hintText: 'Town',
+                                    labelText: 'Town',
+                                    prefixIcon: Icon(Icons.location_city),
+                                  ),
+                                  validators: [
+                                    FormBuilderValidators.required()
+                                  ],
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -331,6 +367,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                         final budgetMax =
                                             double.parse(formData['budgetMax']);
                                         final terms = formData['terms'];
+                                        final county = formData['county'];
+                                        final town = formData['town'];
                                         final imageUrl =
                                             kNetworkImage /*formData['imageUrl']*/;
                                         final userId = kUserId;
@@ -339,6 +377,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                         final token = jwtSnapshot.data;
 
                                         await createService(
+                                            county,
+                                            town,
                                             token,
                                             title,
                                             description,
