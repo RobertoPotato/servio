@@ -69,7 +69,6 @@ class _AlertDetailsState extends State<AlertDetails> {
 
   @override
   void initState() {
-    // TODO: carry out post to update the alert's isSeen status to true
     super.initState();
     _updateIsSeenStatus(widget.id, widget.token);
   }

@@ -41,7 +41,7 @@ class JobDetails extends StatefulWidget {
 }
 
 class _JobDetailsState extends State<JobDetails> {
-  /*TODO
+  /*
      if user is client, fetch part of the agent's profile and store it to be used
      in the popup banner and if user is agent then fetch the client's profile instead.
      all we do is use different URLs for each case

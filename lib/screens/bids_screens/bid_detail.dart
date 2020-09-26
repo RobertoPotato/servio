@@ -15,7 +15,6 @@ import 'package:servio/screens/bids_screens/create_job.dart';
 import 'package:servio/components/StatsWidget.dart';
 
 class BidDetails extends StatefulWidget {
-  //TODO will get userId later from sharedpreferences. For now, use a static id
 
   final double amount;
   final String coverLetter;
@@ -49,7 +48,6 @@ class BidDetails extends StatefulWidget {
 
 class _BidDetailsState extends State<BidDetails> {
   var companyIsVerified = true;
-  //TODO use setState to change state of the favorite icon depending on whether or not its marked as a favorite bid
   var isFavorite = false;
 
   Future<ProfileWithTierAndRole> futureProfile;
@@ -145,25 +143,10 @@ class _BidDetailsState extends State<BidDetails> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: kMainHorizontalPadding),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          isFavorite
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: kRedAlert,
-                                  size: 30.0,
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  size: 30.0,
-                                ),
-                          MaterialText(
-                            text: "${widget.currency} ${widget.amount}",
-                            color: kMyBidsColor,
-                            fontStyle: kTestTextStyleWhite,
-                          ),
-                        ],
+                      child: MaterialText(
+                        text: "${widget.currency} ${widget.amount}",
+                        color: kMyBidsColor,
+                        fontStyle: kTestTextStyleWhite,
                       ),
                     ),
 

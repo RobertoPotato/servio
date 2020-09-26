@@ -21,7 +21,6 @@ class _AwardedJobsState extends State<AwardedJobs> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureJobs = fetchJobs();
   }

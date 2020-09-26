@@ -76,18 +76,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Category: ${widget.categoryTitle}'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.favorite_border,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () {
-                //todo implement make favorite and update icon
-              },
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -133,7 +121,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     MakeBidScreen(
-                                  serviceId: 1,
+                                  serviceId: widget.serviceId,
                                   serviceCategory: "${widget.categoryTitle}",
                                   serviceTitle: "${widget.title}",
                                 ),
@@ -160,7 +148,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                                             ),
                                             child: UserProfile(
                                               userName:
-                                                  "${widget.firstName} ${widget.lastName}", //TODO Set Username
+                                                  "${widget.firstName} ${widget.lastName}",
                                               avatar: snapshot.data.avatar,
                                               roleTitle:
                                                   snapshot.data.role.title,

@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-
-      //todo change initial route back to MainParentScreen.id
+      
       home: FutureBuilder(
         future: jwtOrEmpty,
         builder: (context, snapshot) {

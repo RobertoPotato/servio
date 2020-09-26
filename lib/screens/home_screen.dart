@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/components/top_categories.dart';
 import 'package:servio/components/hiring.dart';
-// todo uncomment when needed: import 'package:servio/components/search_delegate.dart';
+//uncomment when needed: import 'package:servio/components/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home';
@@ -63,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
               size: 30,
             ),
             onPressed: () {
-              //todo implement search functionality
               //showSearch(context: context, delegate: ServiceSearchDelegate());
             },
           ),

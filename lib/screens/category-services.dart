@@ -21,7 +21,6 @@ class _CategoryServicesState extends State<CategoryServices> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureService = fetchServices();
   }
@@ -98,7 +97,7 @@ class _CategoryServicesState extends State<CategoryServices> {
                   child: Column(
                     children: <Widget>[
                       Image.network(
-                          '$kImageBaseUrl${services[index]['imageUrl']}'),
+                          '${services[index]['imageUrl']}'),
                       Text(services[index]['id'].toString()),
                       Text(
                         services[index]['title'],
@@ -119,6 +118,3 @@ class _CategoryServicesState extends State<CategoryServices> {
     );
   }
 }
-
-//TODO don't show service items that dont have an address value.
-//TODO these can be given an inactive status id and ignored when doing a fetch

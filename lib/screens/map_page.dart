@@ -18,7 +18,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     marker.add(
       Marker(

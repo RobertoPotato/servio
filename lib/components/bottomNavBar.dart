@@ -11,7 +11,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   void _onItemTapped(int index) {
     setState(() {
-      //todo when a menu is clicked
       _selectedIndex = index;
     });
   }

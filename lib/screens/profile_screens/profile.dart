@@ -16,7 +16,7 @@ import 'package:servio/screens/bids_screens/bids.dart';
 import '../job_screens/job_parent_screen.dart';
 import 'package:servio/screens/profile_screens/new_profile.dart';
 
-//TODO Use profileWithTierAndRole passing the logged in user id
+//Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
   final String token;
   const ProfileScreen({@required this.token});

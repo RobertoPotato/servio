@@ -23,7 +23,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      //todo when a menu is clicked
       _selectedIndex = index;
     });
   }
@@ -42,7 +41,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
               print("JWT Snapshot${jwtSnapshot.data}");
               return Scaffold(
                 drawer: Container(
-                  color: Colors.white, //TODO Background for sidebar
+                  color: Colors.white, //Background for sidebar
                   child: Drawer(
                     child: ListView(
                       children: [

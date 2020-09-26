@@ -25,69 +25,63 @@ class ReviewCard extends StatelessWidget {
         width: 320.0,
         child: Card(
           elevation: kElevationValue / 2,
-          child: InkWell(
-            onTap: () {
-              //todo Navigate to job details screen
-              print('Review Item Clicked');
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: kMainHorizontalPadding,
-                  horizontal: kMainHorizontalPadding),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      child: Text(
-                        rating.toString(),
-                        style: GoogleFonts.monoton(
-                          fontSize: 44,
-                          fontStyle: FontStyle.italic,
-                          color: kPrimaryColor,
-                        ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: kMainHorizontalPadding,
+                horizontal: kMainHorizontalPadding),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: Text(
+                      rating.toString(),
+                      style: GoogleFonts.monoton(
+                        fontSize: 44,
+                        fontStyle: FontStyle.italic,
+                        color: kPrimaryColor,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              '$reviewerName',
-                              style: kHeadingTextStyle.copyWith(
-                                  color: Colors.black54),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            '$reviewerName',
+                            style: kHeadingTextStyle.copyWith(
+                                color: Colors.black54),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Flexible(
+                            child: Text(
+                              '$review',
+                              textAlign: TextAlign.start,
+                              maxLines: 4,
+                              style: kTestTextStyleBlack.copyWith(
+                                  fontSize: 15, color: Colors.black),
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                '$review',
-                                textAlign: TextAlign.start,
-                                maxLines: 4,
-                                style: kTestTextStyleBlack.copyWith(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

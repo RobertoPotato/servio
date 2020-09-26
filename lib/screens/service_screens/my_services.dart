@@ -20,7 +20,6 @@ class _MyServicesState extends State<MyServices> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureService = fetchServices();
   }
@@ -85,7 +84,7 @@ class _MyServicesState extends State<MyServices> {
                       vertical: kMainHorizontalPadding / 2),
                   child: Column(
                     children: <Widget>[
-                      Image.network('$kImageBaseUrl${services[index]['imageUrl']}'),
+                      Image.network('${services[index]['imageUrl']}'),
                       Text(services[index]['id'].toString()),
                       Text(
                         services[index]['title'],

@@ -15,7 +15,6 @@ class _ListOfReviewsState extends State<ListOfReviews> {
 
   @override
   void setState(fn) {
-    // TODO: implement setState
     super.setState(fn);
     allReviews = widget.reviews;
   }

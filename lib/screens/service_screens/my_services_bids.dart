@@ -59,7 +59,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
               print("Bids: $bidsWithUserNames");
               return InkWell(
                 onTap: () {
-                  //TODO Navigate to bid details page
+                  //Navigate to bid details page
                   var bidsDataArr = bidsWithUserNames[index];
                   Navigator.push(
                     context,
