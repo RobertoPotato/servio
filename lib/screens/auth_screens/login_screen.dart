@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
@@ -44,38 +45,57 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            FormBuilder(
-              key: _fbKey,
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    attribute: 'email',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Email',
-                      labelText: 'Email',
-                      //prefixIcon: Icon(Icons.work),
+            Image.asset(
+              "images/icon.png",
+              height: 220.0,
+              width: 220.0,
+              fit: BoxFit.cover,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: kMainHorizontalPadding,
+                  vertical: kMainHorizontalPadding / 2),
+              child: FormBuilder(
+                key: _fbKey,
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                      attribute: 'email',
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Email',
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.mail),
+                      ),
+                      validators: [
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.email()
+                      ],
                     ),
-                    validators: [
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.email()
-                    ],
-                  ),
-                  FormBuilderTextField(
-                    attribute: 'password',
-                    decoration: InputDecoration().copyWith(
-                      hintText: 'Password',
-                      labelText: 'Password',
-                      prefixIcon: Icon(Icons.security),
+                    SizedBox(
+                      height: 20.0,
                     ),
-                    validators: [
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.minLength(8)
-                    ],
-                  ),
-                ],
+                    FormBuilderTextField(
+                      keyboardType: TextInputType.visiblePassword,
+                      attribute: 'password',
+                      obscureText: true,
+                      obscuringCharacter: "\$",
+                      decoration: InputDecoration().copyWith(
+                        hintText: 'Password',
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.security),
+                      ),
+                      validators: [
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.minLength(8),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
+            SizedBox(height: 20.0,),
             FlatButton(
+              color: kPrimaryColor,
               onPressed: () async {
                 if (_fbKey.currentState.saveAndValidate()) {
                   final formData = _fbKey.currentState.value;
@@ -91,13 +111,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                 }
               },
-              child: Text('Log In'),
+              child: Text('Log In', style: kTestTextStyleWhite,),
             ),
+            SizedBox(height: 20.0,),
             GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, RegisterScreen.id);
                 },
-                child: Text("Not yet registered? Register now")),
+                child: Text("Not yet registered? Register now", style: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 16.0
+                ),)),
           ],
         ),
       ),
