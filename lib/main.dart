@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      
+
       home: FutureBuilder(
         future: jwtOrEmpty,
         builder: (context, snapshot) {
