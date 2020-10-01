@@ -64,6 +64,7 @@ class _CategoryServicesState extends State<CategoryServices> {
           return InkWell(
             onTap: () {
               var user = services[index]['User'];
+              print(services[index]['id']);
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -41,6 +41,8 @@ class UserProfile extends StatelessWidget {
 
       return "$firstInitial.$secondInitial";
     }
+    //If only one name is given, take its first character in capital and use it instead
+    return nameArr[0].toString().toUpperCase()[0];
   }
 
   @override

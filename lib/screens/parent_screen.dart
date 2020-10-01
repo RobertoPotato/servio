@@ -38,7 +38,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
             if (!jwtSnapshot.hasData)
               return Center(child: CircularProgressIndicator());
             if (jwtSnapshot.data != "") {
-              print("JWT Snapshot${jwtSnapshot.data}");
               return Scaffold(
                 drawer: Container(
                   color: Colors.white, //Background for sidebar

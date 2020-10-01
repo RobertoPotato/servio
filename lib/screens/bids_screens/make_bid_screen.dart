@@ -5,11 +5,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:http/http.dart' as http;
-import 'package:servio/models/Bid.dart';
 import 'dart:convert';
 import 'package:servio/jwt_helpers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/errors/error_screen.dart';
+import 'package:servio/models/ErrorResponse.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -27,7 +27,8 @@ class MakeBidScreen extends StatefulWidget {
   _MakeBidScreenState createState() => _MakeBidScreenState();
 }
 
-Future<Bid> createBid(
+Future<String> createBid(
+    ctxt,
     String token,
     double amount,
     String coverLetter,
@@ -52,11 +53,23 @@ Future<Bid> createBid(
         "x-auth-token": "$token"
       });
 
-  if (response.statusCode == 201) {
-    final String responseString = response.body;
-    return bidFromJson(responseString);
+  if (response.statusCode == 200) {
+    displayDialog(ctxt, "Success", "Bid made successfully");
+    await Future.delayed(const Duration(seconds: 2), (){
+      Navigator.pop(ctxt, true);
+    });
+    await Future.delayed(const Duration(seconds: 1), (){
+      Navigator.pop(ctxt, true);
+    });
+    return "Bid made successfully";
+  } else if (response.statusCode == 400) {
+    var error = errorFromJson(response.body);
+    print(error.error);
+    displayDialog(ctxt, "Error", error.error);
+    return error.error;
   } else {
-    return null;
+    displayDialog(ctxt, "Error", kSomethingWrongException);
+    return kSomethingWrongException;
   }
 }
 
@@ -90,9 +103,9 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _showSnack(BuildContext context) {
+    _showSnack(BuildContext context, String text) {
       final snackBar = SnackBar(
-        content: Text("${widget.serviceTitle}"),
+        content: Text("$text"),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
@@ -105,7 +118,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
             title: Builder(
               builder: (context) => InkWell(
                 onTap: () {
-                  _showSnack(context);
+                  _showSnack(context, widget.serviceTitle);
                 },
                 child:
                     Text('${widget.serviceCategory}: ${widget.serviceTitle}'),
@@ -205,7 +218,6 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                           icon: Icons.send,
                           onTap: () async {
                             if (_fbKey.currentState.saveAndValidate()) {
-                              //use the addAll method to combine them
                               final formData = _fbKey.currentState.value;
 
                               final double amount = double.parse(formData[
@@ -215,17 +227,15 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                               final bool canTravel = formData['canTravel'];
                               final String availability =
                                   formData['availability'];
-                              //final String currency = formData['currency'];
                               final int serviceId = widget.serviceId;
 
-                              //createBid();
                               createBid(
+                                  context,
                                   snapshot.data,
                                   amount.toDouble(),
                                   coverLetter,
                                   canTravel,
                                   availability,
-                                  //currency,
                                   serviceId);
                             }
                           },

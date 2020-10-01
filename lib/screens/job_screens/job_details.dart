@@ -8,6 +8,8 @@ import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:servio/screens/profile_screens/profile_user.dart';
+import 'package:servio/jwt_helpers.dart';
+import 'package:servio/models/ErrorResponse.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -65,7 +67,7 @@ class _JobDetailsState extends State<JobDetails> {
     futureProfile = fetchProfile();
   }
 
-  Future<String> _markJobDone(int statusId) async {
+  Future<String> _markJobDone(int statusId, ctxt) async {
     //post change to the url specified based on the job id an agentId
     var url = "$kBaseUrl/v1/jobs/${widget.jobId}/done";
 
@@ -81,15 +83,22 @@ class _JobDetailsState extends State<JobDetails> {
 
     if (response.statusCode == 200) {
       setState(() {
-        showReviewModal = true;
+        //TODO Show review prompt showReviewModal = true;
       });
-      return "Job has been marked as DONE";
-    } else {
-      return "unable to perform this action";
+      displayDialog(ctxt, "Success", "Job has been marked as DONE");
+      return "Job has been marked DONE";
+    } else if(response.statusCode == 400){
+      var error = errorFromJson(response.body);
+      displayDialog(ctxt, "Error", error.error);
+      return error.error;
+    }
+    else {
+      displayDialog(ctxt, "Error", kSomethingWrongException);
+      return kSomethingWrongException;
     }
   }
 
-  Future<String> _markJobComplete(int statusId) async {
+  Future<String> _markJobComplete(int statusId, ctxt) async {
     //post change to the url specified based on the job id an agentId
     var url = "$kBaseUrl/v1/jobs/${widget.jobId}/complete";
 
@@ -104,9 +113,14 @@ class _JobDetailsState extends State<JobDetails> {
         });
 
     if (response.statusCode == 200) {
-      return "Job has been marked as DONE";
-    } else {
-      return "unable to perform this action";
+      displayDialog(ctxt, "Success", "Job has been marked COMPLETE");
+      return "Job has been marked COMPLETE";
+    } else if(response.statusCode == 400){
+      var error = errorFromJson(response.body);
+      displayDialog(ctxt, "Error", error.error);
+      return error.error;
+    }else {
+      return kSomethingWrongException;
     }
   }
 
@@ -268,21 +282,21 @@ class _JobDetailsState extends State<JobDetails> {
                       ? IconButtonWithText(
                           onTap: () async {
                             //Changes the status of the job to completed thus ending it.
-                            await _markJobComplete(
-                                2); //FIXME Switch to the actual intended status ID
+                            //TODO Switch to the actual intended status ID
+                            await _markJobComplete(2, context);
                           },
                           text: 'Close',
-                          icon: Icons.done,
+                          icon: Icons.thumb_up,
                           materialColor: kAccentColor,
                         )
                       : IconButtonWithText(
                           onTap: () async {
                             //changes the status of the job to completed requesting client's input
-                            await _markJobDone(
-                                4); //FIXME Switch to the actual intended status ID
+                            //TODO Switch to the actual intended status ID
+                            await _markJobDone(4, context);
                           },
-                          text: 'Completed',
-                          icon: Icons.thumb_up,
+                          text: 'Done',
+                          icon: Icons.done,
                           materialColor: kAccentColor,
                         ),
                 )

@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/auth_screens/register_screen.dart';
 import 'package:servio/screens/parent_screen.dart';
+import 'package:servio/jwt_helpers.dart';
+import 'package:servio/models/ErrorResponse.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -20,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool passwordsMatch;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  Future profile;
 
   Future<String> logInUser(
     String email,
@@ -36,6 +39,42 @@ class _LoginScreenState extends State<LoginScreen> {
       return response.body;
     } else {
       return null;
+    }
+  }
+
+  getProfile(String token, ctxt) async {
+    final String url = "$kBaseUrl/v1/profiles/validate";
+
+    final response = await http.get(Uri.encodeFull(url), headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "x-auth-token": token
+    });
+
+    if (response.statusCode == 200) {
+      await storage.write(key: "profile", value: 'OK').then(
+            (value) => Navigator.pushNamed(context, MainParentScreen.id),
+          );
+    } else if (response.statusCode == 404) {
+      var error = errorFromJson(response.body);
+
+      showDialog(
+        context: context,
+        builder: (ctxt) => AlertDialog(
+          title: Text("Alert!"),
+          content: Text(error.error),
+          actions: [
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () =>
+                  Navigator.pushNamed(context, MainParentScreen.id),
+            ),
+          ],
+        ),
+      );
+    } else {
+      displayDialog(
+          context, "No profile yet", "You should set it up once logged in");
     }
   }
 
@@ -93,7 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             FlatButton(
               color: kPrimaryColor,
               onPressed: () async {
@@ -104,24 +145,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   var jwt = await logInUser(email, password);
                   if (jwt != null) {
-                    await storage.write(key: "x-auth-token", value: jwt).then(
-                          (value) =>
-                              Navigator.pushNamed(context, MainParentScreen.id),
-                        );
+                    await storage
+                        .write(key: "x-auth-token", value: jwt)
+                        .then((value) => getProfile(jwt, context)
+                            //Navigator.pushNamed(context, MainParentScreen.id),
+                            );
                   }
                 }
               },
-              child: Text('Log In', style: kTestTextStyleWhite,),
+              child: Text(
+                'Log In',
+                style: kTestTextStyleWhite,
+              ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, RegisterScreen.id);
                 },
-                child: Text("Not yet registered? Register now", style: TextStyle(
-                  color: Colors.grey[900],
-                  fontSize: 16.0
-                ),)),
+                child: Text(
+                  "Not yet registered? Register now",
+                  style: TextStyle(color: Colors.grey[900], fontSize: 16.0),
+                )),
           ],
         ),
       ),

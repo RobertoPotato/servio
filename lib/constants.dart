@@ -40,6 +40,7 @@ const kMyJobsColor = Color(0xFF02BBCA);
 const kMySettingsColor = Color(0xFFF39402);
 
 //TEXT
+const kSomethingWrongException = "Something went wrong. Please try again";
 const kStatusExplanation =
     "This is the current status of the service. It may change without notice";
 const kTravelPromptExplanation =
