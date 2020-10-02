@@ -54,21 +54,15 @@ Future<String> createBid(
       });
 
   if (response.statusCode == 200) {
-    displayDialog(ctxt, "Success", "Bid made successfully");
-    await Future.delayed(const Duration(seconds: 2), (){
-      Navigator.pop(ctxt, true);
-    });
-    await Future.delayed(const Duration(seconds: 1), (){
-      Navigator.pop(ctxt, true);
-    });
+    displayResponseCard(ctxt, "Success", "Bid made successfully", kSuccessImage);
     return "Bid made successfully";
   } else if (response.statusCode == 400) {
     var error = errorFromJson(response.body);
     print(error.error);
-    displayDialog(ctxt, "Error", error.error);
+    displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
     return error.error;
   } else {
-    displayDialog(ctxt, "Error", kSomethingWrongException);
+    displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
     return kSomethingWrongException;
   }
 }

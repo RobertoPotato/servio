@@ -1,6 +1,7 @@
 import 'dart:convert' show json, base64, ascii;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'components/response_card.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -33,9 +34,20 @@ bool verifyToken(String token) {
 }
 
 void displayDialog(ctxt, title, text) => showDialog(
-  context: ctxt,
-  builder: (ctxt) => AlertDialog(
-    title: Text(title),
-    content: Text(text),
-  ),
-);
+      context: ctxt,
+      builder: (ctxt) => AlertDialog(
+        title: Text(title),
+        content: Text(text),
+      ),
+    );
+
+void displayResponseCard(ctxt, title, text, imageUrl) => showDialog(
+      context: ctxt,
+      builder: (ctxt) => AlertDialog(
+        content: ResponseCard(
+          title: title,
+          text: text,
+          imageUrl: imageUrl,
+        ),
+      ),
+    );

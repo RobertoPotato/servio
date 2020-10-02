@@ -85,15 +85,15 @@ class _JobDetailsState extends State<JobDetails> {
       setState(() {
         //TODO Show review prompt showReviewModal = true;
       });
-      displayDialog(ctxt, "Success", "Job has been marked as DONE");
+      displayResponseCard(
+          ctxt, 'Success', "Job has been marked as DONE", kSuccessImage);
       return "Job has been marked DONE";
-    } else if(response.statusCode == 400){
+    } else if (response.statusCode == 400) {
       var error = errorFromJson(response.body);
-      displayDialog(ctxt, "Error", error.error);
+      displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
       return error.error;
-    }
-    else {
-      displayDialog(ctxt, "Error", kSomethingWrongException);
+    } else {
+      displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
       return kSomethingWrongException;
     }
   }
@@ -113,13 +113,15 @@ class _JobDetailsState extends State<JobDetails> {
         });
 
     if (response.statusCode == 200) {
-      displayDialog(ctxt, "Success", "Job has been marked COMPLETE");
+      displayResponseCard(
+          ctxt, 'Success', "Job has been marked COMPLETE", kSuccessImage);
       return "Job has been marked COMPLETE";
-    } else if(response.statusCode == 400){
+    } else if (response.statusCode == 400) {
       var error = errorFromJson(response.body);
-      displayDialog(ctxt, "Error", error.error);
+      displayResponseCard(ctxt, 'Oops!', error.error, kErrorImage);
       return error.error;
-    }else {
+    } else {
+      displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
       return kSomethingWrongException;
     }
   }
@@ -227,7 +229,7 @@ class _JobDetailsState extends State<JobDetails> {
                         ? CardWithTitleAndText(
                             title: 'Winning Bid: ${widget.bid['amount']}',
                             text:
-                                "${widget.bid['coverLetter']} and is available ${widget.bid['availability']}",
+                                "${widget.bid['coverLetter']}. \nAgent's availability is: ${widget.bid['availability']}",
                           )
                         : MaterialText(
                             text: "Started on: ${parseDate(widget.jobStart)}",

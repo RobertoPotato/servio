@@ -15,13 +15,16 @@ const kImageBaseUrl = "http://$ip:$port/";
 
 
 
-const kErrorImage = "";
+const kErrorImage = "images/Notify.png";
+const kSuccessImage = "images/confirmed.png";
 const kPageNotFoundImage = "images/undraw_page_not_found.png";
+const kReviewImage = "images/review.png";
 
 //STATIC USER ID
 const kUserId = 1;
 const kNetworkImage =
     "https://cdn.pixabay.com/photo/2020/08/01/10/04/alpine-5455013_640.jpg";
+const kSuccessbackgroundImage = "";
 const kStatusId = 1;
 
 //COLORS
@@ -30,7 +33,8 @@ const kStatusId = 1;
 //accent color
 
 //TODO remove all unnecessary colors and remain with only these three colors
-const kPrimaryColor = Color(0xFF3d2352);
+const kPrimaryColor = Color(0xFF005F86);
+//0xFF3d2352
 const kAccentColor = Colors.lightBlueAccent;
 const kScaffoldBackgroundColor = Colors.white;
 const kColorButtons = Colors.blue;
