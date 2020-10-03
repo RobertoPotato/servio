@@ -46,7 +46,6 @@ class ResponseCard extends StatelessWidget {
             child: Center(
               child: Text(
                 text,
-                maxLines: 3,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -56,12 +55,3 @@ class ResponseCard extends StatelessWidget {
     );
   }
 }
-
-/*Expanded(
-            flex: 2,
-            child: Image.asset('name'),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text("Text"),
-          ),*/

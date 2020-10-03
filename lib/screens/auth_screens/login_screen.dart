@@ -53,7 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       await storage.write(key: "profile", value: 'OK').then(
-            (value) => Navigator.pushNamed(context, MainParentScreen.id),
+            (value) => Navigator.pushNamedAndRemoveUntil(
+                context, MainParentScreen.id, (route) => false),
           );
     } else if (response.statusCode == 404) {
       var error = errorFromJson(response.body);
@@ -66,8 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             FlatButton(
               child: Text('Ok'),
-              onPressed: () =>
-                  Navigator.pushNamed(context, MainParentScreen.id),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, MainParentScreen.id, (route) => false),
             ),
           ],
         ),

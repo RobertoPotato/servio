@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:servio/jwt_helpers.dart';
+import 'package:servio/models/ErrorResponse.dart';
+import 'package:servio/screens/auth_screens/login_screen.dart';
 
 //Which icons to show
 Icon iconToShow(testCase) {
@@ -24,12 +27,8 @@ Icon iconToShow(testCase) {
 }
 
 //Post the data
-Future registerUser(
-    String firstName,
-    String lastName,
-    String email,
-    String password,
-    ) async {
+Future registerUser(String firstName, String lastName, String email,
+    String password, ctxt) async {
   print("$firstName $lastName is registered");
   final String url = "$kBaseUrl/v1/auth/register";
   final response = await http.post(Uri.encodeFull(url),
@@ -43,9 +42,13 @@ Future registerUser(
         "accept": "application/json",
         "content-type": "application/json"
       });
-  if(response.statusCode == 200) {
-    print(response.body);
+  if (response.statusCode == 200) {
+    Navigator.pushNamed(ctxt, LoginScreen.id);
+  } else if (response.statusCode == 400) {
+    var error = errorFromJson(response.body);
+    displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
   } else {
-    print("Request failed");
+    displayResponseCard(
+        ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
   }
 }

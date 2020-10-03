@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/parent_screen.dart';
+import 'package:servio/models/ErrorResponse.dart';
 
 class NewProfile extends StatefulWidget {
   static String id = "new profile";
@@ -24,7 +25,7 @@ class _NewProfileState extends State<NewProfile> {
   File imageFile;
 
   Future<String> createProfile(String token, filename, String bio,
-      String phoneNumber, int roleId) async {
+      String phoneNumber, int roleId, ctxt) async {
     print("$phoneNumber $roleId");
     final String url = "$kBaseUrl/v1/profiles";
     final request = http.MultipartRequest(
@@ -39,10 +40,20 @@ class _NewProfileState extends State<NewProfile> {
     request.fields['roleId'] = roleId.toString();
 
     var res = await request.send();
+
     if (res.statusCode == 200) {
       await storage.write(key: "profile", value: 'OK').then(
-            (value) => Navigator.pushNamed(context, MainParentScreen.id),
+            (value) => Navigator.pushNamedAndRemoveUntil(
+                context, MainParentScreen.id, (route) => false),
           );
+    } else if (res.statusCode == 409) {
+      //if the account's profile exists, show a popup with the info
+      //Instead of getting the error message from server, this one is set in the app
+      displayResponseCard(
+          ctxt, kUniversalErrorTitle, kErrorProfileConflict, kErrorImage);
+    } else {
+      displayResponseCard(
+          ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
     }
     return ""; //Might cause issues
   }
@@ -223,7 +234,8 @@ class _NewProfileState extends State<NewProfile> {
                                     imageFile.path,
                                     bio,
                                     phoneNumber,
-                                    roleId); //Path of the image to upload
+                                    roleId,
+                                    context); //Path of the image to upload
                               }
                             }
                           },

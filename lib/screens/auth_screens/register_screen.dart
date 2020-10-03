@@ -165,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       if (_checkPasswordMatch(password, passwordRepeat)) {
                         print('Everything is safe, you can post');
-                        registerUser(firstName, lastName, email, password);
+                        registerUser(firstName, lastName, email, password, context);
                         //TODO On complete, go to login screen and log in
                       } else {
                         print("Theres a problem registering user");
