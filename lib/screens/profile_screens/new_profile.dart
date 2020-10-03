@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/parent_screen.dart';
-import 'package:servio/models/ErrorResponse.dart';
 
 class NewProfile extends StatefulWidget {
   static String id = "new profile";
