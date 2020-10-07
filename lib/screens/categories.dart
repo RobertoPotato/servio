@@ -63,7 +63,6 @@ class _CategoriesState extends State<Categories> {
                       backgroundColor: Colors.grey[700],
                       textColor: Colors.white,
                       fontSize: 16.0);
-                  print(kMessage);
                 },
                 child: Icon(
                   Icons.info,

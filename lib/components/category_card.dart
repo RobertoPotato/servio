@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/category-services.dart';
 import 'package:servio/components/image_container.dart';
-import 'package:servio/jwt_helpers.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:servio/components/category_details.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -19,7 +18,8 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onLongPress: (){
-        displayResponseCard(context, data[index]['title'], 'Long press', kSuccessImage);
+        //TODO replace with the appropriate widget
+        showCategoryDetails(context);
       },
       onTap: () {
         Navigator.push(
@@ -68,3 +68,10 @@ class CategoryCard extends StatelessWidget {
     );
   }
 }
+
+void showCategoryDetails(ctxt) => showDialog(
+  context: ctxt,
+  builder: (ctxt) => AlertDialog(
+    content: CategoryDetails(),
+  )
+);
