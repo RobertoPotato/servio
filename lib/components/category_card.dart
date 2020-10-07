@@ -17,9 +17,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: (){
+      onLongPress: () {
         //TODO replace with the appropriate widget
-        showCategoryDetails(context);
+        showCategoryDetails(context, data[index]);
       },
       onTap: () {
         Navigator.push(
@@ -69,9 +69,15 @@ class CategoryCard extends StatelessWidget {
   }
 }
 
-void showCategoryDetails(ctxt) => showDialog(
-  context: ctxt,
-  builder: (ctxt) => AlertDialog(
-    content: CategoryDetails(),
-  )
-);
+void showCategoryDetails(ctxt, data) => showDialog(
+    context: ctxt,
+    builder: (ctxt) => AlertDialog(
+          content: CategoryDetails(
+            imageUrl: data['imageUrl'],
+            description: data['description'],
+            title: data['title'],
+            subCategories: data['description'],
+            serviceCount: data['serviceCount'],
+            color: data['themeColor'],
+          ),
+        ));
