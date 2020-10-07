@@ -5,7 +5,7 @@ import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/models/CategoryWithServiceCount.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Categories extends StatefulWidget {
   final String token;
@@ -48,6 +48,30 @@ class _CategoriesState extends State<Categories> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Categories'),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: kMainHorizontalPadding),
+              child: GestureDetector(
+                onTap: () {
+                  const kMessage = "Long press a category for more information";
+                  Fluttertoast.showToast(
+                      msg: kMessage,
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.SNACKBAR,
+                      timeInSecForIosWeb: 2,
+                      backgroundColor: Colors.grey[700],
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                  print(kMessage);
+                },
+                child: Icon(
+                  Icons.info,
+                  color: kAccentColor,
+                ),
+              ),
+            )
+          ],
         ),
         body: GridView.builder(
             itemCount: data == null ? 0 : data.length,

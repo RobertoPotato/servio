@@ -20,6 +20,7 @@ dependencies:
   google_fonts: ^1.1.0
   image_picker: ^0.6.7+6
   flutter_secure_storage: ^3.3.3
+  fluttertoast: ^7.1.1
 
 dev_dependencies:
   flutter_test:
