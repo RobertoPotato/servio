@@ -64,7 +64,14 @@ class _CategoryDetailsState extends State<CategoryDetails> {
               ),
             ),
             Text(widget.description),
-            Text("Sub categories", style: kHeadingSubTextStyle,),
+            Text(
+              "Sub categories",
+              style: kHeadingSubTextStyle.copyWith(
+                color: Color(
+                  hexColConvert(widget.color),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Wrap(
@@ -78,7 +85,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                         borderRadius: BorderRadius.circular(40.0),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: kMainHorizontalPadding),
+                              vertical: 8.0,
+                              horizontal: kMainHorizontalPadding),
                           child: Text(
                             text,
                             style: kTestTextStyleWhite.copyWith(fontSize: 16.0),
