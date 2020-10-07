@@ -7,14 +7,15 @@ import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/models/ReviewWithUser.dart';
-import 'package:servio/screens/settings_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/list_of_reviews.dart';
+import 'package:servio/screens/auth_screens/login_screen.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
 import '../job_screens/job_parent_screen.dart';
 import 'package:servio/screens/profile_screens/new_profile.dart';
+import 'package:servio/jwt_helpers.dart';
 
 //Use profileWithTierAndRole passing the logged in user id
 class ProfileScreen extends StatefulWidget {
@@ -249,6 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 },
                               ),
+                              /*
                               IconButtonWithText(
                                 text: 'Settings',
                                 icon: Icons.settings,
@@ -258,10 +260,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       context, SettingsScreen.id);
                                 },
                               ),
+
+                               */
                               IconButtonWithText(
                                 text: 'Log Out',
                                 icon: Icons.lock,
                                 materialColor: kRedAlert,
+                                onTap: (){
+                                  logOutUser(context, LoginScreen.id);
+                                },
                               ),
                             ],
                           ),

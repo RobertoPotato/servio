@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/home_screen.dart';
-import 'package:servio/screens/favorites.dart';
-import 'package:servio/screens/service_screens/my_services.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/categories.dart';
 import 'package:servio/screens/bids_screens/bids.dart';
 import 'package:servio/screens/job_screens/job_parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
-import 'package:servio/screens/settings_screen.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 
 import 'auth_screens/login_screen.dart';
-
-
-
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -86,6 +80,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
+                        /*
                         ListTile(
                           title: Text('Favorites(Coming Soon)'),
                           leading: Icon(
@@ -105,6 +100,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
+
                         ListTile(
                           title: Text('Messages(Coming Soon)'),
                           leading: Icon(
@@ -129,6 +125,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
+                        */
                         ListTile(
                           title: Text('My Bids'),
                           leading:
@@ -169,6 +166,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                           title: Text('Help'),
                           leading: Icon(Icons.help, color: kPrimaryColor),
                         ),
+                        /*
                         ListTile(
                           title: Text('Settings'),
                           leading: Icon(Icons.settings, color: Colors.blueGrey),
@@ -176,20 +174,20 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             Navigator.pushNamed(context, SettingsScreen.id);
                           },
                         ),
+
+                         */
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FlatButton(
-                              color: kRedAlert,
                               onPressed: () {
-
                                 logOutUser(context, LoginScreen.id);
                               },
                               child: Text(
                                 'Log Out',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.grey[600],
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

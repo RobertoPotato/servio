@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/screens/profile_screens/company_profile.dart';
+import 'package:servio/components/image_container.dart';
 
 class CompanyCard extends StatelessWidget {
   CompanyCard(
@@ -41,14 +42,12 @@ class CompanyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-          left: kMainHorizontalPadding,
-          top: kMainHorizontalPadding,
-          bottom: kMainHorizontalPadding),
-      child: Container(
-        width: width,
-        child: Card(
-          elevation: kElevationValue/2,
+      padding: const EdgeInsets.symmetric(
+          vertical: kMainHorizontalPadding / 2,
+          horizontal: kMainHorizontalPadding),
+      child: Card(
+        child: Container(
+          width: width,
           child: InkWell(
             onTap: () {
               Navigator.push(
@@ -72,11 +71,13 @@ class CompanyCard extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child: Container(
-                    child: CircleAvatar(
-                      radius: 48.0,
-                      backgroundImage: AssetImage('images/$companyImage'),
-                    ),
-                  ),
+                      child: ImageContainer(
+                    imageUrl: 'images/$companyImage',
+                    height: 48.0,
+                    borderRadius: 5.0,
+                    isNetworkImage: false,
+                    elevation: 0.0,
+                  )),
                 ),
                 Expanded(
                   flex: 2,
@@ -87,24 +88,15 @@ class CompanyCard extends StatelessWidget {
                         child: Text(
                           '$companyName',
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Text('$location',
-                          textAlign: TextAlign.center, maxLines: 2, style: TextStyle(color: kPrimaryColor),),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
                       Text(
-                        '$successRate% success',
-                        style: TextStyle(
-                            //todo implement text style for positions
-                            ),
+                        '$location',
                         textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(color: kPrimaryColor),
                       ),
                     ],
                   ),
@@ -117,4 +109,20 @@ class CompanyCard extends StatelessWidget {
     );
   }
 }
-
+/*
+Expanded(
+flex: 1,
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.stretch,
+children: <Widget>[
+Text(
+'$successRate% success',
+style: TextStyle(
+//todo implement text style for positions
+),
+textAlign: TextAlign.center,
+),
+],
+),
+),
+*/
