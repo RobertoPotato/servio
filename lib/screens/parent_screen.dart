@@ -11,6 +11,11 @@ import 'package:servio/jwt_helpers.dart';
 import 'package:servio/screens/settings_screen.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 
+import 'auth_screens/login_screen.dart';
+
+
+
+
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
 
@@ -178,7 +183,8 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             child: FlatButton(
                               color: kRedAlert,
                               onPressed: () {
-                                print('Log user out');
+
+                                logOutUser(context, LoginScreen.id);
                               },
                               child: Text(
                                 'Log Out',

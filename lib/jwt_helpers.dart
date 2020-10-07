@@ -51,3 +51,9 @@ void displayResponseCard(ctxt, title, text, imageUrl) => showDialog(
         ),
       ),
     );
+
+logOutUser(ctxt, screen) async {
+  print("Logging out");
+  await storage.delete(key: "x-auth-token");
+  Navigator.pushNamedAndRemoveUntil(ctxt, screen, (route) => false);
+}

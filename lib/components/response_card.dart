@@ -10,7 +10,7 @@ class ResponseCard extends StatelessWidget {
   final String title;
   final String text;
 
-  const ResponseCard({this.imageUrl, this.title, this.text});
+  const ResponseCard({@required this.imageUrl, @required this.title, @required this.text});
   @override
   Widget build(BuildContext context) {
     return Container(

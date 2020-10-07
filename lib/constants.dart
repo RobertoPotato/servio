@@ -51,6 +51,8 @@ const kTravelPromptExplanation =
     "This is important in case the service would require you to travel";
 const kReviewOnSuccessfulCompletion =
     "Congratulations. The job has been successfully completed. Status changes can be viewed as soon as the page is refreshed. Please take some time to review the ";
+const kLogoutError = "Logging out process failed. This is not a fatal error. You may need to clear app data.";
+
 
 const kExampleCurrency = 'KES';
 const kJobs = "Jobs";
