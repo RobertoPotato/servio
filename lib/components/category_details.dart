@@ -7,7 +7,7 @@ class CategoryDetails extends StatefulWidget {
   final String title;
   final String description;
   final String subCategories;
-  final String serviceCount;
+  final int categoryId;
   final color;
 
   const CategoryDetails(
@@ -15,8 +15,8 @@ class CategoryDetails extends StatefulWidget {
       @required this.title,
       @required this.description,
       @required this.subCategories,
-      @required this.serviceCount,
-      @required this.color});
+      @required this.color,
+      @required this.categoryId});
 
   @override
   _CategoryDetailsState createState() => _CategoryDetailsState();
@@ -50,25 +50,20 @@ class _CategoryDetailsState extends State<CategoryDetails> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Text(
-                    '${widget.title}: ',
-                    style: kHeadingTextStyle,
-                  ),
-                  Text(
-                    "${widget.serviceCount} jobs available",
-                    style: kHeadingSubTextStyle,
-                  )
-                ],
+              child: Text(
+                '${widget.title}',
+                style: kHeadingTextStyle,
               ),
             ),
             Text(widget.description),
-            Text(
-              "Sub categories",
-              style: kHeadingSubTextStyle.copyWith(
-                color: Color(
-                  hexColConvert(widget.color),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Sub categories",
+                style: kHeadingSubTextStyle.copyWith(
+                  color: Color(
+                    hexColConvert(widget.color),
+                  ),
                 ),
               ),
             ),
@@ -106,6 +101,23 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
 List<String> getSubCategories(String items) {
   var array = items.split(' ');
-  print(items);
   return array;
 }
+
+/*  Future<ServiceCount> getServiceCount() async {
+    var url = "$kBaseUrl/v1/categories/servicecount/${widget.categoryId}";
+
+    final response = await http.get(Uri.encodeFull(url), headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+    });
+
+    print(response);
+
+    final jsonResponse = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return ServiceCount.fromJson(jsonResponse);
+    } else
+      throw Exception('Couldn\'t get number of jobs');
+  }*/

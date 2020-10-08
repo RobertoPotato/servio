@@ -18,8 +18,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onLongPress: () {
-        //TODO replace with the appropriate widget
-        showCategoryDetails(context, data[index]);
+        showCategoryDetails(context, data[index], data[index]['id']);
       },
       onTap: () {
         Navigator.push(
@@ -39,7 +38,7 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ImageContainer(
-              height: 150.0,
+              height: 180.0,
               imageUrl: data[index]['imageUrl'],
               borderRadius: 5.0,
               elevation: 0.0,
@@ -54,14 +53,6 @@ class CategoryCard extends StatelessWidget {
                 color: Color(hexColConvert(data[index]['themeColor'])),
               ),
             ),
-            Text(
-              "${data[index]['serviceCount']} available jobs",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(hexColConvert(data[index]['themeColor'])),
-              ),
-            ),
           ],
         ),
       ),
@@ -69,7 +60,7 @@ class CategoryCard extends StatelessWidget {
   }
 }
 
-void showCategoryDetails(ctxt, data) => showDialog(
+void showCategoryDetails(ctxt, data, int categoryId) => showDialog(
     context: ctxt,
     builder: (ctxt) => AlertDialog(
           content: CategoryDetails(
@@ -77,7 +68,6 @@ void showCategoryDetails(ctxt, data) => showDialog(
             description: data['description'],
             title: data['title'],
             subCategories: data['description'],
-            serviceCount: data['serviceCount'],
-            color: data['themeColor'],
+            color: data['themeColor'], categoryId: categoryId,
           ),
         ));

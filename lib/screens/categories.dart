@@ -4,7 +4,7 @@ import 'package:servio/components/category_card.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:servio/models/CategoryWithServiceCount.dart';
+import 'package:servio/models/Category.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Categories extends StatefulWidget {
@@ -16,7 +16,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  Future<CategoryWithServiceCount> futureCategory;
+  Future<Category> futureCategory;
 
   List data;
   @override
@@ -25,7 +25,7 @@ class _CategoriesState extends State<Categories> {
     futureCategory = fetchCategory();
   }
 
-  Future<CategoryWithServiceCount> fetchCategory() async {
+  Future<Category> fetchCategory() async {
     var url = '$kBaseUrl/v1/categories';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
@@ -36,7 +36,7 @@ class _CategoriesState extends State<Categories> {
     });
 
     if (response.statusCode == 200) {
-      return CategoryWithServiceCount.fromJson(jsonResponse[0]);
+      return Category.fromJson(jsonResponse[0]);
     } else {
       throw Exception('Failed to load categories');
     }
@@ -86,11 +86,3 @@ class _CategoriesState extends State<Categories> {
     );
   }
 }
-
-/*
-        ListView.builder(
-          itemCount: data == null ? 0 : data.length,
-          itemBuilder: (BuildContext context, int index) {
-            return CategoryCard(data: data, index: index,);
-          },
-        )*/
