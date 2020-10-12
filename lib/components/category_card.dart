@@ -38,13 +38,15 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ImageContainer(
-              height: 180.0,
+              height: 150.0,
               imageUrl: data[index]['imageUrl'],
               borderRadius: 5.0,
               elevation: 0.0,
               isNetworkImage: true,
             ),
-            //Text(data[index]['id'].toString()),
+            SizedBox(
+              height: 10.0,
+            ),
             Text(
               data[index]['title'],
               style: TextStyle(
@@ -67,7 +69,7 @@ void showCategoryDetails(ctxt, data, int categoryId) => showDialog(
             imageUrl: data['imageUrl'],
             description: data['description'],
             title: data['title'],
-            subCategories: data['description'],
+            subCategories: data['subCategories'],
             color: data['themeColor'], categoryId: categoryId,
           ),
         ));

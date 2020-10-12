@@ -21,50 +21,10 @@ class MakeBidScreen extends StatefulWidget {
   MakeBidScreen(
       {@required this.serviceId,
       @required this.serviceTitle,
-      @required this.serviceCategory});
+      @required this.serviceCategory,});
 
   @override
   _MakeBidScreenState createState() => _MakeBidScreenState();
-}
-
-Future<String> createBid(
-    ctxt,
-    String token,
-    double amount,
-    String coverLetter,
-    bool canTravel,
-    String availability,
-    //String currency,
-    int serviceId) async {
-  final String url = "$kBaseUrl/v1/bids/";
-  final response = await http.post(Uri.encodeFull(url),
-      body: json.encode({
-        "amount": amount,
-        "coverLetter": coverLetter,
-        "canTravel": canTravel,
-        "availability": availability,
-        //"currency": currency,
-        "serviceId": serviceId,
-      }),
-      //necessary for transporting json to server. Specify what data is being sent
-      headers: {
-        "accept": "application/json",
-        "content-type": "application/json",
-        "x-auth-token": "$token"
-      });
-
-  if (response.statusCode == 200) {
-    displayResponseCard(ctxt, "Success", "Bid made successfully", kSuccessImage);
-    return "Bid made successfully";
-  } else if (response.statusCode == 400) {
-    var error = errorFromJson(response.body);
-    print(error.error);
-    displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
-    return error.error;
-  } else {
-    displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
-    return kSomethingWrongException;
-  }
 }
 
 class _MakeBidScreenState extends State<MakeBidScreen> {
@@ -72,6 +32,7 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
+  double sliderValue = 0.0;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
@@ -97,6 +58,8 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    //sliderValue.toStringAsFixed(1)
     _showSnack(BuildContext context, String text) {
       final snackBar = SnackBar(
         content: Text("$text"),
@@ -250,5 +213,46 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
         ),
       ),
     );
+  }
+}
+
+Future<String> createBid(
+    ctxt,
+    String token,
+    double amount,
+    String coverLetter,
+    bool canTravel,
+    String availability,
+    //String currency,
+    int serviceId) async {
+  final String url = "$kBaseUrl/v1/bids/";
+  final response = await http.post(Uri.encodeFull(url),
+      body: json.encode({
+        "amount": amount,
+        "coverLetter": coverLetter,
+        "canTravel": canTravel,
+        "availability": availability,
+        //"currency": currency,
+        "serviceId": serviceId,
+      }),
+      //necessary for transporting json to server. Specify what data is being sent
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "x-auth-token": "$token"
+      });
+
+  if (response.statusCode == 200) {
+    displayResponseCard(
+        ctxt, "Success", "Bid made successfully", kSuccessImage);
+    return "Bid made successfully";
+  } else if (response.statusCode == 400) {
+    var error = errorFromJson(response.body);
+    print(error.error);
+    displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
+    return error.error;
+  } else {
+    displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
+    return kSomethingWrongException;
   }
 }
