@@ -7,6 +7,7 @@ import 'package:servio/screens/bids_screens/bids.dart';
 import 'package:servio/screens/job_screens/job_parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
+import 'package:servio/screens/service_screens/my_services.dart';
 
 import 'auth_screens/login_screen.dart';
 
@@ -109,6 +110,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                           ),
                           trailing: Icon(Icons.timer),
                         ),
+                        */
                         ListTile(
                           title: Text('My Services'),
                           leading:
@@ -125,7 +127,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
-                        */
+
                         ListTile(
                           title: Text('My Bids'),
                           leading:
