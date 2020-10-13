@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:servio/components/review_card.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/material_text.dart';
@@ -7,9 +8,11 @@ import 'package:servio/date_time.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:servio/models/Review.dart';
 import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/ErrorResponse.dart';
+import 'jobs_helper_function.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -57,6 +60,7 @@ class _JobDetailsState extends State<JobDetails> {
   }
 
   Future<ProfileWithTierAndRole> futureProfile;
+  Future futureReviewOrEmpty;
   List profile;
   bool showSpinner = true;
   bool showReviewModal = false;
@@ -65,10 +69,10 @@ class _JobDetailsState extends State<JobDetails> {
   void initState() {
     super.initState();
     futureProfile = fetchProfile();
+    futureReviewOrEmpty = fetchReviewOrEmpty(widget.token, widget.jobId);
   }
 
   Future<String> _markJobDone(int statusId, ctxt) async {
-    //post change to the url specified based on the job id an agentId
     var url = "$kBaseUrl/v1/jobs/${widget.jobId}/done";
 
     final response = await http.put(Uri.encodeFull(url),
@@ -165,7 +169,7 @@ class _JobDetailsState extends State<JobDetails> {
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   background: Image.network(
-                    widget.service['imageUrl'],
+                    "$kImageBaseUrl${widget.service['imageUrl']}",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -259,7 +263,7 @@ class _JobDetailsState extends State<JobDetails> {
                               updatedAt: parseDate(
                                   snapshot.data.updatedAt.toIso8601String()),
                               isVerified: snapshot.data.isVerified,
-                              picture: snapshot.data.picture,
+                              picture: "$kImageBaseUrl${snapshot.data.picture}",
                               bio: snapshot.data.bio,
                               tierTitle: snapshot.data.tier.title,
                               tierDescription: snapshot.data.tier.description,
@@ -275,8 +279,7 @@ class _JobDetailsState extends State<JobDetails> {
                           );
                         },
                       ),
-
-                //Show the options available to the user based on the rol played in the job
+                seeReviewOrError(futureReviewOrEmpty, context, widget.token, widget.agentId),
                 Padding(
                   padding: EdgeInsets.all(kMainHorizontalPadding),
                   child: widget.userIsClient

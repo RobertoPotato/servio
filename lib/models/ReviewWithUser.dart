@@ -12,30 +12,26 @@ class ReviewWithUser {
   ReviewWithUser({
     this.stars,
     this.content,
-    this.clientId,
-    this.createdAt,
+    this.updatedAt,
     this.user,
   });
 
   double stars;
   String content;
-  int clientId;
-  DateTime createdAt;
+  DateTime updatedAt;
   User user;
 
   factory ReviewWithUser.fromJson(Map<String, dynamic> json) => ReviewWithUser(
     stars: json["stars"].toDouble(),
     content: json["content"],
-    clientId: json["clientId"],
-    createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
     user: User.fromJson(json["User"]),
   );
 
   Map<String, dynamic> toJson() => {
     "stars": stars,
     "content": content,
-    "clientId": clientId,
-    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
     "User": user.toJson(),
   };
 }

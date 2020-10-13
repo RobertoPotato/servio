@@ -101,7 +101,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
-
                         ListTile(
                           title: Text('Messages(Coming Soon)'),
                           leading: Icon(
@@ -127,7 +126,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             );
                           },
                         ),
-
                         ListTile(
                           title: Text('My Bids'),
                           leading:

@@ -15,7 +15,6 @@ import 'package:servio/screens/bids_screens/create_job.dart';
 import 'package:servio/components/StatsWidget.dart';
 
 class BidDetails extends StatefulWidget {
-
   final double amount;
   final String coverLetter;
   final bool canTravel;
@@ -111,6 +110,7 @@ class _BidDetailsState extends State<BidDetails> {
           future: futureProfile,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              print("$kImageBaseUrl${snapshot.data.picture}");
               return NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
@@ -128,7 +128,7 @@ class _BidDetailsState extends State<BidDetails> {
                         //TODO change placeholder image to show when getting actual image from the network
                         background: FadeInImage.assetNetwork(
                           placeholder: "images/business_woman.jpg",
-                          image: snapshot.data.picture,
+                          image: "$kImageBaseUrl${snapshot.data.picture}",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -140,13 +140,15 @@ class _BidDetailsState extends State<BidDetails> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: kMainHorizontalPadding),
-                      child: MaterialText(
-                        text: "${widget.currency} ${widget.amount}",
-                        color: kMyBidsColor,
-                        fontStyle: kTestTextStyleWhite,
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: kMainHorizontalPadding),
+                        child: MaterialText(
+                          text: "${widget.currency} ${widget.amount}",
+                          color: kMyBidsColor,
+                          fontStyle: kTestTextStyleWhite,
+                        ),
                       ),
                     ),
 
@@ -225,6 +227,7 @@ class _BidDetailsState extends State<BidDetails> {
                                   }
                                 },
                               ),
+                              //TODO remove this and replace with widget that only shows the unrepetitive items from the profile
                               IconButtonWithText(
                                 onTap: () {
                                   showModalBottomSheet<void>(
@@ -247,7 +250,8 @@ class _BidDetailsState extends State<BidDetails> {
                                                 .toIso8601String(),
                                             isVerified:
                                                 snapshot.data.isVerified,
-                                            picture: snapshot.data.picture,
+                                            picture:
+                                                "$kImageBaseUrl${snapshot.data.picture}",
                                             bio: snapshot.data.bio,
                                             tierTitle: snapshot.data.tier.title,
                                             tierDescription:
