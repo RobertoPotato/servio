@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
-import 'package:servio/components/review_card.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/material_text.dart';
@@ -8,7 +7,6 @@ import 'package:servio/date_time.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:servio/models/Review.dart';
 import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/ErrorResponse.dart';

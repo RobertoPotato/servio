@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/constants.dart';
 
 class CreateReview extends StatefulWidget {
@@ -29,7 +28,7 @@ class _CreateReviewState extends State<CreateReview> {
     print(sliderValue);
     return Container(
       width: 300.0,
-      height: 400.0,
+      height: 350.0,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -57,7 +56,7 @@ class _CreateReviewState extends State<CreateReview> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(iconToSHow(sliderValue), size: 38.0,),
+                    child: Icon(iconToSHow(sliderValue), size: 38.0, color: iconColor(sliderValue),),
                   ), //TODO use function that changes emoji based on value of rating given
                   FormBuilderTextField(
                     keyboardType: TextInputType.multiline,
@@ -98,6 +97,12 @@ IconData iconToSHow(double val){
   } else return Icons.error;
 }
 
-iconColor(double val){
-  if (val< )
+Color iconColor(double val){
+  if (val<= 2){
+    return Colors.redAccent;
+  } else if (val <= 3.5) {
+    return Colors.orangeAccent;
+  } else if (val <= 5) {
+    return Colors.greenAccent;
+  } else return Colors.grey[600];
 }
