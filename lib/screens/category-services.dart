@@ -59,6 +59,7 @@ class _CategoryServicesState extends State<CategoryServices> {
                 top: kMainHorizontalPadding),
             child: ServiceCard(
               service: services[index],
+              categoryTitle: widget.categoryTitle,
             ),
           );
         },

@@ -84,6 +84,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 imageUrl: "$kImageBaseUrl${widget.imageUrl}",
                 height: 400.0,
                 borderRadius: 20.0,
+                bottomRightRad: 20.0,
+                bottomLeftRad: 20.0,
                 isNetworkImage: true,
                 elevation: kElevationValue / 2,
               ),

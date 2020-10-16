@@ -18,14 +18,14 @@ class Review {
   });
 
   int id;
-  int stars;
+  double stars;
   String content;
   int reviewerId;
   DateTime updatedAt;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
     id: json["id"],
-    stars: json["stars"],
+    stars: json["stars"].toDouble(),
     content: json["content"],
     reviewerId: json["reviewerId"],
     updatedAt: DateTime.parse(json["updatedAt"]),

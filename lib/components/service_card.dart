@@ -9,7 +9,7 @@ class ServiceCard extends StatelessWidget {
 
   ServiceCard(
       {
-      @required this.service, this.categoryTitle,
+      @required this.service, @required this.categoryTitle,
      });
 
   String getBudget() {
@@ -86,7 +86,7 @@ class ServiceCard extends StatelessWidget {
                       children: [
                         ImageContainer(
                           borderRadius: 5.0,
-                          imageUrl: service['imageUrl'],
+                          imageUrl: "$kImageBaseUrl${service['imageUrl']}",
                           height: 110.0,
                           isNetworkImage: true,
                           elevation: 0.0,

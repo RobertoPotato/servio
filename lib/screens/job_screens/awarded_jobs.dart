@@ -50,7 +50,6 @@ class _AwardedJobsState extends State<AwardedJobs> {
 
   @override
   Widget build(BuildContext context) {
-    print("Awarded jobs: ${widget.token}");
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

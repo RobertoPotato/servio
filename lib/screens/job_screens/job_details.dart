@@ -267,11 +267,12 @@ class _JobDetailsState extends State<JobDetails> {
                       },
                     ),
               seeReviewOrError(
-                  futureReviewOrEmpty,
-                  context,
-                  widget.token,
-                  widget.agentId,
-                  widget.userIsClient
+                  userIsClient: widget.userIsClient,
+                  futureReview: futureReviewOrEmpty,
+                  ctxt: context,
+                  token: widget.token,
+                  jobId: widget.jobId,
+                  userName: widget.userIsClient
                       ? "${widget.agent['firstName']} ${widget.agent['lastName']}"
                       : "${widget.client['firstName']} ${widget.client['lastName']}"),
               Padding(

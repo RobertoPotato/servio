@@ -23,7 +23,6 @@ class JobCard extends StatelessWidget {
       @required this.service,
       @required this.status,
       @required this.jobStart,
-      //checks if the info coming is from the role of the current user being the client
       @required this.userIsClient,
       @required this.jobId,
       @required this.clientId,

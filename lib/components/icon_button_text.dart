@@ -17,7 +17,7 @@ class IconButtonWithText extends StatelessWidget {
     return SizedBox.fromSize(
       size: Size(80, 66), // button width and height
       child: Material(
-        elevation: kElevationValue / 2,
+        elevation: kElevationValue/3,
         borderRadius: BorderRadius.circular(10.0),
         color: materialColor, // button color
         child: InkWell(
