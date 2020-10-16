@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //Network Addresses
-const ipLoc = "192.168.100.3";
+const ipLoc = "192.168.43.58";
 const ipNet = "";
 const ip = ipLoc;
 

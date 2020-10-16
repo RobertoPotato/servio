@@ -8,8 +8,8 @@ import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/screens/bids_screens/make_bid_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:servio/screens/profile_screens/profile_user.dart';
+import 'package:servio/components/image_container.dart';
 
 class ServiceDetails extends StatefulWidget {
   final userId;
@@ -80,11 +80,21 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.network("$kImageBaseUrl${widget.imageUrl}",
-                  fit: BoxFit.cover),
-              MaterialText(
-                text: "Title: ${widget.title}", //title
-                fontStyle: kMainBlackTextStyle,
+              ImageContainer(
+                imageUrl: "$kImageBaseUrl${widget.imageUrl}",
+                height: 400.0,
+                borderRadius: 20.0,
+                isNetworkImage: true,
+                elevation: kElevationValue / 2,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding + 5,
+                    vertical: kMainHorizontalPadding / 2),
+                child: MaterialText(
+                  text: "Title: ${widget.title}", //title
+                  fontStyle: kMainBlackTextStyle,
+                ),
               ),
               CardWithTitleAndText(
                 title: 'Description',

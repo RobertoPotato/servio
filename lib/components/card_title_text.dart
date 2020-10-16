@@ -7,24 +7,21 @@ class CardWithTitleAndText extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(kMainHorizontalPadding),
-      child: Card(
-        elevation: kElevationValue / 2,
-        child: Padding(
-          padding: const EdgeInsets.all(kMainHorizontalPadding),
-          child: Column(
-            children: <Widget>[
-              Text(
-                '$title',
-                style: kHeadingTextStyle,
-              ),
-              Text(
-                '$text',
-                style: kMainBlackTextStyle.copyWith(color: Colors.grey[700], fontWeight: FontWeight.normal),
-              ),
-            ],
-          ),
+    return Card(
+      elevation: kElevationValue / 2,
+      child: Padding(
+        padding: const EdgeInsets.all(kMainHorizontalPadding),
+        child: Column(
+          children: <Widget>[
+            Text(
+              '$title',
+              style: kHeadingTextStyle,
+            ),
+            Text(
+              '$text',
+              style: kMainBlackTextStyle.copyWith(color: Colors.grey[700], fontWeight: FontWeight.normal),
+            ),
+          ],
         ),
       ),
     );

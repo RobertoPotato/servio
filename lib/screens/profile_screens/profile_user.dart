@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/my_vertical_divider.dart';
+import 'package:servio/components/image_container.dart';
 
 class UserProfile extends StatelessWidget {
   final String userName;
@@ -30,10 +31,10 @@ class UserProfile extends StatelessWidget {
       @required this.roleTitle,
       @required this.roleDescription});
 
-  String getInitials(String fullNames){
+  String getInitials(String fullNames) {
     var name = fullNames.trim();
     var nameArr = name.split(" ");
-    if(nameArr.length >1) {
+    if (nameArr.length > 1) {
       //First letter of the first string in array
       var firstInitial = nameArr[0].toString()[0];
       //First letter of the second string in array
@@ -59,7 +60,10 @@ class UserProfile extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundColor: kPrimaryColor,
                     child: Center(
-                      child: Text(getInitials(userName), style: kTestTextStyleWhite,),
+                      child: Text(
+                        getInitials(userName),
+                        style: kTestTextStyleWhite,
+                      ),
                     ),
                     radius: 40.0,
                   ),
@@ -132,8 +136,12 @@ class UserProfile extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            Container(
-              child: Image.network(picture),
+            ImageContainer(
+              height: 300,
+              borderRadius: 5.0,
+              imageUrl: picture,
+              elevation: 0.0,
+              isNetworkImage: true,
             ),
             SizedBox(
               height: 20.0,

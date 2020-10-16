@@ -11,6 +11,7 @@ import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/ErrorResponse.dart';
 import 'jobs_helper_function.dart';
+import 'package:servio/components/image_container.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -32,7 +33,6 @@ class JobDetails extends StatefulWidget {
       @required this.service,
       @required this.status,
       @required this.jobStart,
-      //checks if the info coming is from the role of the current user being the client
       @required this.userIsClient,
       @required this.jobId,
       @required this.clientId,
@@ -44,11 +44,6 @@ class JobDetails extends StatefulWidget {
 }
 
 class _JobDetailsState extends State<JobDetails> {
-  /*
-     if user is client, fetch part of the agent's profile and store it to be used
-     in the popup banner and if user is agent then fetch the client's profile instead.
-     all we do is use different URLs for each case
-  * */
   int userId(bool userIsClient) {
     if (userIsClient) {
       return widget.agentId;
@@ -157,154 +152,154 @@ class _JobDetailsState extends State<JobDetails> {
 
     return SafeArea(
       child: Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 370.0,
-                floating: false,
-                pinned: false,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: Image.network(
-                    "$kImageBaseUrl${widget.service['imageUrl']}",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                title: InkWell(
-                  onTap: () {
-                    _showSnack(context, widget.status["description"]);
-                  },
-                  child: Text(
-                    "Job Status: ${widget.status["title"]}",
-                    style: kAppBarTitle.copyWith(
-                        color: Colors.white, fontSize: 24.0),
-                  ),
-                ),
-              )
-            ];
-          },
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kMainHorizontalPadding,
-                      vertical: kMainHorizontalPadding / 3),
-                  child: MaterialText(
-                    text: "${widget.service["title"]}",
-                    fontStyle: kTestTextStyleWhite,
-                    color: kPrimaryColor,
-                  ),
-                ),
-                CardWithTitleAndText(
-                  title: "Project Description",
-                  text: "${widget.service["description"]}",
-                ),
-                //Show the terms of the job and when the job was created
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kMainHorizontalPadding,
-                      vertical: kMainHorizontalPadding / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      MaterialText(
-                        text: "${widget.service["terms"]}",
-                        fontStyle: kTestTextStyleWhite,
-                        color: kMyJobsColor,
-                      ),
-                      Flexible(
-                          child: Text(
-                        parseDate(widget.service["createdAt"]),
-                        style: kTestTextStyleBlack,
-                        maxLines: 4,
-                        overflow: TextOverflow.fade,
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(kMainHorizontalPadding),
-                  child: Container(
-                    child: widget.userIsClient
-                        ? CardWithTitleAndText(
-                            title: 'Winning Bid: ${widget.bid['amount']}',
-                            text:
-                                "${widget.bid['coverLetter']}. \nAgent's availability is: ${widget.bid['availability']}",
-                          )
-                        : MaterialText(
-                            text: "Started on: ${parseDate(widget.jobStart)}",
-                            color: kPrimaryColor,
-                            fontStyle: kHeadingSubTextStyle.copyWith(
-                                color: Colors.white),
-                          ),
-                  ),
-                ),
-                showSpinner
-                    ? MaterialText(
-                        text: "Looking for user\'s profile",
-                        fontStyle: kTestTextStyleWhite,
-                        color: kPrimaryColor,
-                      )
-                    : FutureBuilder<ProfileWithTierAndRole>(
-                        future: futureProfile,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return UserProfile(
-                              userName: widget.userIsClient
-                                  ? "${widget.agent['firstName']} ${widget.agent['lastName']}"
-                                  : "${widget.client['firstName']} ${widget.client['lastName']}",
-                              avatar: snapshot.data.avatar,
-                              roleTitle: snapshot.data.role.title,
-                              roleDescription: snapshot.data.role.description,
-                              updatedAt: parseDate(
-                                  snapshot.data.updatedAt.toIso8601String()),
-                              isVerified: snapshot.data.isVerified,
-                              picture: "$kImageBaseUrl${snapshot.data.picture}",
-                              bio: snapshot.data.bio,
-                              tierTitle: snapshot.data.tier.title,
-                              tierDescription: snapshot.data.tier.description,
-                              tierBadgeUrl: snapshot.data.tier.badgeUrl,
-                              phoneNumber: snapshot.data.phoneNumber,
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text('Failed to load profile');
-                          }
-                          return Center(
-                            child:
-                                Container(child: CircularProgressIndicator()),
-                          );
-                        },
-                      ),
-                seeReviewOrError(futureReviewOrEmpty, context, widget.token, widget.agentId),
-                Padding(
-                  padding: EdgeInsets.all(kMainHorizontalPadding),
-                  child: widget.userIsClient
-                      //we are setting a static statusID for testing purposes only
-                      ? IconButtonWithText(
-                          onTap: () async {
-                            //Changes the status of the job to completed thus ending it.
-                            //TODO Switch to the actual intended status ID
-                            await _markJobComplete(2, context);
-                          },
-                          text: 'Close',
-                          icon: Icons.thumb_up,
-                          materialColor: kAccentColor,
-                        )
-                      : IconButtonWithText(
-                          onTap: () async {
-                            //changes the status of the job to completed requesting client's input
-                            //TODO Switch to the actual intended status ID
-                            await _markJobDone(4, context);
-                          },
-                          text: 'Done',
-                          icon: Icons.done,
-                          materialColor: kAccentColor,
-                        ),
-                )
-              ],
+        appBar: AppBar(
+          title: InkWell(
+            onTap: () {
+              _showSnack(context, widget.status["description"]);
+            },
+            child: Text(
+              "Job Status: ${widget.status["title"]}",
+              style: kAppBarTitle.copyWith(color: Colors.white, fontSize: 24.0),
             ),
+          ),
+        ),
+        //,
+        /**/
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageContainer(
+                imageUrl: "$kImageBaseUrl${widget.service['imageUrl']}",
+                height: 400.0,
+                borderRadius: 20.0,
+                bottomLeftRad: 20.0,
+                bottomRightRad: 20.0,
+                isNetworkImage: true,
+                elevation: kElevationValue / 2,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding,
+                    vertical: kMainHorizontalPadding / 2),
+                child: MaterialText(
+                  text: "${widget.service["title"]}",
+                  fontStyle: kTestTextStyleWhite,
+                  color: kPrimaryColor,
+                ),
+              ),
+              CardWithTitleAndText(
+                title: "Project Description",
+                text: "${widget.service["description"]}",
+              ),
+              //Show the terms of the job and when the job was created
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding,
+                    vertical: kMainHorizontalPadding / 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialText(
+                      text: "${widget.service["terms"]}",
+                      fontStyle: kTestTextStyleWhite,
+                      color: kMyJobsColor,
+                    ),
+                    Flexible(
+                        child: Text(
+                      parseDate(widget.service["createdAt"]),
+                      style: kTestTextStyleBlack,
+                      maxLines: 4,
+                      overflow: TextOverflow.fade,
+                    )),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(kMainHorizontalPadding),
+                child: Container(
+                  child: widget.userIsClient
+                      ? CardWithTitleAndText(
+                          title: 'Winning Bid: ${widget.bid['amount']}',
+                          text:
+                              "${widget.bid['coverLetter']}. \nAgent's availability is: ${widget.bid['availability']}",
+                        )
+                      : MaterialText(
+                          text: "Started on: ${parseDate(widget.jobStart)}",
+                          color: kPrimaryColor,
+                          fontStyle: kHeadingSubTextStyle.copyWith(
+                              color: Colors.white),
+                        ),
+                ),
+              ),
+              showSpinner
+                  ? MaterialText(
+                      text: "Looking for user\'s profile",
+                      fontStyle: kTestTextStyleWhite,
+                      color: kPrimaryColor,
+                    )
+                  : FutureBuilder<ProfileWithTierAndRole>(
+                      future: futureProfile,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return UserProfile(
+                            userName: widget.userIsClient
+                                ? "${widget.agent['firstName']} ${widget.agent['lastName']}"
+                                : "${widget.client['firstName']} ${widget.client['lastName']}",
+                            avatar: snapshot.data.avatar,
+                            roleTitle: snapshot.data.role.title,
+                            roleDescription: snapshot.data.role.description,
+                            updatedAt: parseDate(
+                                snapshot.data.updatedAt.toIso8601String()),
+                            isVerified: snapshot.data.isVerified,
+                            picture: "$kImageBaseUrl${snapshot.data.picture}",
+                            bio: snapshot.data.bio,
+                            tierTitle: snapshot.data.tier.title,
+                            tierDescription: snapshot.data.tier.description,
+                            tierBadgeUrl: snapshot.data.tier.badgeUrl,
+                            phoneNumber: snapshot.data.phoneNumber,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Failed to load profile');
+                        }
+                        return Center(
+                          child: Container(child: CircularProgressIndicator()),
+                        );
+                      },
+                    ),
+              seeReviewOrError(
+                  futureReviewOrEmpty,
+                  context,
+                  widget.token,
+                  widget.agentId,
+                  widget.userIsClient
+                      ? "${widget.agent['firstName']} ${widget.agent['lastName']}"
+                      : "${widget.client['firstName']} ${widget.client['lastName']}"),
+              Padding(
+                padding: EdgeInsets.all(kMainHorizontalPadding),
+                child: widget.userIsClient
+                    //we are setting a static statusID for testing purposes only
+                    ? IconButtonWithText(
+                        onTap: () async {
+                          //Changes the status of the job to completed thus ending it.
+                          //TODO Switch to the actual intended status ID
+                          await _markJobComplete(2, context);
+                        },
+                        text: 'Close',
+                        icon: Icons.thumb_up,
+                        materialColor: kAccentColor,
+                      )
+                    : IconButtonWithText(
+                        onTap: () async {
+                          //changes the status of the job to completed requesting client's input
+                          //TODO Switch to the actual intended status ID
+                          await _markJobDone(4, context);
+                        },
+                        text: 'Done',
+                        icon: Icons.done,
+                        materialColor: kAccentColor,
+                      ),
+              )
+            ],
           ),
         ),
       ),

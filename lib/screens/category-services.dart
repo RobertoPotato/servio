@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:servio/screens/service_screens/service_detail.dart';
 import 'package:servio/models/Service.dart';
+import 'package:servio/components/service_card.dart';
 
 class CategoryServices extends StatefulWidget {
   final int categoryId;
@@ -26,8 +26,7 @@ class _CategoryServicesState extends State<CategoryServices> {
   }
 
   Future<Service> fetchServices() async {
-    var url =
-        '$kBaseUrl/v1/services/category/${widget.categoryId}';
+    var url = '$kBaseUrl/v1/services/category/${widget.categoryId}';
     final response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
@@ -44,14 +43,6 @@ class _CategoryServicesState extends State<CategoryServices> {
     }
   }
 
-  String budget(index) {
-    if (services[index]['budgetMin'] > services[index]['budgetMax']) {
-      return "${services[index]['budgetMax']} - ${services[index]['budgetMin']}";
-    } else {
-      return "${services[index]['budgetMin']} - ${services[index]['budgetMax']}";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,57 +52,13 @@ class _CategoryServicesState extends State<CategoryServices> {
       body: ListView.builder(
         itemCount: services == null ? 0 : services.length,
         itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              var user = services[index]['User'];
-              print(services[index]['id']);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => ServiceDetails(
-                    firstName: user['firstName'],
-                    lastName: user['lastName'],
-                    userId: services[index]['userId'],
-                    serviceId: services[index]['id'],
-                    categoryTitle: widget.categoryTitle,
-                    title: services[index]['title'],
-                    description: services[index]['description'],
-                    budget: budget(index),
-                    terms: services[index]['terms'],
-                    imageUrl: services[index]['imageUrl'],
-                    county: services[index]['county'],
-                    town: services[index]['town'],
-                  ),
-                ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kMainHorizontalPadding,
-                  vertical: kMainHorizontalPadding / 4),
-              child: Card(
-                elevation: kElevationValue / 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kMainHorizontalPadding,
-                      vertical: kMainHorizontalPadding / 2),
-                  child: Column(
-                    children: <Widget>[
-                      Image.network(
-                          '${services[index]['imageUrl']}'),
-                      Text(services[index]['id'].toString()),
-                      Text(
-                        services[index]['title'],
-                        style: kMainBlackTextStyle,
-                      ),
-                      Text(services[index]['description']),
-                      Text(services[index]['imageUrl']),
-                      Text(budget(index)),
-                      Text("Job Terms: ${services[index]['terms']}"),
-                    ],
-                  ),
-                ),
-              ),
+          return Padding(
+            padding: const EdgeInsets.only(
+                left: kMainHorizontalPadding,
+                right: kMainHorizontalPadding,
+                top: kMainHorizontalPadding),
+            child: ServiceCard(
+              service: services[index],
             ),
           );
         },

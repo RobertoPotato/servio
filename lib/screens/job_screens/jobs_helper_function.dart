@@ -34,7 +34,7 @@ Future fetchReviewOrEmpty(String token, int jobId) async {
 
 //return a widget that shows a review if available or a button telling you to
 //leave a review if not, or an error if we couldn't fetch the review
-Widget seeReviewOrError(futureReview, ctxt, token, userId) {
+Widget seeReviewOrError(futureReview, ctxt, token, userId, userName) {
   return FutureBuilder(
     future: futureReview,
     builder: (ctxt, reviewSnapshot) {
@@ -44,7 +44,7 @@ Widget seeReviewOrError(futureReview, ctxt, token, userId) {
                 child: FlatButton(
                   color: kPrimaryColor,
                   onPressed: () {
-                    displayCreateReviewCard(ctxt, token, userId);
+                    displayCreateReviewCard(ctxt, token, userId, userName);
                     print("Show popup that lets user write a review");
                   },
                   child: Text(
@@ -69,12 +69,13 @@ Widget seeReviewOrError(futureReview, ctxt, token, userId) {
   );
 }
 
-void displayCreateReviewCard(ctxt, token, userId) => showDialog(
+void displayCreateReviewCard(ctxt, token, userId, userName) => showDialog(
     context: ctxt,
     builder: (ctxt) => AlertDialog(
           content: CreateReview(
             token: token,
             clientOrAgentId: userId,
+            name: userName
           ),
         ));
 

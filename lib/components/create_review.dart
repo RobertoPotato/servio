@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/constants.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
+
+var parser = EmojiParser();
 
 class CreateReview extends StatefulWidget {
   final token;
@@ -18,6 +21,9 @@ class CreateReview extends StatefulWidget {
 class _CreateReviewState extends State<CreateReview> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   double sliderValue = 2.5;
+  var min = 0.0;
+  var max = 5.0;
+  var divisions = 50;
 
   sendReview() {
     print("Review has been sent");
@@ -25,6 +31,7 @@ class _CreateReviewState extends State<CreateReview> {
 
   @override
   Widget build(BuildContext context) {
+
     print(sliderValue);
     return Container(
       width: 300.0,
@@ -32,32 +39,37 @@ class _CreateReviewState extends State<CreateReview> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("${widget.name}"),
-                Icon(Icons.close),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left:kMainHorizontalPadding, right: kMainHorizontalPadding, bottom: kMainHorizontalPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("${widget.name}", style: kHeadingTextStyle,),
+                  Text("${emojiToShow(sliderValue)}", style: TextStyle(fontSize: 30.0),)
+                ],
+              ),
             ),
-            Container(
+            Padding(
+              padding: const EdgeInsets.only(left:kMainHorizontalPadding, right: kMainHorizontalPadding, bottom: kMainHorizontalPadding),
               child: Column(
                 children: [
                   Slider(
+                    label: sliderValue.toStringAsFixed(1),
                     activeColor: kPrimaryColor,
-                    min: 0,
-                    max: 5,
+                    min: min,
+                    max: max,
                     value: sliderValue,
                     onChanged: (value) {
                       setState(() {
                         sliderValue = value;
                       });
                     },
-                    divisions: 10,
+                    divisions: divisions,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(iconToSHow(sliderValue), size: 38.0, color: iconColor(sliderValue),),
-                  ), //TODO use function that changes emoji based on value of rating given
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text('Rated: ${sliderValue.toStringAsFixed(1)}', style: kHeadingSubTextStyle,),
+                  ),
                   FormBuilderTextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: 4,
@@ -94,6 +106,26 @@ IconData iconToSHow(double val){
     return Icons.sentiment_satisfied;
   } else if (val <= 5){
     return Icons.sentiment_very_satisfied;
+  } else return Icons.error;
+}
+
+emojiToShow(double val){
+  var verySatisfied = '😀';
+  var satisfied = '😊';
+  var neutral = '😐';
+  var dissatisfied = '😧';
+  var veryDissatisfied = '😣';
+
+  if(val <= 1) {
+    return veryDissatisfied;
+  } else if (val <= 2){
+    return dissatisfied;
+  } else if (val <= 3){
+    return neutral;
+  } else if (val <= 4){
+    return satisfied;
+  } else if (val <= 5){
+    return verySatisfied;
   } else return Icons.error;
 }
 
