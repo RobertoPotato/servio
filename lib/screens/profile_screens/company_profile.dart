@@ -122,22 +122,22 @@ class CompanyScreen extends StatelessWidget {
                         ReviewCard(
                           reviewerName: 'John Doe',
                           review: kLoremIpsum,
-                          rating: 4.5,
+                          rating: "4.5",
                         ),
                         ReviewCard(
                           reviewerName: 'Jane Doe',
                           review: kLoremIpsumShort,
-                          rating: 2.0,
+                          rating: "2.0",
                         ),
                         ReviewCard(
                           reviewerName: 'Jack Doe',
                           review: kLoremIpsum,
-                          rating: 4.5,
+                          rating: "4.5",
                         ),
                         ReviewCard(
                           reviewerName: 'Joan Doe',
                           review: kLoremIpsumShort,
-                          rating: 4.5,
+                          rating: "4.5",
                         ),
                       ],
                     ),

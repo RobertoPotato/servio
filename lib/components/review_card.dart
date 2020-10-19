@@ -11,7 +11,7 @@ class ReviewCard extends StatelessWidget {
       @required this.rating});
   final String reviewerName;
   final String review;
-  final double rating;
+  final String rating;
 
   @override
   Widget build(BuildContext context) {

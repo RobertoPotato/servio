@@ -147,8 +147,10 @@ class _CreateReviewState extends State<CreateReview> {
                 if (_fbKey.currentState.saveAndValidate()) {
                   final formData = _fbKey.currentState.value;
                   final String reviewText = formData['reviewText'];
+                  print(formData);
+                  //TODO ensure slider value gets passed in as part of the review
                   sendReview(
-                      stars: 4.5,
+                      stars: sliderValue,
                       content: reviewText,
                       jobId: widget.jobId,
                       token: widget.token,
