@@ -67,7 +67,7 @@ class JobCard extends StatelessWidget {
                     isNetworkImage: true,
                     elevation: 0.0,
                     borderRadius: 10.0,
-                    imageUrl: service['imageUrl'],
+                    imageUrl: "$kImageBaseUrl${service['imageUrl']}",
                     height: 90.0,
                   ),
                 ),

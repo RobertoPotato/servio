@@ -7,7 +7,6 @@ import 'package:servio/models/Review.dart';
 import 'package:servio/components/review_card.dart';
 import 'package:servio/models/ErrorResponse.dart';
 import 'package:servio/components/create_review.dart';
-import 'package:servio/jwt_helpers.dart';
 
 //================ALERT!!!!======================
 // These errors are sent from the server as is...
@@ -18,6 +17,8 @@ const SERVER_JOB_NOT_FOUND_ERROR = "Job not found"; //fatal error, job not found
 const SERVER_INSUFFICIENT_PERMISSIONS_ERROR =
     "Insufficient permissions"; //show invalid token
 
+
+//get a review or none
 Future fetchReviewOrEmpty(String token, int jobId) async {
   final String url = "$kBaseUrl/v1/reviews/job/$jobId";
 
@@ -40,6 +41,7 @@ Future fetchReviewOrEmpty(String token, int jobId) async {
 
 //return a widget that shows a review if available or a button telling you to
 //leave a review if not, or an error if we couldn't fetch the review
+//process review to show its content or an error message
 Widget seeReviewOrError(
     {@required futureReview,
     @required ctxt,
@@ -87,7 +89,7 @@ Widget seeReviewOrError(
           );
         } else {
           return ReviewCard(
-            rating: reviewSnapshot.data.stars,
+            rating: reviewSnapshot.data.stars.toString(),
             review: reviewSnapshot.data.content,
             reviewerName: "By me",
           );
@@ -102,7 +104,7 @@ Widget seeReviewOrError(
   );
 }
 
-
+//show the modal that lets users create a review
 void displayCreateReviewCard(
         {@required ctxt,
         @required token,

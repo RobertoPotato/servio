@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servio/components/image_container.dart';
 import 'package:servio/models/Service.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
@@ -62,6 +63,7 @@ class _MyServicesState extends State<MyServices> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
+              var service = services[index];
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -75,26 +77,67 @@ class _MyServicesState extends State<MyServices> {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: kMainHorizontalPadding,
-                  vertical: kMainHorizontalPadding / 4),
+                  vertical: kMainHorizontalPadding / 2),
               child: Card(
-                elevation: kElevationValue / 2,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kMainHorizontalPadding,
-                      vertical: kMainHorizontalPadding / 2),
-                  child: Column(
-                    children: <Widget>[
-                      Image.network('${services[index]['imageUrl']}'),
-                      Text(services[index]['id'].toString()),
-                      Text(
-                        services[index]['title'],
-                        style: kMainBlackTextStyle,
-                      ),
-                      Text(services[index]['description']),
-                      Text(services[index]['imageUrl']),
-                      Text(budget(index)),
-                      Text("Job Terms: ${services[index]['terms']}"),
-                    ],
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 130.0,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                services[index]['title'],
+                                style: kHeadingTextStyle.copyWith(
+                                  fontSize: 15.0,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(
+                                height: 4.0,
+                              ),
+                              Text(
+                                services[index]['description'],
+                                maxLines: 5,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.grey[700]),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 1.0,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              ImageContainer(
+                                borderRadius: 5.0,
+                                imageUrl:
+                                    "$kImageBaseUrl${services[index]['imageUrl']}",
+                                height: 110.0,
+                                isNetworkImage: true,
+                                elevation: 0.0,
+                              ),
+                              SizedBox(
+                                height: 4.0,
+                              ),
+                              Text(
+                                budget(index),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -105,3 +148,20 @@ class _MyServicesState extends State<MyServices> {
     );
   }
 }
+
+/*Column(
+              children: <Widget>[
+
+
+                Image.network('${services[index]['imageUrl']}'),
+                Text(services[index]['id'].toString()),
+                Text(
+                  services[index]['title'],
+                  style: kMainBlackTextStyle,
+                ),
+                Text(services[index]['description']),
+                Text(services[index]['imageUrl']),
+                Text(budget(index)),
+                Text("Job Terms: ${services[index]['terms']}"),
+              ],
+            )*/

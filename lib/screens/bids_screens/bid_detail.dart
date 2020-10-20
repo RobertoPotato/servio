@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
+import 'package:servio/components/my_vertical_divider.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
@@ -13,6 +14,7 @@ import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/create_job.dart';
 import 'package:servio/components/StatsWidget.dart';
+import 'package:servio/components/image_container.dart';
 
 class BidDetails extends StatefulWidget {
   final double amount;
@@ -20,7 +22,6 @@ class BidDetails extends StatefulWidget {
   final bool canTravel;
   final String availability;
   final String currency;
-  //this is the agent's id. Client's ID will be loaded from SP
   final int userId;
   final String updatedAt;
   final String userName;
@@ -77,7 +78,8 @@ class _BidDetailsState extends State<BidDetails> {
   }
 
   Future<ReviewWithUser> fetchReviews() async {
-    var url = "$kBaseUrl/v1/reviews/foruser/${widget.userId}";
+    var url = "$kBaseUrl/v1/reviews/foruser/${widget.bidId}";
+    print("Bid ID: $url");
 
     final response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json", "x-auth-token": widget.token});
@@ -97,6 +99,7 @@ class _BidDetailsState extends State<BidDetails> {
 
   @override
   Widget build(BuildContext context) {
+    //print("Bid ID: ${widget.bidId}");
     _showSnack(BuildContext context, String text) {
       final snackBar = SnackBar(
         content: Text(text),
@@ -110,179 +113,186 @@ class _BidDetailsState extends State<BidDetails> {
           future: futureProfile,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("$kImageBaseUrl${snapshot.data.picture}");
-              return NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverAppBar(
-                      expandedHeight: 370.0,
-                      floating: false,
-                      pinned: true,
-                      flexibleSpace: FlexibleSpaceBar(
-                        centerTitle: true,
-                        title: Text(
-                          widget.userName,
-                          style: TextStyle(color: Colors.white, fontSize: 18.0),
-                        ),
-                        //TODO change placeholder image to show when getting actual image from the network
-                        background: FadeInImage.assetNetwork(
-                          placeholder: "images/business_woman.jpg",
-                          image: "$kImageBaseUrl${snapshot.data.picture}",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  ];
-                },
-                body: ListView(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: kMainHorizontalPadding),
-                        child: MaterialText(
-                          text: "${widget.currency} ${widget.amount}",
-                          color: kMyBidsColor,
-                          fontStyle: kTestTextStyleWhite,
-                        ),
+              return ListView(
+                children: <Widget>[
+                  ImageContainer(
+                    elevation: 0.0,
+                    isNetworkImage: true,
+                    borderRadius: 20.0,
+                    bottomRightRad: 20.0,
+                    bottomLeftRad: 20.0,
+                    height: 350.0,
+                    imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: kMainHorizontalPadding),
+                      child: MaterialText(
+                        text:
+                            "${widget.userName.toUpperCase()}: ${widget.currency} ${widget.amount}",
+                        color: kMyBidsColor,
+                        fontStyle: kTestTextStyleWhite,
                       ),
                     ),
+                  ),
 
-                    //BIDDER'S PROPOSAL
-                    CardWithTitleAndText(
+                  //BIDDER'S PROPOSAL
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: CardWithTitleAndText(
                       title: 'Cover Letter',
                       text: widget.coverLetter,
                     ),
+                  ),
 
-                    //BIDDER'S STATS
-                    StatsWidget(
+                  //BIDDER'S STATS
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: StatsWidget(
                       rating: kExampleRatingText,
                       isVerified: snapshot.data.isVerified,
                       successrate: 99,
                     ),
-
-                    //FEW REVIEWS
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: kMainHorizontalPadding),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'Reviews',
-                            style: kHeadingTextStyle,
-                          ),
-                          Text(
-                            'See All',
-                            style: kHeadingSubTextStyle,
-                          ),
-                        ],
-                      ),
-                    ),
-                    //REVIEWS
-                    reviews.length == 0 || reviews.length == null
-                        ? Center(
-                            child: MaterialText(
-                              text: "No reviews to show",
-                              color: Colors.white,
-                              fontStyle: kHeadingTextStyle,
+                  ),
+                  //More Stats
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: Card(
+                      elevation: kElevationValue / 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(kMainHorizontalPadding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(Icons.supervisor_account,
+                                      size: 28.0, color: Colors.greenAccent),
+                                  Text("${snapshot.data.role.title}")
+                                ],
+                              ),
                             ),
-                          )
-                        : ListOfReviews(
-                            reviews: reviews,
-                          ),
-                    //ACTIONS
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: kMainHorizontalPadding,
-                          vertical: kMainHorizontalPadding / 2),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              IconButtonWithText(
-                                text: 'Accept',
-                                icon: Icons.sentiment_very_satisfied,
-                                materialColor: kMyBidsColor,
-                                onTap: () async {
-                                  try {
-                                    var acceptUserBid = await acceptBid(
-                                      MJob(
-                                          widget.token,
-                                          widget.userId,
-                                          widget.bidId,
-                                          widget.serviceId,
-                                          kStatusId),
-                                    );
-
-                                    _showSnack(context, acceptUserBid);
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
+                            MyVerticalDivider(
+                              height: 28.0,
+                              width: 1.0,
+                              color: kPrimaryColor,
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(Icons.star,
+                                      size: 28.0, color: Colors.orangeAccent),
+                                  Text('${snapshot.data.tier.title}')
+                                ],
                               ),
-                              //TODO remove this and replace with widget that only shows the unrepetitive items from the profile
-                              IconButtonWithText(
-                                onTap: () {
-                                  showModalBottomSheet<void>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30.0),
-                                              topRight: Radius.circular(30.0),
-                                            ),
-                                          ),
-                                          child: UserProfile(
-                                            userName: widget.userName,
-                                            avatar: snapshot.data.avatar,
-                                            roleTitle: snapshot.data.role.title,
-                                            roleDescription:
-                                                snapshot.data.role.description,
-                                            updatedAt: snapshot.data.updatedAt
-                                                .toIso8601String(),
-                                            isVerified:
-                                                snapshot.data.isVerified,
-                                            picture:
-                                                "$kImageBaseUrl${snapshot.data.picture}",
-                                            bio: snapshot.data.bio,
-                                            tierTitle: snapshot.data.tier.title,
-                                            tierDescription:
-                                                snapshot.data.tier.description,
-                                            tierBadgeUrl:
-                                                snapshot.data.tier.badgeUrl,
-                                            phoneNumber:
-                                                snapshot.data.phoneNumber,
-                                          ),
-                                        );
-                                      });
-                                },
-                                text: 'Profile',
-                                icon: Icons.person,
-                                materialColor: kMyJobsColor,
-                              ),
-                              IconButtonWithText(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                text: 'Decline',
-                                icon: Icons.not_interested,
-                                materialColor: kRedAlert,
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  //User's Bio
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: CardWithTitleAndText(
+                      title: "User\'s Bio",
+                      text: "${snapshot.data.bio}",
+                    ),
+                  ),
+                  //FEW REVIEWS
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding + 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Reviews',
+                          style: kHeadingTextStyle,
+                        ),
+                        Text(
+                          'See All',
+                          style: kHeadingSubTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  //REVIEWS
+                  reviews == null
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: MaterialText(
+                              text: "No reviews to show".toUpperCase(),
+                              color: Colors.white,
+                              fontStyle: kHeadingTextStyle,
+                            ),
+                          ),
+                        )
+                      : ListOfReviews(
+                          reviews: reviews,
+                        ),
+                  //ACTIONS
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kMainHorizontalPadding,
+                        vertical: kMainHorizontalPadding / 2),
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(3),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            IconButtonWithText(
+                              text: 'Accept',
+                              icon: Icons.sentiment_very_satisfied,
+                              materialColor: kMyBidsColor,
+                              onTap: () async {
+                                try {
+                                  var acceptUserBid = await acceptBid(
+                                    MJob(
+                                        widget.token,
+                                        widget.userId,
+                                        widget.bidId,
+                                        widget.serviceId,
+                                        kStatusId),
+                                  );
+
+                                  _showSnack(context, acceptUserBid);
+                                } catch (e) {
+                                  print(e);
+                                }
+                              },
+                            ),
+                            IconButtonWithText(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              text: 'Decline',
+                              icon: Icons.not_interested,
+                              materialColor: kRedAlert,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
             } else if (snapshot.hasError) {
               return ErrorScreen(
@@ -299,3 +309,14 @@ class _BidDetailsState extends State<BidDetails> {
     );
   }
 }
+
+/*
+                    roleTitle: snapshot.data.role.title,
+                    roleDescription:
+                    snapshot.data.role.description,
+                    tierTitle: snapshot.data.tier.title,
+                    tierDescription:
+                    snapshot.data.tier.description,
+                    tierBadgeUrl:
+                    snapshot.data.tier.badgeUrl,
+                   */

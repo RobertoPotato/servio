@@ -65,13 +65,10 @@ class _JobDetailsState extends State<JobDetails> {
     futureReviewOrEmpty = fetchReviewOrEmpty(widget.token, widget.jobId);
   }
 
-  Future<String> _markJobDone(int statusId, ctxt) async {
+  Future<String> _markJobDone(ctxt) async {
     var url = "$kBaseUrl/v1/jobs/${widget.jobId}/done";
 
     final response = await http.put(Uri.encodeFull(url),
-        body: json.encode({
-          "statusId": statusId,
-        }),
         headers: {
           "accept": "application/json",
           "content-type": "application/json",
@@ -87,10 +84,10 @@ class _JobDetailsState extends State<JobDetails> {
       return "Job has been marked DONE";
     } else if (response.statusCode == 400) {
       var error = errorFromJson(response.body);
-      displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
+      displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
       return error.error;
     } else {
-      displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
+      displayResponseCard(ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
       return kSomethingWrongException;
     }
   }
@@ -293,7 +290,7 @@ class _JobDetailsState extends State<JobDetails> {
                         onTap: () async {
                           //changes the status of the job to completed requesting client's input
                           //TODO Switch to the actual intended status ID
-                          await _markJobDone(4, context);
+                          await _markJobDone(context);
                         },
                         text: 'Done',
                         icon: Icons.done,

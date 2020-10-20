@@ -76,7 +76,7 @@ const kAgent = 'Agent';
 const kBidNotice =
     'The client will receive your profile information when you bid for their work';
 const kErrorProfileConflict = "There's already a profile associated with this account";
-const kUniversalErrorTitle = "Oops!";
+const kUniversalErrorTitle = "Slight problem...";
 
 //SIZES
 const kMainHorizontalPadding = 12.0;

@@ -19,8 +19,8 @@ class ReviewCard extends StatelessWidget {
       padding: const EdgeInsets.only(
           left: kMainHorizontalPadding,
           right: kMainHorizontalPadding / 2,
-          bottom: kMainHorizontalPadding,
-          top: kMainHorizontalPadding),
+          bottom: kMainHorizontalPadding/2,
+          top: kMainHorizontalPadding/2),
       child: Container(
         width: 320.0,
         child: Card(

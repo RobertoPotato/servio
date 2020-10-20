@@ -18,6 +18,7 @@ import 'package:servio/jwt_helpers.dart';
 import 'package:servio/components/image_container.dart';
 import 'package:servio/components/review_card.dart';
 import 'package:servio/screens/settings_screen.dart';
+import 'package:servio/models/ProfileWithTierRoleAndUser.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String token;
@@ -29,7 +30,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final companyIsVerified = true;
-  Future<ProfileWithTierAndRole> futureProfile;
+  Future<ProfileWithTierRoleAndUser> futureProfile;
   Future<ReviewWithUser> futureReviews;
   List reviews;
   List profile;
@@ -60,8 +61,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<ProfileWithTierAndRole> fetchProfile() async {
-    var url = "$kBaseUrl/v1/profiles/";
+  Future<ProfileWithTierRoleAndUser> fetchProfile() async {
+    var url = "$kBaseUrl/v1/profiles/withName";
 
     final response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json", "x-auth-token": widget.token});
@@ -69,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final jsonResponse = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      return ProfileWithTierAndRole.fromJson(jsonResponse);
+      return ProfileWithTierRoleAndUser.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load Profile With Tier and Roles');
     }
@@ -79,10 +80,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: FutureBuilder<ProfileWithTierAndRole>(
+          body: FutureBuilder<ProfileWithTierRoleAndUser>(
         future: futureProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print("${snapshot.data.user.firstName} ${snapshot.data.user.lastName}".toUpperCase());
             return CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
@@ -95,6 +97,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     bottomRightRad: 20.0,
                     imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
                   ), //Picture
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: kMainHorizontalPadding,
+                        left: kMainHorizontalPadding,
+                        right: kMainHorizontalPadding),
+                    child: Center(
+                      child: Text(
+                        "${snapshot.data.user.firstName} ${snapshot.data.user.lastName}",
+                        style: kHeadingSubTextStyle,
+                      ),
+                    ),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -260,11 +276,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               icon: Icons.settings,
                               materialColor: kMySettingsColor,
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, SettingsScreen.id);
+                                Navigator.pushNamed(context, SettingsScreen.id);
                               },
                             ),
-
                             IconButtonWithText(
                               text: 'Log Out',
                               icon: Icons.lock,
