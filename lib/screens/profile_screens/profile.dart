@@ -5,7 +5,6 @@ import 'package:servio/components/material_text.dart';
 import 'package:servio/components/my_vertical_divider.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/components/card_title_text.dart';
-import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/models/ReviewWithUser.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

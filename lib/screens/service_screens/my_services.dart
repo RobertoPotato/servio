@@ -63,7 +63,6 @@ class _MyServicesState extends State<MyServices> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              var service = services[index];
               Navigator.push(
                 context,
                 MaterialPageRoute(

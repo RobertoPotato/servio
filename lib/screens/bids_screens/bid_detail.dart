@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/models/ReviewWithUser.dart';
 import 'dart:convert';
-import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/create_job.dart';
