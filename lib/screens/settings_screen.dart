@@ -20,21 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: 'Common',
-            tiles: [
-              SettingsTile(
-                title: 'Language',
-                subtitle: 'English',
-                leading: Icon(Icons.language),
-                onTap: () {},
-              ),
-              SettingsTile(
-                  title: 'Environment',
-                  subtitle: 'Production',
-                  leading: Icon(Icons.cloud_queue)),
-            ],
-          ),
-          SettingsSection(
             title: 'Account',
             tiles: [
               SettingsTile(
@@ -46,6 +31,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 leading: Icon(Icons.email),
               ),
               SettingsTile(
+                title: 'Theme',
+                leading: Icon(Icons.format_paint),
+              ),
+              SettingsTile(
                 title: 'Sign out',
                 leading: Icon(Icons.exit_to_app),
               ),
@@ -55,33 +44,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: 'Security',
             tiles: [
               SettingsTile.switchTile(
-                title: 'Lock app in background',
-                leading: Icon(Icons.phonelink_lock),
-                switchValue: lockInBackground,
-                onToggle: (bool value) {
-                  setState(() {
-                    lockInBackground = value;
-                    notificationsEnabled = value;
-                  });
-                },
-              ),
-              SettingsTile.switchTile(
-                  title: 'Use fingerprint',
-                  leading: Icon(Icons.fingerprint),
-                  onToggle: (bool value) {},
-                  switchValue: false),
-              SettingsTile.switchTile(
                 title: 'Change password',
                 leading: Icon(Icons.lock),
                 switchValue: true,
                 onToggle: (bool value) {},
-              ),
-              SettingsTile.switchTile(
-                title: 'Enable Notifications',
-                enabled: notificationsEnabled,
-                leading: Icon(Icons.notifications_active),
-                switchValue: true,
-                onToggle: (value) {},
               ),
             ],
           ),

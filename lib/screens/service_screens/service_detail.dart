@@ -133,6 +133,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     MakeBidScreen(
+                                  budgetRange: widget.budget,
                                   serviceId: widget.serviceId,
                                   serviceCategory: "${widget.categoryTitle}",
                                   serviceTitle: "${widget.title}",

@@ -121,40 +121,58 @@ class _NewProfileState extends State<NewProfile> {
                     key: _fbKey,
                     child: Column(
                       children: [
-                        FormBuilderTextField(
-                          attribute: 'phoneNumber',
-                          decoration: InputDecoration().copyWith(
-                            hintText: 'Phone Number',
-                            labelText: 'Phone',
-                            prefixIcon: Icon(Icons.work),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            attribute: 'phoneNumber',
+                            decoration: InputDecoration().copyWith(
+                              hintText: 'Phone Number',
+                              labelText: 'Phone',
+                              prefixIcon: Icon(Icons.work),
+                            ),
+                            validators: [FormBuilderValidators.required()],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        FormBuilderTextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 4,
-                          attribute: 'bio',
-                          decoration: InputDecoration().copyWith(
-                            //hasFloatingPlaceholder: false,
-                            labelText: 'Bio',
-                            hintText: 'Say something about yourself',
-                            prefixIcon: Icon(Icons.note_add),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
+                          child: FormBuilderTextField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 4,
+                            attribute: 'bio',
+                            decoration: InputDecoration().copyWith(
+                              //hasFloatingPlaceholder: false,
+                              labelText: 'Bio',
+                              hintText: 'Say something about yourself',
+                              prefixIcon: Icon(Icons.note_add),
+                            ),
+                            validators: [FormBuilderValidators.required()],
                           ),
-                          validators: [FormBuilderValidators.required()],
                         ),
-                        FormBuilderDropdown(
-                          attribute: 'roleId',
-                          decoration: InputDecoration().copyWith(
-                            prefixIcon: Icon(Icons.category),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
+                          child: FormBuilderDropdown(
+                            attribute: 'roleId',
+                            decoration: InputDecoration().copyWith(
+                              prefixIcon: Icon(Icons.category),
+                            ),
+                            hint: Text('Role'),
+                            validators: [FormBuilderValidators.required()],
+                            items: [Role(id: 1, title: "Individual")]
+                                .map((role) => DropdownMenuItem(
+                                      child: Text(role.title),
+                                      value: role.id,
+                                    ))
+                                .toList(),
                           ),
-                          hint: Text('Role'),
-                          validators: [FormBuilderValidators.required()],
-                          items: [Role(id: 1, title: "Individual")]
-                              .map((role) => DropdownMenuItem(
-                                    child: Text(role.title),
-                                    value: role.id,
-                                  ))
-                              .toList(),
                         ),
                         imageFile == null
                             ? InkWell(
@@ -196,25 +214,36 @@ class _NewProfileState extends State<NewProfile> {
                                   color: kPrimaryColor,
                                 ),
                               )
-                            : Image.file(
-                                imageFile,
-                                width: 150.0,
-                                height: 150.0,
-                                fit: BoxFit.cover,
-                              ),
-                        //Remove the selected image
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              imageFile = null;
-                            });
-                          },
-                          child: Icon(
-                            Icons.close,
-                            size: 24.0,
-                            color: kPrimaryColor,
-                          ),
-                        ),
+                            : Padding(
+                              padding: const EdgeInsets.only(
+                                  left: kMainHorizontalPadding,
+                                  right: kMainHorizontalPadding,
+                                  top: kMainHorizontalPadding),
+                              child: Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.file(
+                                      imageFile,
+                                      width: 200.0,
+                                      height: 200.0,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                    //Remove the selected image
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          imageFile = null;
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.remove_circle,
+                                        size: 28.0,
+                                        color: kRedAlert,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ),
                         FlatButton(
                           onPressed: () async {
                             if (imageFile == null) {

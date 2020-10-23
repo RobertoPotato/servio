@@ -17,11 +17,14 @@ class MakeBidScreen extends StatefulWidget {
   final int serviceId;
   final String serviceTitle;
   final String serviceCategory;
+  final budgetRange;
 
-  MakeBidScreen(
-      {@required this.serviceId,
-      @required this.serviceTitle,
-      @required this.serviceCategory,});
+  MakeBidScreen({
+    @required this.serviceId,
+    @required this.serviceTitle,
+    @required this.serviceCategory,
+    @required this.budgetRange,
+  });
 
   @override
   _MakeBidScreenState createState() => _MakeBidScreenState();
@@ -58,7 +61,6 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     //sliderValue.toStringAsFixed(1)
     _showSnack(BuildContext context, String text) {
       final snackBar = SnackBar(
@@ -95,12 +97,29 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        CardWithTitleAndText(
-                          title: 'Notice',
-                          text: '$kBidNotice',
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: kMainHorizontalPadding),
+                          child: CardWithTitleAndText(
+                            title: 'Notice',
+                            text: '$kBidNotice',
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          padding: const EdgeInsets.only(
+                              top: kMainHorizontalPadding,
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding),
+                          child: Text(
+                            "Client's budget: ${widget.budgetRange}",
+                            style: kHeadingSubTextStyle,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
                           child: FormBuilderTextField(
                             keyboardType: TextInputType.number,
                             attribute: 'amount',
@@ -117,7 +136,10 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
                           child: FormBuilderDropdown(
                             attribute: 'availability',
                             decoration: InputDecoration().copyWith(
@@ -138,7 +160,10 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
                           child: FormBuilderTextField(
                             keyboardType: TextInputType.multiline,
                             maxLines: 5,
@@ -153,7 +178,10 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
                           child: FormBuilderCheckbox(
                             initialValue: false,
                             label: Text('Can Travel'),
@@ -161,7 +189,10 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(kMainHorizontalPadding),
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
                           child: FormBuilderCheckbox(
                             initialValue: false,
                             label: Text(
@@ -170,33 +201,39 @@ class _MakeBidScreenState extends State<MakeBidScreen> {
                             validators: [FormBuilderValidators.requiredTrue()],
                           ),
                         ),
-                        IconButtonWithText(
-                          text: 'Post',
-                          icon: Icons.send,
-                          onTap: () async {
-                            if (_fbKey.currentState.saveAndValidate()) {
-                              final formData = _fbKey.currentState.value;
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: kMainHorizontalPadding,
+                              right: kMainHorizontalPadding,
+                              top: kMainHorizontalPadding),
+                          child: IconButtonWithText(
+                            text: 'Post',
+                            icon: Icons.send,
+                            onTap: () async {
+                              if (_fbKey.currentState.saveAndValidate()) {
+                                final formData = _fbKey.currentState.value;
 
-                              final double amount = double.parse(formData[
-                                  'amount']); //convert the value from string to double
-                              final String coverLetter =
-                                  formData['coverLetter'];
-                              final bool canTravel = formData['canTravel'];
-                              final String availability =
-                                  formData['availability'];
-                              final int serviceId = widget.serviceId;
+                                final double amount = double.parse(formData[
+                                    'amount']); //convert the value from string to double
+                                final String coverLetter =
+                                    formData['coverLetter'];
+                                final bool canTravel = formData['canTravel'];
+                                final String availability =
+                                    formData['availability'];
+                                final int serviceId = widget.serviceId;
 
-                              createBid(
-                                  context,
-                                  snapshot.data,
-                                  amount.toDouble(),
-                                  coverLetter,
-                                  canTravel,
-                                  availability,
-                                  serviceId);
-                            }
-                          },
-                          materialColor: kMyBidsColor,
+                                createBid(
+                                    context,
+                                    snapshot.data,
+                                    amount.toDouble(),
+                                    coverLetter,
+                                    canTravel,
+                                    availability,
+                                    serviceId);
+                              }
+                            },
+                            materialColor: kPrimaryColor,
+                          ),
                         )
                       ],
                     ),

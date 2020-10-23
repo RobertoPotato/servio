@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -136,7 +137,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                           future: profileOrEmpty,
                           builder: (context, profileSnapshot) {
                             return Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 profileSnapshot.data == ''
                                     ? MaterialText(
@@ -146,146 +146,199 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                         color: kRedAlert,
                                       )
                                     : Text(""),
-                                FormBuilderTextField(
-                                  attribute: 'title',
-                                  decoration: InputDecoration().copyWith(
-                                    hintText: 'Title',
-                                    labelText: 'Title',
-                                    prefixIcon: Icon(Icons.work),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderTextField(
+                                    attribute: 'title',
+                                    decoration: InputDecoration().copyWith(
+                                      hintText: 'Title',
+                                      labelText: 'Title',
+                                      prefixIcon: Icon(Icons.work),
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
                                   ),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
                                 ),
-                                FormBuilderDropdown(
-                                  attribute: 'categoryId',
-                                  decoration: InputDecoration().copyWith(
-                                    prefixIcon: Icon(Icons.category),
-                                  ),
-                                  hint: Text('Select Service Category'),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
-                                  items: [
-                                    Category(id: 1, title: 'Service one'),
-                                    Category(id: 2, title: 'Service two'),
-                                    Category(id: 3, title: 'Service three'),
-                                    Category(id: 4, title: 'Service four'),
-                                    Category(id: 5, title: 'Service five'),
-                                  ]
-                                      .map(
-                                        (service) => DropdownMenuItem(
-                                          child: Text(service.title),
-                                          value: service.id,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                FormBuilderTextField(
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: 7,
-                                  attribute: 'description',
-                                  decoration: InputDecoration().copyWith(
-                                    //hasFloatingPlaceholder: false,
-                                    labelText: 'Description',
-                                    hintText: 'Describe the service',
-                                    prefixIcon: Icon(Icons.note_add),
-                                  ),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
-                                ),
-                                FormBuilderDropdown(
-                                  attribute: 'terms',
-                                  decoration: InputDecoration().copyWith(
-                                    prefixIcon: Icon(Icons.supervisor_account),
-                                  ),
-                                  hint: Text('Terms'),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
-                                  items:
-                                      ['Part Time', 'Full time', 'Unspecified']
-                                          .map((service) => DropdownMenuItem(
-                                                child: Text('$service'),
-                                                value: service,
-                                              ))
-                                          .toList(),
-                                ),
-                                FormBuilderDropdown(
-                                  attribute: 'county',
-                                  decoration: InputDecoration().copyWith(
-                                    prefixIcon: Icon(Icons.category),
-                                  ),
-                                  hint: Text('Select your county'),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
-                                  items: counties
-                                      .map(
-                                        (county) => DropdownMenuItem(
-                                          child: Text(county),
-                                          value: county,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                FormBuilderTextField(
-                                  attribute: 'town',
-                                  decoration: InputDecoration().copyWith(
-                                    hintText: 'Town',
-                                    labelText: 'Town',
-                                    prefixIcon: Icon(Icons.location_city),
-                                  ),
-                                  validators: [
-                                    FormBuilderValidators.required()
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: kMainHorizontalPadding / 2),
-                                        child: FormBuilderTextField(
-                                          keyboardType: TextInputType.number,
-                                          attribute: 'budgetMin',
-                                          decoration:
-                                              InputDecoration().copyWith(
-                                            labelText: 'Budget From',
-                                            prefixIcon: Icon(Icons.payment),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderDropdown(
+                                    attribute: 'categoryId',
+                                    decoration: InputDecoration().copyWith(
+                                      prefixIcon: Icon(Icons.category),
+                                    ),
+                                    hint: Text('Select Service Category'),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                    items: [
+                                      Category(id: 1, title: 'Service one'),
+                                      Category(id: 2, title: 'Service two'),
+                                      Category(id: 3, title: 'Service three'),
+                                      Category(id: 4, title: 'Service four'),
+                                      Category(id: 5, title: 'Service five'),
+                                    ]
+                                        .map(
+                                          (service) => DropdownMenuItem(
+                                            child: Text(service.title),
+                                            value: service.id,
                                           ),
-                                          validators: [
-                                            FormBuilderValidators.required()
-                                          ],
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderTextField(
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: 7,
+                                    attribute: 'description',
+                                    decoration: InputDecoration().copyWith(
+                                      //hasFloatingPlaceholder: false,
+                                      labelText: 'Description',
+                                      hintText: 'Describe the service',
+                                      prefixIcon: Icon(Icons.note_add),
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderDropdown(
+                                    attribute: 'terms',
+                                    decoration: InputDecoration().copyWith(
+                                      prefixIcon:
+                                          Icon(Icons.supervisor_account),
+                                    ),
+                                    hint: Text('Terms'),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                    items: [
+                                      'Part Time',
+                                      'Full time',
+                                      'Unspecified'
+                                    ]
+                                        .map((service) => DropdownMenuItem(
+                                              child: Text('$service'),
+                                              value: service,
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderDropdown(
+                                    attribute: 'county',
+                                    decoration: InputDecoration().copyWith(
+                                      prefixIcon: Icon(Icons.category),
+                                    ),
+                                    hint: Text('Select your county'),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                    items: counties
+                                        .map(
+                                          (county) => DropdownMenuItem(
+                                            child: Text(county),
+                                            value: county,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: FormBuilderTextField(
+                                    attribute: 'town',
+                                    decoration: InputDecoration().copyWith(
+                                      hintText: 'Town',
+                                      labelText: 'Town',
+                                      prefixIcon: Icon(Icons.location_city),
+                                    ),
+                                    validators: [
+                                      FormBuilderValidators.required()
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right:
+                                                  kMainHorizontalPadding / 2),
+                                          child: FormBuilderTextField(
+                                            keyboardType: TextInputType.number,
+                                            attribute: 'budgetMin',
+                                            decoration:
+                                                InputDecoration().copyWith(
+                                              labelText: 'Budget From',
+                                              prefixIcon: Icon(Icons.payment),
+                                            ),
+                                            validators: [
+                                              FormBuilderValidators.required()
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: kMainHorizontalPadding / 2),
-                                        child: FormBuilderTextField(
-                                          keyboardType: TextInputType.number,
-                                          attribute: 'budgetMax',
-                                          decoration:
-                                              InputDecoration().copyWith(
-                                            labelText: 'Budget To',
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: kMainHorizontalPadding / 2),
+                                          child: FormBuilderTextField(
+                                            keyboardType: TextInputType.number,
+                                            attribute: 'budgetMax',
+                                            decoration:
+                                                InputDecoration().copyWith(
+                                              labelText: 'Budget To',
+                                            ),
+                                            validators: [
+                                              FormBuilderValidators.required()
+                                            ],
                                           ),
-                                          validators: [
-                                            FormBuilderValidators.required()
-                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  "Service Image",
-                                  style: kHeadingTextStyle.copyWith(
-                                      color: Colors.grey.shade500),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: Text(
+                                    "Service Image",
+                                    style: kHeadingTextStyle.copyWith(
+                                        color: Colors.grey.shade500),
+                                  ),
                                 ),
                                 imageFile == null
                                     ? InkWell(
@@ -331,74 +384,92 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                           color: kPrimaryColor,
                                         ),
                                       )
-                                    : Image.file(
-                                        imageFile,
-                                        width: 150.0,
-                                        height: 150.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                //Remove the selected image
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        imageFile = null;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.close,
-                                      size: 24.0,
-                                      color: kPrimaryColor,
-                                    )),
-                                FlatButton(
-                                  onPressed: () async {
-                                    if (imageFile == null) {
-                                      displayDialog(context, 'Error',
-                                          "You haven\'t selected an image");
-                                    } else {
-                                      if (_fbKey.currentState
-                                          .saveAndValidate()) {
-                                        final formData =
-                                            _fbKey.currentState.value;
-                                        final title = formData['title'];
-                                        final description =
-                                            formData['description'];
-                                        final budgetMin =
-                                            double.parse(formData['budgetMin']);
-                                        final budgetMax =
-                                            double.parse(formData['budgetMax']);
-                                        final terms = formData['terms'];
-                                        final county = formData['county'];
-                                        final town = formData['town'];
-                                        final imageUrl =
-                                            kNetworkImage /*formData['imageUrl']*/;
-                                        final userId = kUserId;
-                                        final categoryId = 2;
-                                        final statusId = 2;
-                                        final token = jwtSnapshot.data;
+                                    : Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: kMainHorizontalPadding,
+                                            right: kMainHorizontalPadding,
+                                            top: kMainHorizontalPadding),
+                                        child: Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            Image.file(
+                                              imageFile,
+                                              width: 200.0,
+                                              height: 200.0,
+                                              fit: BoxFit.fitHeight,
+                                            ),
+                                            //Remove the selected image
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  imageFile = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.remove_circle,
+                                                size: 28.0,
+                                                color: kRedAlert,
+                                              ),
+                                            ),
 
-                                        await createService(
-                                            county,
-                                            town,
-                                            token,
-                                            title,
-                                            description,
-                                            budgetMin.toDouble(),
-                                            budgetMax.toDouble(),
-                                            terms,
-                                            imageUrl,
-                                            userId,
-                                            categoryId,
-                                            statusId,
-                                            imageFile
-                                                .path); //Path of the image to upload
+                                          ],
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kMainHorizontalPadding,
+                                      right: kMainHorizontalPadding,
+                                      top: kMainHorizontalPadding),
+                                  child: IconButtonWithText(
+                                    text: "Order",
+                                    icon: Icons.send,
+                                    materialColor: kPrimaryColor,
+                                    onTap: () async {
+                                      if (imageFile == null) {
+                                        displayDialog(context, 'Error',
+                                            "You haven\'t selected an image");
+                                      } else {
+                                        if (_fbKey.currentState
+                                            .saveAndValidate()) {
+                                          final formData =
+                                              _fbKey.currentState.value;
+                                          final title = formData['title'];
+                                          final description =
+                                              formData['description'];
+                                          final budgetMin = double.parse(
+                                              formData['budgetMin']);
+                                          final budgetMax = double.parse(
+                                              formData['budgetMax']);
+                                          final terms = formData['terms'];
+                                          final county = formData['county'];
+                                          final town = formData['town'];
+                                          final imageUrl =
+                                              kNetworkImage /*formData['imageUrl']*/;
+                                          final userId = kUserId;
+                                          final categoryId = 2;
+                                          final statusId = 2;
+                                          final token = jwtSnapshot.data;
+
+                                          await createService(
+                                              county,
+                                              town,
+                                              token,
+                                              title,
+                                              description,
+                                              budgetMin.toDouble(),
+                                              budgetMax.toDouble(),
+                                              terms,
+                                              imageUrl,
+                                              userId,
+                                              categoryId,
+                                              statusId,
+                                              imageFile
+                                                  .path); //Path of the image to upload
+                                        }
                                       }
-                                    }
-                                  },
-                                  child: Icon(
-                                    Icons.send,
-                                    size: 54.0,
+                                    },
                                   ),
-                                )
+                                ),
                               ],
                             );
                           },
