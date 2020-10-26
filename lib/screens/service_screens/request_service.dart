@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:servio/components/icon_button_text.dart';
@@ -7,10 +8,12 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:servio/jwt_helpers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:servio/models/CategoryWithIdAndTitle.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 import 'package:servio/components/material_text.dart';
 import 'list_of_counties.dart';
+import 'package:servio/screens/service_screens/service_helpers.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -28,51 +31,36 @@ class Category {
 
 class _RequestServicePageState extends State<RequestServicePage> {
   var data;
-  bool autoValidate = true;
-  bool readOnly = false;
-  var initialStatusId = 1;
+  List categories;
+  Future<CategoryIdAndTitle> futureCategories;
   File imageFile;
   var token;
 
-  Future<String> createService(
-      String county,
-      String town,
-      String token,
-      String title,
-      String description,
-      double budgetMin,
-      double budgetMax,
-      String terms,
-      String imageUrl,
-      int userId,
-      int categoryId,
-      int statusId,
-      filename) async {
-    final String url = "$kBaseUrl/v1/services";
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse(url),
-    );
-    request.headers.addAll({"x-auth-token": "$token"});
-    request.files.add(await http.MultipartFile.fromPath('imageUrl', filename));
-    request.fields['county'] = county;
-    request.fields['town'] = town;
-    request.fields['title'] = title;
-    request.fields['description'] = description;
-    request.fields['budgetMin'] = budgetMin.toString();
-    request.fields['budgetMax'] = budgetMax.toString();
-    request.fields['terms'] = terms;
-    request.fields['userId'] = userId.toString();
-    request.fields['categoryId'] = categoryId.toString();
-    request.fields['statusId'] = statusId.toString();
-
-    var res = await request.send();
-    print("Status: ${res.statusCode}");
-    if (res.statusCode == 200) {
-      displayDialog(context, "Success", "Your request was saved successfully");
-    }
-    return "";
+  @override
+  void initState(){
+    super.initState();
+    futureCategories = getCategoriesForDropDown();
   }
+
+  Future getCategoriesForDropDown() async {
+  //the zero has no use whatsoever but code works if it's there
+  var url = "$kBaseUrl/v1/categories/items/0";
+  final response = await http
+      .get(Uri.encodeFull(url), headers: {"accept": "application/json"});
+
+  final jsonResponse = json.decode(response.body);
+
+  setState(() {
+    categories = json.decode(response.body);
+  });
+
+  if (response.statusCode == 200) {
+    var categories =  CategoryIdAndTitle.fromJson(json.decode(response.body));
+    return "Success";
+  } else {
+    throw Exception("Error fetching categories");
+  }
+}
 
   Future _getImageGallery() async {
     PickedFile pickedFile =
@@ -177,19 +165,13 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     validators: [
                                       FormBuilderValidators.required()
                                     ],
-                                    items: [
-                                      Category(id: 1, title: 'Service one'),
-                                      Category(id: 2, title: 'Service two'),
-                                      Category(id: 3, title: 'Service three'),
-                                      Category(id: 4, title: 'Service four'),
-                                      Category(id: 5, title: 'Service five'),
-                                    ]
+                                    items: categories
                                         .map(
-                                          (service) => DropdownMenuItem(
-                                            child: Text(service.title),
-                                            value: service.id,
-                                          ),
-                                        )
+                                          (category) => DropdownMenuItem(
+                                        child: Text(category['title']),
+                                        value: category['id'],
+                                      ),
+                                    )
                                         .toList(),
                                   ),
                                 ),
@@ -411,7 +393,6 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 color: kRedAlert,
                                               ),
                                             ),
-
                                           ],
                                         ),
                                       ),
@@ -433,6 +414,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             .saveAndValidate()) {
                                           final formData =
                                               _fbKey.currentState.value;
+
+                                          setState(() {});
                                           final title = formData['title'];
                                           final description =
                                               formData['description'];
@@ -443,28 +426,22 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                           final terms = formData['terms'];
                                           final county = formData['county'];
                                           final town = formData['town'];
-                                          final imageUrl =
-                                              kNetworkImage /*formData['imageUrl']*/;
-                                          final userId = kUserId;
-                                          final categoryId = 2;
-                                          final statusId = 2;
+                                          final categoryId = formData['categoryId'];
                                           final token = jwtSnapshot.data;
 
                                           await createService(
-                                              county,
-                                              town,
-                                              token,
-                                              title,
-                                              description,
-                                              budgetMin.toDouble(),
-                                              budgetMax.toDouble(),
-                                              terms,
-                                              imageUrl,
-                                              userId,
-                                              categoryId,
-                                              statusId,
-                                              imageFile
-                                                  .path); //Path of the image to upload
+                                            county: county,
+                                            town: town,
+                                            token: token,
+                                            title: title,
+                                            description: description,
+                                            budgetMin: budgetMin,
+                                            budgetMax: budgetMax,
+                                            categoryId: categoryId,
+                                            filename: imageFile.path,
+                                            ctxt: context,
+                                            terms: terms,
+                                          ); //Path of the image to upload
                                         }
                                       }
                                     },
