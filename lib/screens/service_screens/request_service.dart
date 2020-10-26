@@ -42,7 +42,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
     futureCategories = getCategoriesForDropDown();
   }
 
-  Future getCategoriesForDropDown() async {
+  Future<CategoryIdAndTitle> getCategoriesForDropDown() async {
     //the zero has no use whatsoever but code works if it's there
     var url = "$kBaseUrl/v1/categories/items/0";
     final response = await http
@@ -55,8 +55,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
     });
 
     if (response.statusCode == 200) {
-      //var categories =  CategoryIdAndTitle.fromJson(json.decode(response.body));
-      return "Success";
+      var categories =  CategoryIdAndTitle.fromJson(json.decode(response.body));
+      return categories;
     } else {
       throw Exception("Error fetching categories");
     }
@@ -166,6 +166,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     validators: [
                                       FormBuilderValidators.required()
                                     ],
+                                    //TODO handle nulls by having a default fallback category like "Others" or "Default" eg ID 99
                                     items: categories
                                         .map(
                                           (category) => DropdownMenuItem(
