@@ -37,30 +37,30 @@ class _RequestServicePageState extends State<RequestServicePage> {
   var token;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     futureCategories = getCategoriesForDropDown();
   }
 
   Future getCategoriesForDropDown() async {
-  //the zero has no use whatsoever but code works if it's there
-  var url = "$kBaseUrl/v1/categories/items/0";
-  final response = await http
-      .get(Uri.encodeFull(url), headers: {"accept": "application/json"});
+    //the zero has no use whatsoever but code works if it's there
+    var url = "$kBaseUrl/v1/categories/items/0";
+    final response = await http
+        .get(Uri.encodeFull(url), headers: {"accept": "application/json"});
 
-  final jsonResponse = json.decode(response.body);
+    //final jsonResponse = json.decode(response.body);
 
-  setState(() {
-    categories = json.decode(response.body);
-  });
+    setState(() {
+      categories = json.decode(response.body);
+    });
 
-  if (response.statusCode == 200) {
-    var categories =  CategoryIdAndTitle.fromJson(json.decode(response.body));
-    return "Success";
-  } else {
-    throw Exception("Error fetching categories");
+    if (response.statusCode == 200) {
+      //var categories =  CategoryIdAndTitle.fromJson(json.decode(response.body));
+      return "Success";
+    } else {
+      throw Exception("Error fetching categories");
+    }
   }
-}
 
   Future _getImageGallery() async {
     PickedFile pickedFile =
@@ -102,6 +102,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
     );
   }
 
+  //TODO Add this to review card = pop scope handling
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -168,10 +169,10 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                     items: categories
                                         .map(
                                           (category) => DropdownMenuItem(
-                                        child: Text(category['title']),
-                                        value: category['id'],
-                                      ),
-                                    )
+                                            child: Text(category['title']),
+                                            value: category['id'],
+                                          ),
+                                        )
                                         .toList(),
                                   ),
                                 ),
@@ -426,7 +427,8 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                           final terms = formData['terms'];
                                           final county = formData['county'];
                                           final town = formData['town'];
-                                          final categoryId = formData['categoryId'];
+                                          final categoryId =
+                                              formData['categoryId'];
                                           final token = jwtSnapshot.data;
 
                                           await createService(

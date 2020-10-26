@@ -8,8 +8,8 @@ import 'package:servio/screens/job_screens/job_parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 import 'package:servio/screens/service_screens/my_services.dart';
-
-import 'auth_screens/login_screen.dart';
+import 'package:servio/screens/settings_screen.dart';
+import 'package:servio/screens/stats_screen.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -157,16 +157,27 @@ class _MainParentScreenState extends State<MainParentScreen> {
                           },
                         ),
                         ListTile(
-                          title: Text('Stats(Coming Soon)'),
+                          title: Text('Stats'),
                           leading:
                               Icon(Icons.grade, color: Colors.lightBlueAccent),
-                          trailing: Icon(Icons.timer),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    StatsPage(
+                                      token: jwtSnapshot.data,
+                                    ),
+                              ),
+                            );
+                          },
                         ),
                         ListTile(
-                          title: Text('Help'),
+                          title: Text('Help(Coming soon)'),
+                          trailing: Icon(Icons.timer),
                           leading: Icon(Icons.help, color: kPrimaryColor),
                         ),
-                        /*
+
                         ListTile(
                           title: Text('Settings'),
                           leading: Icon(Icons.settings, color: Colors.blueGrey),
@@ -174,26 +185,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             Navigator.pushNamed(context, SettingsScreen.id);
                           },
                         ),
-
-                         */
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: FlatButton(
-                              onPressed: () {
-                                logOutUser(context, LoginScreen.id);
-                              },
-                              child: Text(
-                                'Log Out',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   ),
