@@ -203,11 +203,11 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
-                      title: Text('Home'),
+                      label: 'Home',
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.category),
-                      title: Text('Categories'),
+                      label: 'Categories',
                     ),
                   ],
                   currentIndex: _selectedIndex,

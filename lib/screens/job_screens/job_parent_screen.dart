@@ -41,11 +41,11 @@ class _JobParentScreen extends State<JobParentScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.all_out),
-            title: Text('Mine'),
+            label: 'Mine',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.format_paint),
-            title: Text('Applied'),
+            label: 'Applied',
           ),
         ],
         currentIndex: _selectedIndex,
