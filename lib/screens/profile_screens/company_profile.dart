@@ -148,16 +148,16 @@ class CompanyScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         HorizontalButtons(
-                          buttonText: 'Company\s first Service',
+                          buttonText: 'Company\'s first Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s second Service',
+                          buttonText: 'Company\'s second Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s third Service',
+                          buttonText: 'Company\'s third Service',
                         ),
                         HorizontalButtons(
-                          buttonText: 'Company\s fourth Service',
+                          buttonText: 'Company\'s fourth Service',
                         ),
                       ],
                     ),

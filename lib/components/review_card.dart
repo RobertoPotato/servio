@@ -24,7 +24,7 @@ class ReviewCard extends StatelessWidget {
       child: Container(
         width: 320.0,
         child: Card(
-          elevation: kElevationValue / 2,
+          elevation: 4,
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 vertical: kMainHorizontalPadding,

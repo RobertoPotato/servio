@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
+            //TODO Replace with horizontal slider that shows help info
             child: TopCategories(),
           ),
           SliverToBoxAdapter(

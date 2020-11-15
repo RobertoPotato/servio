@@ -5,14 +5,14 @@ import 'package:servio/components/image_container.dart';
 
 class CompanyCard extends StatelessWidget {
   CompanyCard(
-      {this.companyName,
+      {@required this.companyName,
       //this.servicesOffered, todo uncomment this and initialize with list
-      this.location,
-      this.companyImage,
+  @required this.location,
+  @required this.companyImage,
       //this.reviews, todo uncomment this and initialize with list
-      this.companyIsVerified,
-      this.successRate,
-      this.bio});
+  @required this.companyIsVerified,
+  @required this.successRate,
+  @required this.bio});
 
   final String companyName;
   //final List<String> servicesOffered; todo uncomment this
