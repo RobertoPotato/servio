@@ -24,10 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   Future profile;
 
-  Future<String> logInUser(
-    String email,
-    String password,
-  ) async {
+  Future<String> logInUser({String email, String password, ctxt}) async {
     final String url = "$kBaseUrl/v1/auth/login";
     final response = await http.post(Uri.encodeFull(url),
         body: json.encode({"email": email, "password": password}),
@@ -37,8 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
         });
     if (response.statusCode == 200) {
       return response.body;
-    } else {
-      return null;
+    } else if (response.statusCode == 404) {
+      var error = errorFromJson(response.body);
+      displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
+    } else if (response.statusCode == 400) {
+      var error = errorFromJson(response.body);
+      displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
     }
   }
 
@@ -144,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   final email = formData['email'].toString().trim();
                   final password = formData['password'].toString().trim();
 
-                  var jwt = await logInUser(email, password);
+                  var jwt = await logInUser(
+                      email: email, password: password, ctxt: context);
                   if (jwt != null) {
                     await storage
                         .write(key: "x-auth-token", value: jwt)

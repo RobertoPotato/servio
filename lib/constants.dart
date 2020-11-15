@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 //Network Addresses
 const ipLoc = "192.168.100.3";
 const ipNet = "151.236.219.72";
-const ip = ipNet;
 
 const portLoc = "3000";
 const portNet = "3000";
+
 const port = portLoc;
-//TODO change to https after certificates have been configured
+const ip = ipLoc;
+
+//change to https after certificates have been configured
 const kBaseUrl = "http://$ip:$port/api";
 const kImageBaseUrl = "http://$ip:$port/";
 
@@ -53,6 +55,12 @@ const kReviewOnSuccessfulCompletion =
     "Congratulations. The job has been successfully completed. Status changes can be viewed as soon as the page is refreshed. Please take some time to review the ";
 const kLogoutError = "Logging out process failed. This is not a fatal error. You may need to clear app data.";
 
+
+//CONTEXTUAL TEXTS
+const kNoServicesRequestedPrompt = "You haven't requested any services yet";
+const kNoBidsMadePrompt = "You haven't placed bids on services yet";
+const kNoJobsCreatedPrompt = "No jobs found. Order a service and hire a bidder to get started";
+const kNoJobsHiredPrompt = "No jobs found. Set up your profile then bid on jobs to get hired";
 
 const kExampleCurrency = 'KES';
 const kJobs = "Jobs";

@@ -53,34 +53,38 @@ class _CreatedJobsState extends State<CreatedJobs> {
         appBar: AppBar(
           title: Text('Posted by me...'),
         ),
-        body: ListView.builder(
-            itemCount: jobs == null ? 0 : jobs.length,
-            itemBuilder: (BuildContext context, int index) {
-              var jobStart = jobs[index]['createdAt'];
-              var client = jobs[index]['client'];
-              var agent = jobs[index]['agent'];
-              var bid = jobs[index]['Bid'];
-              var service = jobs[index]['Service'];
-              var status = jobs[index]['Status'];
-              var clientId = jobs[index]['clientId'];
-              var agentId = jobs[index]['agentId'];
-              var jobId = jobs[index]['id'];
+        body: jobs == null
+            ? Center(child: Text("Looking for jobs"))
+            : jobs.length == 0
+                ? Center(child: Text(kNoJobsCreatedPrompt))
+                : ListView.builder(
+                    itemCount: jobs == null ? 0 : jobs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var jobStart = jobs[index]['createdAt'];
+                      var client = jobs[index]['client'];
+                      var agent = jobs[index]['agent'];
+                      var bid = jobs[index]['Bid'];
+                      var service = jobs[index]['Service'];
+                      var status = jobs[index]['Status'];
+                      var clientId = jobs[index]['clientId'];
+                      var agentId = jobs[index]['agentId'];
+                      var jobId = jobs[index]['id'];
 
-              //In this page, the user assumes the role of the client
-              return JobCard(
-                token: widget.token,
-                userIsClient: true,
-                client: client,
-                agent: agent,
-                bid: bid,
-                status: status,
-                jobStart: jobStart,
-                service: service,
-                clientId: clientId,
-                agentId: agentId,
-                jobId: jobId,
-              );
-            }),
+                      //In this page, the user assumes the role of the client
+                      return JobCard(
+                        token: widget.token,
+                        userIsClient: true,
+                        client: client,
+                        agent: agent,
+                        bid: bid,
+                        status: status,
+                        jobStart: jobStart,
+                        service: service,
+                        clientId: clientId,
+                        agentId: agentId,
+                        jobId: jobId,
+                      );
+                    }),
       ),
     );
   }

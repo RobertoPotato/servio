@@ -54,34 +54,38 @@ class _BidsState extends State<Bids> {
         appBar: AppBar(
           title: Text("Bids I've Made"),
         ),
-        body: ListView.builder(
-            itemCount: bids == null ? 0 : bids.length,
-            itemBuilder: (BuildContext context, int index) {
-              var currentBidIndex = bids[index];
-              var currentServiceIndex = bids[index]["Service"];
-              var currentStatusIndex = bids[index]["Service"]["Status"];
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => MyBidDetails(
-                        bid: currentBidIndex,
-                        bidService: currentServiceIndex,
-                        serviceStatus: currentStatusIndex,
-                      ),
-                    ),
-                  );
-                },
-                child: BidCard(
-                  currency: currentBidIndex['currency'],
-                  amount: currentBidIndex['amount'].toDouble(),
-                  userName: "My Bid",
-                  description: currentBidIndex['coverLetter'],
-                  position: "${index + 1}/${bids.length}",
-                ),
-              );
-            }),
+        body: bids == null
+            ? Center(child: Text("Looking for your bids"))
+            : bids.length == 0
+                ? Center(child: Text(kNoBidsMadePrompt))
+                : ListView.builder(
+                    itemCount: bids == null ? 0 : bids.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var currentBidIndex = bids[index];
+                      var currentServiceIndex = bids[index]["Service"];
+                      var currentStatusIndex = bids[index]["Service"]["Status"];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => MyBidDetails(
+                                bid: currentBidIndex,
+                                bidService: currentServiceIndex,
+                                serviceStatus: currentStatusIndex,
+                              ),
+                            ),
+                          );
+                        },
+                        child: BidCard(
+                          currency: currentBidIndex['currency'],
+                          amount: currentBidIndex['amount'].toDouble(),
+                          userName: "My Bid",
+                          description: currentBidIndex['coverLetter'],
+                          position: "${index + 1}/${bids.length}",
+                        ),
+                      );
+                    }),
       ),
     );
   }

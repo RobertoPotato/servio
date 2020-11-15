@@ -58,109 +58,101 @@ class _MyServicesState extends State<MyServices> {
       appBar: AppBar(
         title: Text("My Services"),
       ),
-      body: ListView.builder(
-        itemCount: services == null ? 0 : services.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => MyServicesBids(
-                    serviceId: services[index]['id'],
-                    token: widget.token,
-                  ),
-                ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kMainHorizontalPadding,
-                  vertical: kMainHorizontalPadding / 2),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 130.0,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                services[index]['title'],
-                                style: kHeadingTextStyle.copyWith(
-                                  fontSize: 15.0,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+      body: services == null
+          ? Center(
+              child: Text("Looking for your services"),
+            )
+          : services.length == 0
+              ? Center(child: Text(kNoServicesRequestedPrompt))
+              : ListView.builder(
+                  itemCount: services == null ? 0 : services.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => MyServicesBids(
+                              serviceId: services[index]['id'],
+                              token: widget.token,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: kMainHorizontalPadding,
+                            vertical: kMainHorizontalPadding / 2),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 130.0,
+                              width: double.infinity,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          services[index]['title'],
+                                          style: kHeadingTextStyle.copyWith(
+                                            fontSize: 15.0,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        SizedBox(
+                                          height: 4.0,
+                                        ),
+                                        Text(
+                                          services[index]['description'],
+                                          maxLines: 5,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: Colors.grey[700]),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 1.0,
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        ImageContainer(
+                                          borderRadius: 5.0,
+                                          imageUrl:
+                                              "$kImageBaseUrl${services[index]['imageUrl']}",
+                                          height: 110.0,
+                                          isNetworkImage: true,
+                                          elevation: 0.0,
+                                        ),
+                                        SizedBox(
+                                          height: 4.0,
+                                        ),
+                                        Text(
+                                          budget(index),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 4.0,
-                              ),
-                              Text(
-                                services[index]['description'],
-                                maxLines: 5,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey[700]),
-                              )
-                            ],
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          width: 1.0,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              ImageContainer(
-                                borderRadius: 5.0,
-                                imageUrl:
-                                    "$kImageBaseUrl${services[index]['imageUrl']}",
-                                height: 110.0,
-                                isNetworkImage: true,
-                                elevation: 0.0,
-                              ),
-                              SizedBox(
-                                height: 4.0,
-                              ),
-                              Text(
-                                budget(index),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
-
-/*Column(
-              children: <Widget>[
-
-
-                Image.network('${services[index]['imageUrl']}'),
-                Text(services[index]['id'].toString()),
-                Text(
-                  services[index]['title'],
-                  style: kMainBlackTextStyle,
-                ),
-                Text(services[index]['description']),
-                Text(services[index]['imageUrl']),
-                Text(budget(index)),
-                Text("Job Terms: ${services[index]['terms']}"),
-              ],
-            )*/

@@ -38,6 +38,8 @@ Future<String> createService(
   print("Status: ${res.statusCode}");
   if (res.statusCode == 200) {
     displayDialog(ctxt, "Success", "Your request was saved successfully");
+  } else {
+    displayDialog(ctxt, "Error", "Unable to complete this request. Please try again");
   }
   return "";
 }

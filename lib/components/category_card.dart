@@ -35,10 +35,11 @@ class CategoryCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: kMainHorizontalPadding,
             vertical: kMainHorizontalPadding / 4),
-        child: Column(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: <Widget>[
             ImageContainer(
-              height: 150.0,
+              height: 180.0,
               imageUrl: data[index]['imageUrl'],
               borderRadius: 5.0,
               elevation: 0.0,
@@ -47,12 +48,17 @@ class CategoryCard extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
-            Text(
-              data[index]['title'],
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(hexColConvert(data[index]['themeColor'])),
+            Container(
+              width: double.infinity,
+              color: Colors.white.withOpacity(0.6),
+              child: Text(
+                data[index]['title'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(hexColConvert(data[index]['themeColor'])),
+                ),
               ),
             ),
           ],
@@ -63,13 +69,15 @@ class CategoryCard extends StatelessWidget {
 }
 
 void showCategoryDetails(ctxt, data, int categoryId) => showDialog(
-    context: ctxt,
-    builder: (ctxt) => AlertDialog(
-          content: CategoryDetails(
-            imageUrl: data['imageUrl'],
-            description: data['description'],
-            title: data['title'],
-            subCategories: data['subCategories'],
-            color: data['themeColor'], categoryId: categoryId,
-          ),
-        ));
+      context: ctxt,
+      builder: (ctxt) => AlertDialog(
+        content: CategoryDetails(
+          imageUrl: data['imageUrl'],
+          description: data['description'],
+          title: data['title'],
+          subCategories: data['subCategories'],
+          color: data['themeColor'],
+          categoryId: categoryId,
+        ),
+      ),
+    );
