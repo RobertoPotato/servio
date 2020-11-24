@@ -38,7 +38,7 @@ class _CategoriesState extends State<Categories> {
     if (response.statusCode == 200) {
       return Category.fromJson(jsonResponse[0]);
     } else {
-      throw Exception('Failed to load categories');
+      throw Exception(kCategoriesNotFound);
     }
   }
 
@@ -55,8 +55,9 @@ class _CategoriesState extends State<Categories> {
               child: GestureDetector(
                 onTap: () {
                   const kMessage = "Long press a category for more information";
+                  const kWaitingForCategories = "Please allow some time for the request to be served. Ensure you have a stable internet connection";
                   Fluttertoast.showToast(
-                      msg: kMessage,
+                      msg: data == null ? kWaitingForCategories : data.length != 0 ? kMessage : kCategoriesNotFound,
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.SNACKBAR,
                       timeInSecForIosWeb: 2,
@@ -66,7 +67,7 @@ class _CategoriesState extends State<Categories> {
                 },
                 child: Icon(
                   Icons.info,
-                  color: kAccentColor,
+                  color: data == null ? Colors.orangeAccent : data.length != 0 ? kAccentColor : Colors.red,
                 ),
               ),
             )

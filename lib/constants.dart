@@ -56,6 +56,7 @@ const kLogoutError = "Logging out process failed. This is not a fatal error. You
 
 
 //CONTEXTUAL TEXTS
+const kCategoriesNotFound = "Failed to load categories";
 const kNoServicesRequestedPrompt = "You haven't requested any services yet";
 const kNoServicesForCategory = "There are no services for this category right now. Please check back later";
 const kNoBidsMadePrompt = "You haven't placed bids on services yet";
