@@ -39,7 +39,7 @@ class _CategoryServicesState extends State<CategoryServices> {
     if (response.statusCode == 200) {
       return Service.fromJson(jsonResponse[0]);
     } else {
-      throw Exception('Failed to load categories');
+      throw Exception("An error occurred while fetching services for this category");
     }
   }
 
@@ -49,21 +49,25 @@ class _CategoryServicesState extends State<CategoryServices> {
       appBar: AppBar(
         title: Text(widget.categoryTitle),
       ),
-      body: ListView.builder(
-        itemCount: services == null ? 0 : services.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(
-                left: kMainHorizontalPadding,
-                right: kMainHorizontalPadding,
-                top: kMainHorizontalPadding),
-            child: ServiceCard(
-              service: services[index],
-              categoryTitle: widget.categoryTitle,
-            ),
-          );
-        },
-      ),
+      body: services == null
+          ? Center(child: CircularProgressIndicator())
+          : services.length != 0
+              ? ListView.builder(
+                  itemCount: services == null ? 0 : services.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          left: kMainHorizontalPadding,
+                          right: kMainHorizontalPadding,
+                          top: kMainHorizontalPadding),
+                      child: ServiceCard(
+                        service: services[index],
+                        categoryTitle: widget.categoryTitle,
+                      ),
+                    );
+                  },
+                )
+              : Text(kNoServicesForCategory),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/models/ErrorResponse.dart';
+import 'package:servio/jwt_helpers.dart';
 
 var parser = EmojiParser();
 
@@ -37,8 +38,6 @@ class _CreateReviewState extends State<CreateReview> {
       int jobId,
       String token,
       bool userIsClient}) async {
-    print(
-        "Stars: $stars \nContent: $content \nJobId: $jobId \nToken: $token \nUser is client: $userIsClient");
     final url = "$kBaseUrl/v1/reviews";
 
     var response = await http.post(Uri.encodeFull(url),
@@ -58,11 +57,15 @@ class _CreateReviewState extends State<CreateReview> {
 
     //Handle the errors
     if (response.statusCode == 200) {
-      print("Everything's okay");
+      displayResponseCard(
+          context, "Successful", "Your review has been sent", kSuccessImage);
     } else if (response.statusCode == 400) {
       var error = Error.fromJson(jsonResponse);
-      print(error.error.toString());
+      displayResponseCard(
+          context, "Something went wrong", "${error.error}", kErrorImage);
     } else
+      displayResponseCard(
+          context, "Oops", "Something went wrong", kErrorImage);
       return;
   }
 
@@ -148,7 +151,6 @@ class _CreateReviewState extends State<CreateReview> {
                   final formData = _fbKey.currentState.value;
                   final String reviewText = formData['reviewText'];
                   print(formData);
-                  //TODO ensure slider value gets passed in as part of the review
                   sendReview(
                       stars: sliderValue,
                       content: reviewText,

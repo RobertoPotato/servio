@@ -81,7 +81,6 @@ class _MyServicesBidsState extends State<MyServicesBids> {
                 itemCount:
                     bidsWithUserNames == null ? 0 : bidsWithUserNames.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print("Bids: $bidsWithUserNames");
                   return InkWell(
                     onTap: () {
                       //Navigate to bid details page

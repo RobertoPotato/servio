@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/components/alert_card.dart';
+import 'package:servio/components/help_items.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/models/Alert.dart';
 import 'package:servio/screens/service_screens/request_service.dart';
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/components/top_categories.dart';
 import 'package:servio/components/hiring.dart';
+import 'package:servio/components/help_cards.dart';
 //uncomment when needed: import 'package:servio/components/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,8 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            //TODO Replace with horizontal slider that shows help info
-            child: TopCategories(),
+            //TODO Implement horizontal slider that shows help info
+            child: HelpItems()
+            //child: TopCategories(),
           ),
           SliverToBoxAdapter(
             child: NowHiring(),

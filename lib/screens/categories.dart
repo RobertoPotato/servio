@@ -72,16 +72,24 @@ class _CategoriesState extends State<Categories> {
             )
           ],
         ),
-        body: GridView.builder(
-            itemCount: data == null ? 0 : data.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (BuildContext context, int index) {
-              return CategoryCard(
-                data: data,
-                index: index,
-              );
-            }),
+        body: data == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : data.length != 0
+                ? GridView.builder(
+                    itemCount: data == null ? 0 : data.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CategoryCard(
+                        data: data,
+                        index: index,
+                      );
+                    })
+                : Center(
+                    child: Text("A problem occurred while fetching categories"),
+                  ),
       ),
     );
   }

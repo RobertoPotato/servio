@@ -10,7 +10,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool lockInBackground = true;
   bool notificationsEnabled = true;
-
+  bool showFAQSwitchValue = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +33,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile(
                 title: 'Theme',
                 leading: Icon(Icons.format_paint),
+              ),
+              SettingsTile.switchTile(
+                title: "Show FAQs in home page",
+                leading: Icon(Icons.help_center),
+                onToggle: (bool value) {},
+                switchValue: showFAQSwitchValue,
               ),
               SettingsTile(
                 title: 'Sign out',
