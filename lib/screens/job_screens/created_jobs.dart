@@ -54,7 +54,7 @@ class _CreatedJobsState extends State<CreatedJobs> {
           title: Text('Posted by me...'),
         ),
         body: jobs == null
-            ? Center(child: Text("Looking for jobs"))
+            ? Center(child: CircularProgressIndicator())
             : jobs.length == 0
                 ? Center(child: Text(kNoJobsCreatedPrompt))
                 : ListView.builder(

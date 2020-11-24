@@ -46,28 +46,6 @@ class _MyServicesBidsState extends State<MyServicesBids> {
     }
   }
 
-  /*Future<BidWithUserName> fetchBidsWithUserNames() async {
-    var url = "$kBaseUrl/v1/bids/formyservice/${widget.serviceId}";
-
-    final response = await http.get(Uri.encodeFull(url),
-        headers: {"Accept": "application/json", "x-auth-token": widget.token});
-
-    final jsonResponse = json.decode(response.body);
-
-    setState(() {
-      bidsWithUserNames = json.decode(response.body);
-    });
-
-    if (response.statusCode == 200) {
-      //remove this isNotEmpty check if run to issues
-      if(response.body.isNotEmpty) {
-        return BidWithUserName.fromJson(jsonResponse[0]);
-      }
-    } else {
-      throw Exception('Failed to load Bids With User Names');
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -60,7 +60,7 @@ class _MyServicesState extends State<MyServices> {
       ),
       body: services == null
           ? Center(
-              child: Text("Looking for your services"),
+              child: CircularProgressIndicator(),
             )
           : services.length == 0
               ? Center(child: Text(kNoServicesRequestedPrompt))

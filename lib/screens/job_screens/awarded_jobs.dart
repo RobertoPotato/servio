@@ -54,7 +54,7 @@ class _AwardedJobsState extends State<AwardedJobs> {
         ),
         body: jobs == null
             ? Center(
-                child: Text("Looking for jobs"),
+                child: CircularProgressIndicator(),
               )
             : jobs.length == 0
                 ? Center(

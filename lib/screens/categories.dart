@@ -55,9 +55,14 @@ class _CategoriesState extends State<Categories> {
               child: GestureDetector(
                 onTap: () {
                   const kMessage = "Long press a category for more information";
-                  const kWaitingForCategories = "Please allow some time for the request to be served. Ensure you have a stable internet connection";
+                  const kWaitingForCategories =
+                      "Please allow some time for the request to be served. Ensure you have a stable internet connection";
                   Fluttertoast.showToast(
-                      msg: data == null ? kWaitingForCategories : data.length != 0 ? kMessage : kCategoriesNotFound,
+                      msg: data == null
+                          ? kWaitingForCategories
+                          : data.length != 0
+                              ? kMessage
+                              : kCategoriesNotFound,
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.SNACKBAR,
                       timeInSecForIosWeb: 2,
@@ -67,7 +72,11 @@ class _CategoriesState extends State<Categories> {
                 },
                 child: Icon(
                   Icons.info,
-                  color: data == null ? Colors.orangeAccent : data.length != 0 ? kAccentColor : Colors.red,
+                  color: data == null
+                      ? Colors.orangeAccent
+                      : data.length != 0
+                          ? kAccentColor
+                          : Colors.red,
                 ),
               ),
             )

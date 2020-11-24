@@ -55,7 +55,7 @@ class _BidsState extends State<Bids> {
           title: Text("Bids I've Made"),
         ),
         body: bids == null
-            ? Center(child: Text("Looking for your bids"))
+            ? Center(child: CircularProgressIndicator())
             : bids.length == 0
                 ? Center(child: Text(kNoBidsMadePrompt))
                 : ListView.builder(
