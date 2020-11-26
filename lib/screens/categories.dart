@@ -1,8 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/components/category_card.dart';
 import 'package:servio/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:servio/jwt_helpers.dart';
 import 'dart:convert';
 import 'package:servio/models/Category.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,18 +31,29 @@ class _CategoriesState extends State<Categories> {
 
   Future<Category> fetchCategory() async {
     var url = '$kBaseUrl/v1/categories';
-    final response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-    final jsonResponse = json.decode(response.body);
+    try {
+      final response = await http.get(Uri.encodeFull(url), headers: {
+        "Accept": "application/json"
+      }).timeout(Duration(seconds: 10));
 
-    setState(() {
-      data = json.decode(response.body);
-    });
+      final jsonResponse = json.decode(response.body);
 
-    if (response.statusCode == 200) {
-      return Category.fromJson(jsonResponse[0]);
-    } else {
-      throw Exception(kCategoriesNotFound);
+      setState(() {
+        data = json.decode(response.body);
+      });
+
+      if (response.statusCode == 200) {
+        return Category.fromJson(jsonResponse[0]);
+      } else {
+        throw Exception(kCategoriesNotFound);
+      }
+    } on TimeoutException catch (e) {
+      displayResponseCard(
+          context, "Error", "This seems to be taking too long", kErrorImage);
+      print("Request timed out");
+    } on SocketException catch (e) {
+      displayResponseCard(context, "Error", "No connection", kErrorImage);
+      print("No Connection");
     }
   }
 

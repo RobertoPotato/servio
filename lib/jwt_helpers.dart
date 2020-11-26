@@ -57,3 +57,12 @@ logOutUser(ctxt, screen) async {
   await storage.delete(key: "x-auth-token");
   Navigator.pushNamedAndRemoveUntil(ctxt, screen, (route) => false);
 }
+
+//FIXME - for responding to timeouts and no connections
+/*
+* try {} on TimeoutException catch (e) {
+      print(e.message);
+    } on SocketException catch (e) {
+      print(e.message);
+    }
+* */

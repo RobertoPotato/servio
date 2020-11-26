@@ -164,10 +164,9 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    StatsPage(
-                                      token: jwtSnapshot.data,
-                                    ),
+                                builder: (BuildContext context) => StatsPage(
+                                  token: jwtSnapshot.data,
+                                ),
                               ),
                             );
                           },
@@ -177,7 +176,6 @@ class _MainParentScreenState extends State<MainParentScreen> {
                           trailing: Icon(Icons.timer),
                           leading: Icon(Icons.help, color: kPrimaryColor),
                         ),
-
                         ListTile(
                           title: Text('Settings'),
                           leading: Icon(Icons.settings, color: Colors.blueGrey),
@@ -192,22 +190,22 @@ class _MainParentScreenState extends State<MainParentScreen> {
                 //body will be whatever screen is represented by the index and the
                 //token contained in snapshot.data
                 body: _selectedIndex == 0
-                    ? HomeScreen(
+                    ? Categories(
                         token: jwtSnapshot.data,
                       )
-                    : Categories(
+                    : HomeScreen(
                         token: jwtSnapshot.data,
                       ),
                 bottomNavigationBar: BottomNavigationBar(
                   backgroundColor: kPrimaryColor,
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
                       icon: Icon(Icons.category),
                       label: 'Categories',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
                     ),
                   ],
                   currentIndex: _selectedIndex,
