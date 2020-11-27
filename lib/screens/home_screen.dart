@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:servio/components/alert_card.dart';
 import 'package:servio/constants.dart';
+import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/Alert.dart';
 import 'package:servio/screens/service_screens/request_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/components/hiring.dart';
-//uncomment when needed: import 'package:servio/components/search_delegate.dart';
+//import 'package:servio/components/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home';
@@ -31,26 +35,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<Alert> fetchAlerts() async {
     var url = "$kBaseUrl/v1/alerts/mine";
-    final response = await http.get(Uri.encodeFull(url),
-        headers: {"Accept": "application/json", "x-auth-token": widget.token});
 
-    final jsonResponse = json.decode(response.body);
+    try {
+      final response = await http.get(Uri.encodeFull(url), headers: {
+        "Accept": "application/json",
+        "x-auth-token": widget.token
+      }).timeout(Duration(seconds: kNetworkRequestTimeOutDuration));
 
-    if (response.statusCode == 200) {
-      setState(() {
-        listOfAlertsIsAvailable = true;
-        alerts = json.decode(response.body);
-      });
+      final jsonResponse = json.decode(response.body);
 
-      return Alert.fromJson(jsonResponse[0]);
-    } else {
-      throw Exception('Failed to load Alerts');
+      if (response.statusCode == 200) {
+        setState(() {
+          listOfAlertsIsAvailable = true;
+          alerts = json.decode(response.body);
+        });
+
+        return Alert.fromJson(jsonResponse[0]);
+      } else {
+        throw Exception('Failed to load Alerts');
+      }
+    } on TimeoutException catch (e) {
+      displayResponseCard(context, "Error", kRequestTimedOut, kErrorImage);
+      print(e.message);
+    } on SocketException catch (e) {
+      displayResponseCard(context, "Error", kNoConnection, kErrorImage);
+      print(e.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //print(alerts);
     return Scaffold(
       appBar: AppBar(
         elevation: kElevationValue,
@@ -84,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomScrollView(
         slivers: <Widget>[
-       /*   SliverToBoxAdapter(
+          /*   SliverToBoxAdapter(
             child: HelpItems()
             //child: TopCategories(),
           ),*/
@@ -118,7 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               : SliverToBoxAdapter(
                   child: Center(
-                    child: Text("No new alerts", style: kTestTextStyleBlack,),
+                    child: Text(
+                      "No new alerts",
+                      style: kTestTextStyleBlack,
+                    ),
                   ),
                 ),
         ],

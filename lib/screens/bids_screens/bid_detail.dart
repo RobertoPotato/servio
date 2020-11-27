@@ -99,14 +99,6 @@ class _BidDetailsState extends State<BidDetails> {
 
   @override
   Widget build(BuildContext context) {
-    //print("Bid ID: ${widget.bidId}");
-    _showSnack(BuildContext context, String text) {
-      final snackBar = SnackBar(
-        content: Text(text),
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
-    }
-
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<ProfileWithTierAndRole>(

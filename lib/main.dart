@@ -8,6 +8,7 @@ import 'screens/settings_screen.dart';
 import 'screens/profile_screens/new_profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'jwt_helpers.dart';
+import 'package:flutter/services.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -16,6 +17,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(

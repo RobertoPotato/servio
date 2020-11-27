@@ -46,7 +46,9 @@ Future<String> acceptBid({@required MJob job, @required ctxt}) async {
     }
   } on SocketException catch (e) {
     displayResponseCard(ctxt, "Error", kNoConnection, kErrorImage);
+    print(e.message);
   } on TimeoutException catch (e) {
     displayResponseCard(ctxt, "Error", kRequestTimedOut, kErrorImage);
+    print(e.message);
   }
 }

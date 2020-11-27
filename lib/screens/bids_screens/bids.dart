@@ -51,13 +51,12 @@ class _BidsState extends State<Bids> {
         throw Exception('Failed to load Bids');
       }
     } on TimeoutException catch(e){
+      print(e.message);
       displayResponseCard(context, "Error", kRequestTimedOut, kErrorImage);
-      throw Exception('Failed to load Bids');
 
     } on SocketException catch(e){
       print(e.message);
       displayResponseCard(context, "Error", kNoConnection, kErrorImage);
-      throw Exception('Failed to load Bids');
     }
   }
 

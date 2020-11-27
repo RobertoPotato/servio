@@ -56,8 +56,10 @@ Future registerUser(String firstName, String lastName, String email,
           ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
     }
   } on SocketException catch (e) {
+    print(e.message);
     displayResponseCard(ctxt, "Error", kNoConnection, kErrorImage);
   } on TimeoutException catch (e) {
+    print(e.message);
     displayResponseCard(ctxt, "Error", kRequestTimedOut, kErrorImage);
   }
 }

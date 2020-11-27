@@ -41,14 +41,18 @@ class _LoginScreenState extends State<LoginScreen> {
         var error = errorFromJson(response.body);
         displayResponseCard(
             ctxt, kUniversalErrorTitle, error.error, kErrorImage);
+        return error.error;
       } else if (response.statusCode == 400) {
         var error = errorFromJson(response.body);
         displayResponseCard(
             ctxt, kUniversalErrorTitle, error.error, kErrorImage);
+        return error.error;
       }
     } on TimeoutException catch (e) {
+      print(e.message);
       displayResponseCard(context, 'Error', 'Request timed out', kErrorImage);
     } on SocketException catch (e) {
+      print(e.message);
       displayResponseCard(context, "Error", "No connection to the server", kErrorImage);
     }
   }

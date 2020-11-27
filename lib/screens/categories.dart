@@ -48,8 +48,10 @@ class _CategoriesState extends State<Categories> {
         throw Exception(kCategoriesNotFound);
       }
     } on TimeoutException catch (e) {
+      print(e.message);
       displayResponseCard(context, "Error", kRequestTimedOut, kErrorImage);
     } on SocketException catch (e) {
+      print(e.message);
       displayResponseCard(context, "Error", kNoConnection, kErrorImage);
     }
   }
