@@ -30,12 +30,17 @@ const kSuccessbackgroundImage = "";
 const kStatusId = 1;
 
 //COLORS
+/*TODO random color to consider
+#087c77
+#22010b
+*/
 //primary color
 //secondary color
 //accent color
 
 //TODO remove all unnecessary colors and remain with only these three colors
-const kPrimaryColor = Color(0xFF005F86);
+//const kPrimaryColor = Color(0xFF005F86);
+const kPrimaryColor = Color(0xFF087c77);
 //0xFF3d2352
 const kAccentColor = Colors.lightBlueAccent;
 const kScaffoldBackgroundColor = Colors.white;
