@@ -14,7 +14,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool passwordsMatch;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
-  bool _checkPasswordMatch(pasMain, pasCompare) {
+  bool checkPasswordMatch(pasMain, pasCompare) {
     if (pasMain != pasCompare) {
       setState(() {
         passwordsMatch = false;
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       final passwordRepeat =
                           formData['passwordRepeat'].toString().trim();
 
-                      if (_checkPasswordMatch(password, passwordRepeat)) {
+                      if (checkPasswordMatch(password, passwordRepeat)) {
                         print('Everything is safe, you can post');
                         registerUser(firstName, lastName, email, password, context);
                         //TODO On complete, go to login screen and log in

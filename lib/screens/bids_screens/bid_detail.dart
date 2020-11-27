@@ -60,6 +60,7 @@ class _BidDetailsState extends State<BidDetails> {
     futureProfile = fetchProfile();
     futureReviews = fetchReviews();
   }
+  //TODO Setup a client to use here
 
   Future<ProfileWithTierAndRole> fetchProfile() async {
     var url = "$kBaseUrl/v1/profiles/${widget.userId}";
@@ -263,16 +264,14 @@ class _BidDetailsState extends State<BidDetails> {
                               materialColor: kMyBidsColor,
                               onTap: () async {
                                 try {
-                                  var acceptUserBid = await acceptBid(
-                                    MJob(
-                                        widget.token,
-                                        widget.userId,
-                                        widget.bidId,
-                                        widget.serviceId,
-                                        kStatusId),
-                                  );
-
-                                  _showSnack(context, acceptUserBid);
+                                  await acceptBid(
+                                      job: MJob(
+                                          widget.token,
+                                          widget.userId,
+                                          widget.bidId,
+                                          widget.serviceId,
+                                          kStatusId),
+                                      ctxt: context);
                                 } catch (e) {
                                   print(e);
                                 }
@@ -308,14 +307,3 @@ class _BidDetailsState extends State<BidDetails> {
     );
   }
 }
-
-/*
-                    roleTitle: snapshot.data.role.title,
-                    roleDescription:
-                    snapshot.data.role.description,
-                    tierTitle: snapshot.data.tier.title,
-                    tierDescription:
-                    snapshot.data.tier.description,
-                    tierBadgeUrl:
-                    snapshot.data.tier.badgeUrl,
-                   */

@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:servio/components/bid_card.dart';
+import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/BidWithServiceAndStatus.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -31,18 +35,28 @@ class _BidsState extends State<Bids> {
     //User fetches bids made by them
     var url = "$kBaseUrl/v1/bids/mine";
 
-    final response = await http.get(Uri.encodeFull(url),
-        headers: {"Accept": "application/json", "x-auth-token": widget.token});
+    try {
+      final response = await http.get(Uri.encodeFull(url),
+          headers: {"Accept": "application/json", "x-auth-token": widget.token}).timeout(Duration(seconds: kNetworkRequestTimeOutDuration));
 
-    final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(response.body);
 
-    setState(() {
-      bids = json.decode(response.body);
-    });
+      setState(() {
+        bids = json.decode(response.body);
+      });
 
-    if (response.statusCode == 200) {
-      return BidWithServiceAndStatus.fromJson(jsonResponse[0]);
-    } else {
+      if (response.statusCode == 200) {
+        return BidWithServiceAndStatus.fromJson(jsonResponse[0]);
+      } else {
+        throw Exception('Failed to load Bids');
+      }
+    } on TimeoutException catch(e){
+      displayResponseCard(context, "Error", kRequestTimedOut, kErrorImage);
+      throw Exception('Failed to load Bids');
+
+    } on SocketException catch(e){
+      print(e.message);
+      displayResponseCard(context, "Error", kNoConnection, kErrorImage);
       throw Exception('Failed to load Bids');
     }
   }

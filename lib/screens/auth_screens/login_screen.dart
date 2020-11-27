@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -6,9 +8,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:servio/screens/auth_screens/register_screen.dart';
-import 'package:servio/screens/parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/ErrorResponse.dart';
+import 'login_helpers.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -26,57 +28,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<String> logInUser({String email, String password, ctxt}) async {
     final String url = "$kBaseUrl/v1/auth/login";
-    final response = await http.post(Uri.encodeFull(url),
-        body: json.encode({"email": email, "password": password}),
-        headers: {
-          "accept": "application/json",
-          "content-type": "application/json"
-        });
-    if (response.statusCode == 200) {
-      return response.body;
-    } else if (response.statusCode == 404) {
-      var error = errorFromJson(response.body);
-      displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
-    } else if (response.statusCode == 400) {
-      var error = errorFromJson(response.body);
-      displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
-    }
-  }
-
-  getProfile(String token, ctxt) async {
-    final String url = "$kBaseUrl/v1/profiles/validate";
-
-    final response = await http.get(Uri.encodeFull(url), headers: {
-      "accept": "application/json",
-      "content-type": "application/json",
-      "x-auth-token": token
-    });
-
-    if (response.statusCode == 200) {
-      await storage.write(key: "profile", value: 'OK').then(
-            (value) => Navigator.pushNamedAndRemoveUntil(
-                context, MainParentScreen.id, (route) => false),
-          );
-    } else if (response.statusCode == 404) {
-      var error = errorFromJson(response.body);
-
-      showDialog(
-        context: context,
-        builder: (ctxt) => AlertDialog(
-          title: Text("Alert!"),
-          content: Text(error.error),
-          actions: [
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                  context, MainParentScreen.id, (route) => false),
-            ),
-          ],
-        ),
-      );
-    } else {
-      displayDialog(
-          context, "No profile yet", "You should set it up once logged in");
+    try {
+      final response = await http.post(Uri.encodeFull(url),
+          body: json.encode({"email": email, "password": password}),
+          headers: {
+            "accept": "application/json",
+            "content-type": "application/json"
+          }).timeout(Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else if (response.statusCode == 404) {
+        var error = errorFromJson(response.body);
+        displayResponseCard(
+            ctxt, kUniversalErrorTitle, error.error, kErrorImage);
+      } else if (response.statusCode == 400) {
+        var error = errorFromJson(response.body);
+        displayResponseCard(
+            ctxt, kUniversalErrorTitle, error.error, kErrorImage);
+      }
+    } on TimeoutException catch (e) {
+      displayResponseCard(context, 'Error', 'Request timed out', kErrorImage);
+    } on SocketException catch (e) {
+      displayResponseCard(context, "Error", "No connection to the server", kErrorImage);
     }
   }
 

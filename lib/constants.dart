@@ -14,6 +14,7 @@ const ip = ipLoc;
 //change to https after certificates have been configured
 const kBaseUrl = "http://$ip:$port/api";
 const kImageBaseUrl = "http://$ip:$port/";
+const kNetworkRequestTimeOutDuration = 10;
 
 
 const kErrorImage = "images/Notify.png";
@@ -62,6 +63,9 @@ const kNoServicesForCategory = "There are no services for this category right no
 const kNoBidsMadePrompt = "You haven't placed bids on services yet";
 const kNoJobsCreatedPrompt = "No jobs found. Order a service and hire a bidder to get started";
 const kNoJobsHiredPrompt = "No jobs found. Set up your profile then bid on jobs to get hired";
+const kRequestTimedOut = "Request Timed Out";
+const kNoConnection = "No Connection to server";
+
 
 const kExampleCurrency = 'KES';
 const kJobs = "Jobs";

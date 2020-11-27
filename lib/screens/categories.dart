@@ -48,12 +48,9 @@ class _CategoriesState extends State<Categories> {
         throw Exception(kCategoriesNotFound);
       }
     } on TimeoutException catch (e) {
-      displayResponseCard(
-          context, "Error", "This seems to be taking too long", kErrorImage);
-      print("Request timed out");
+      displayResponseCard(context, "Error", kRequestTimedOut, kErrorImage);
     } on SocketException catch (e) {
-      displayResponseCard(context, "Error", "No connection", kErrorImage);
-      print("No Connection");
+      displayResponseCard(context, "Error", kNoConnection, kErrorImage);
     }
   }
 
