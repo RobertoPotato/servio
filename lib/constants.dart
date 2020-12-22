@@ -16,7 +16,6 @@ const kBaseUrl = "http://$ip:$port/api";
 const kImageBaseUrl = "http://$ip:$port/";
 const kNetworkRequestTimeOutDuration = 10;
 
-
 const kErrorImage = "images/Notify.png";
 const kSuccessImage = "images/confirmed.png";
 const kPageNotFoundImage = "images/undraw_page_not_found.png";
@@ -58,19 +57,21 @@ const kTravelPromptExplanation =
     "This is important in case the service would require you to travel";
 const kReviewOnSuccessfulCompletion =
     "Congratulations. The job has been successfully completed. Status changes can be viewed as soon as the page is refreshed. Please take some time to review the ";
-const kLogoutError = "Logging out process failed. This is not a fatal error. You may need to clear app data.";
-
+const kLogoutError =
+    "Logging out process failed. This is not a fatal error. You may need to clear app data.";
 
 //CONTEXTUAL TEXTS
 const kCategoriesNotFound = "Failed to load categories";
 const kNoServicesRequestedPrompt = "You haven't requested any services yet";
-const kNoServicesForCategory = "There are no services for this category right now. Please check back later";
+const kNoServicesForCategory =
+    "There are no services for this category right now. Please check back later";
 const kNoBidsMadePrompt = "You haven't placed bids on services yet";
-const kNoJobsCreatedPrompt = "No jobs found. Order a service and hire a bidder to get started";
-const kNoJobsHiredPrompt = "No jobs found. Set up your profile then bid on jobs to get hired";
+const kNoJobsCreatedPrompt =
+    "No jobs found. Order a service and hire a bidder to get started";
+const kNoJobsHiredPrompt =
+    "No jobs found. Set up your profile then bid on jobs to get hired";
 const kRequestTimedOut = "Request Timed Out";
 const kNoConnection = "No Connection to server";
-
 
 const kExampleCurrency = 'KES';
 const kJobs = "Jobs";
@@ -93,7 +94,8 @@ const kClient = 'Client';
 const kAgent = 'Agent';
 const kBidNotice =
     'The client will receive your profile information when you bid for their work';
-const kErrorProfileConflict = "There's already a profile associated with this account";
+const kErrorProfileConflict =
+    "There's already a profile associated with this account";
 const kUniversalErrorTitle = "Slight problem...";
 
 //SIZES
