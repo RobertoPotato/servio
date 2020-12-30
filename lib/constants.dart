@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //Network Addresses
-const ipLoc = "192.168.0.103";
+const ipLoc = "192.168.0.19";
 const ipNet = "151.236.219.72";
 const domainName = "test.robertwabuti.co.ke";
 
@@ -9,7 +9,7 @@ const portLoc = "3000";
 const portNet = "3000";
 
 const port = portLoc;
-const ip = domainName;
+const ip = ipLoc;
 
 //change to https after certificates have been configured
 const kBaseUrl = "http://$ip:$port/api";

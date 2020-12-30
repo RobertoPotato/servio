@@ -23,20 +23,39 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Future getUserStats({@required String token}) async {
+    print("Fetching stats");
     final String url = "$kBaseUrl/v1/statistics/";
+
+    print(url);
 
     final response = await http.get(Uri.encodeFull(url),
         headers: {"accepts": "application/json", "x-auth-token": token});
 
-    //final jsonResponse = json.decode(response.body);
+    final jsonResponse = json.decode(response.body);
 
     if (response.statusCode == 200) {
+      print("Response caught");
+      return Stats.fromJson(jsonResponse);
+    } else {
+      print("no response");
+    }
+
+    return;
+
+    /*if (response.statusCode == 200) {
       var stats = Stats.fromJson(json.decode(response.body));
-      print(stats);
+      print("Response was caught");
       return stats;
     } else {
-      return "Damn!";
-    }
+      return "";
+    }*/
+  }
+
+  showNumberOrZero(recoveredValue) {
+    if (recoveredValue >= 1) {
+      return recoveredValue.toStringAsFixed(1);
+    } else
+      return 0;
   }
 
   @override
@@ -54,7 +73,6 @@ class _StatsPageState extends State<StatsPage> {
                 future: futureStats,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    print(snapshot.data);
                     return Column(
                       children: [
                         BasicStats(
@@ -84,12 +102,12 @@ class _StatsPageState extends State<StatsPage> {
                         BasicStats(
                           item: "Bidding success rate",
                           value:
-                              "${(snapshot.data.jobCount / snapshot.data.bidCount).toStringAsFixed(1)}",
+                              "${showNumberOrZero((snapshot.data.jobCount / snapshot.data.bidCount))}",
                         ),
                         BasicStats(
                           item: "Job completion rate",
                           value:
-                              "${(snapshot.data.jobsCompleted / snapshot.data.jobCount).toStringAsFixed(1)}",
+                              "${showNumberOrZero((snapshot.data.jobsCompleted / snapshot.data.jobCount))}",
                         ),
                       ],
                     );

@@ -25,7 +25,7 @@ class Stats {
   int jobsStalled;
   int jobsCreated;
   int servicesCount;
-  List<AverageRating> averageRating;
+  int averageRating;
 
   factory Stats.fromJson(Map<String, dynamic> json) => Stats(
     bidCount: json["bid_count"],
@@ -34,7 +34,7 @@ class Stats {
     jobsStalled: json["jobs_stalled"],
     jobsCreated: json["jobs_created"],
     servicesCount: json["services_count"],
-    averageRating: List<AverageRating>.from(json["average_rating"].map((x) => AverageRating.fromJson(x))),
+    averageRating: json["average_rating"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -44,22 +44,6 @@ class Stats {
     "jobs_stalled": jobsStalled,
     "jobs_created": jobsCreated,
     "services_count": servicesCount,
-    "average_rating": List<dynamic>.from(averageRating.map((x) => x.toJson())),
-  };
-}
-
-class AverageRating {
-  AverageRating({
-    this.avg,
-  });
-
-  double avg;
-
-  factory AverageRating.fromJson(Map<String, dynamic> json) => AverageRating(
-    avg: json["avg"].toDouble(),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "avg": avg,
+    "average_rating": averageRating,
   };
 }

@@ -54,6 +54,7 @@ class _CategoriesState extends State<Categories> {
       print(e.message);
       displayResponseCard(context, "Error", kNoConnection, kErrorImage);
     }
+    return null;
   }
 
   @override

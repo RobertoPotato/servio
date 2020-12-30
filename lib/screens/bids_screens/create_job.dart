@@ -51,4 +51,5 @@ Future<String> acceptBid({@required MJob job, @required ctxt}) async {
     displayResponseCard(ctxt, "Error", kRequestTimedOut, kErrorImage);
     print(e.message);
   }
+  return "";
 }

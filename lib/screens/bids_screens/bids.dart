@@ -58,6 +58,8 @@ class _BidsState extends State<Bids> {
       print(e.message);
       displayResponseCard(context, "Error", kNoConnection, kErrorImage);
     }
+    //FIXME
+    return null;
   }
 
   @override

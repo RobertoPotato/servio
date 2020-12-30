@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       displayResponseCard(context, "Error", kNoConnection, kErrorImage);
       print(e.message);
     }
+    return null;
   }
 
   @override

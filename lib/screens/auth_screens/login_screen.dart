@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future profile;
 
   Future<String> logInUser({String email, String password, ctxt}) async {
+    print(kBaseUrl);
     final String url = "$kBaseUrl/v1/auth/login";
     try {
       final response = await http.post(Uri.encodeFull(url),
@@ -55,6 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       print(e.message);
       displayResponseCard(context, "Error", "No connection to the server", kErrorImage);
     }
+    //FIXME
+    return '';
   }
 
   @override
