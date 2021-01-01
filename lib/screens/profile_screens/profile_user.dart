@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/divider_component.dart';
 import 'package:servio/components/image_container.dart';
-
+import 'package:servio/screens/image_screen.dart';
 class UserProfile extends StatelessWidget {
   final String userName;
   final String bio;
@@ -50,7 +50,7 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(kMainHorizontalPadding),
+        padding: const EdgeInsets.only(left: kMainHorizontalPadding + 4, top: kMainHorizontalPadding + 4, right: kMainHorizontalPadding + 4),
         child: Column(
           children: [
             Row(
@@ -61,7 +61,7 @@ class UserProfile extends StatelessWidget {
                     backgroundColor: kPrimaryColor,
                     child: Center(
                       child: Text(
-                        getInitials(userName),
+                        getInitials(userName).toUpperCase(),
                         style: kTestTextStyleWhite,
                       ),
                     ),
@@ -136,21 +136,33 @@ class UserProfile extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            ImageContainer(
-              height: 300,
-              borderRadius: 5.0,
-              imageUrl: picture,
-              elevation: 0.0,
-              isNetworkImage: true,
+            InkWell(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => ImageScreen(
+                        imageUrl: picture,
+                        isNetworkImage: true),
+                  ),
+                );
+              },
+              child: ImageContainer(
+                height: 300,
+                borderRadius: 5.0,
+                imageUrl: picture,
+                elevation: 0.0,
+                isNetworkImage: true,
+              ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 10.0,
             ),
             Container(
-              child: Text(bio),
+              child: Text("User's Bio: $bio", style: kMainBlackTextStyle.copyWith(fontSize: 18),),
             ),
             SizedBox(
-              height: 20.0,
+              height: 5.0,
             ),
           ],
         ),

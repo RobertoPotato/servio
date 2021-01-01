@@ -51,11 +51,11 @@ class _StatsPageState extends State<StatsPage> {
     }*/
   }
 
-  showNumberOrZero(recoveredValue) {
-    if (recoveredValue >= 1) {
-      return recoveredValue.toStringAsFixed(1);
-    } else
-      return 0;
+  roundedPercent(recoveredValue) {
+    recoveredValue == 1
+        ? recoveredValue = recoveredValue * 100 - 1
+        : recoveredValue = recoveredValue * 100;
+    return double.parse((recoveredValue).toStringAsFixed(1));
   }
 
   @override
@@ -100,14 +100,18 @@ class _StatsPageState extends State<StatsPage> {
                           value: "${snapshot.data.servicesCount}",
                         ),
                         BasicStats(
+                          item: "Average rating",
+                          value: "${snapshot.data.averageRating}",
+                        ),
+                        BasicStats(
                           item: "Bidding success rate",
                           value:
-                              "${showNumberOrZero((snapshot.data.jobCount / snapshot.data.bidCount))}",
+                              "${(roundedPercent((snapshot.data.jobCount / snapshot.data.bidCount)))}%",
                         ),
                         BasicStats(
                           item: "Job completion rate",
                           value:
-                              "${showNumberOrZero((snapshot.data.jobsCompleted / snapshot.data.jobCount))}",
+                              "${roundedPercent((snapshot.data.jobsCompleted / snapshot.data.jobCount))}%",
                         ),
                       ],
                     );

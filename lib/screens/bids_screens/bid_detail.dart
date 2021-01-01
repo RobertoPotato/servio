@@ -14,6 +14,7 @@ import 'package:servio/components/list_of_reviews.dart';
 import 'package:servio/screens/bids_screens/create_job.dart';
 import 'package:servio/components/StatsWidget.dart';
 import 'package:servio/components/image_container.dart';
+import 'package:servio/screens/image_screen.dart';
 
 class BidDetails extends StatefulWidget {
   final double amount;
@@ -107,14 +108,26 @@ class _BidDetailsState extends State<BidDetails> {
             if (snapshot.hasData) {
               return ListView(
                 children: <Widget>[
-                  ImageContainer(
-                    elevation: 0.0,
-                    isNetworkImage: true,
-                    borderRadius: 20.0,
-                    bottomRightRad: 20.0,
-                    bottomLeftRad: 20.0,
-                    height: 350.0,
-                    imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ImageScreen(
+                              imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                              isNetworkImage: true),
+                        ),
+                      );
+                    },
+                    child: ImageContainer(
+                      elevation: 0.0,
+                      isNetworkImage: true,
+                      borderRadius: 20.0,
+                      bottomRightRad: 20.0,
+                      bottomLeftRad: 20.0,
+                      height: 350.0,
+                      imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,

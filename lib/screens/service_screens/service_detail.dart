@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/screens/profile_screens/profile_user.dart';
 import 'package:servio/components/image_container.dart';
+import 'package:servio/screens/image_screen.dart';
 
 class ServiceDetails extends StatefulWidget {
   final userId;
@@ -80,14 +81,27 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ImageContainer(
-                imageUrl: "$kImageBaseUrl${widget.imageUrl}",
-                height: 400.0,
-                borderRadius: 20.0,
-                bottomRightRad: 20.0,
-                bottomLeftRad: 20.0,
-                isNetworkImage: true,
-                elevation: kElevationValue / 2,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ImageScreen(
+                          imageUrl:
+                          "$kImageBaseUrl${widget.imageUrl}",
+                          isNetworkImage: true),
+                    ),
+                  );
+                },
+                child: ImageContainer(
+                  imageUrl: "$kImageBaseUrl${widget.imageUrl}",
+                  height: 400.0,
+                  borderRadius: 20.0,
+                  bottomRightRad: 20.0,
+                  bottomLeftRad: 20.0,
+                  isNetworkImage: true,
+                  elevation: kElevationValue / 2,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(

@@ -12,6 +12,11 @@ import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/ErrorResponse.dart';
 import 'jobs_helper_function.dart';
 import 'package:servio/components/image_container.dart';
+import 'package:servio/components/grid_details_card.dart';
+import 'package:servio/screens/image_screen.dart';
+import 'package:servio/components/details_container.dart';
+import 'package:servio/components/sections_separator.dart';
+import 'package:servio/components/divider_component.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -68,12 +73,11 @@ class _JobDetailsState extends State<JobDetails> {
   Future<String> _markJobDone(ctxt) async {
     var url = "$kBaseUrl/v1/jobs/${widget.jobId}/done";
 
-    final response = await http.put(Uri.encodeFull(url),
-        headers: {
-          "accept": "application/json",
-          "content-type": "application/json",
-          "x-auth-token": widget.token
-        });
+    final response = await http.put(Uri.encodeFull(url), headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "x-auth-token": widget.token
+    });
 
     if (response.statusCode == 200) {
       setState(() {
@@ -87,7 +91,8 @@ class _JobDetailsState extends State<JobDetails> {
       displayResponseCard(ctxt, kUniversalErrorTitle, error.error, kErrorImage);
       return error.error;
     } else {
-      displayResponseCard(ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
+      displayResponseCard(
+          ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
       return kSomethingWrongException;
     }
   }
@@ -140,92 +145,109 @@ class _JobDetailsState extends State<JobDetails> {
 
   @override
   Widget build(BuildContext context) {
-    _showSnack(BuildContext context, text) {
-      final snackBar = SnackBar(
-        content: Text(text),
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
-    }
+    print(
+        "Agent last: ${widget.agent['lastName']} Client first: ${widget.client['firstName']}");
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: InkWell(
-            onTap: () {
-              _showSnack(context, widget.status["description"]);
-            },
-            child: Text(
-              "Job Status: ${widget.status["title"]}",
-              style: kAppBarTitle.copyWith(color: Colors.white, fontSize: 24.0),
-            ),
+          title: Text(
+            "Job Status: ${widget.status["title"]}",
+            style: kAppBarTitle.copyWith(color: Colors.white, fontSize: 24.0),
           ),
         ),
-        //,
-        /**/
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ImageContainer(
-                imageUrl: "$kImageBaseUrl${widget.service['imageUrl']}",
-                height: 400.0,
-                borderRadius: 20.0,
-                bottomLeftRad: 20.0,
-                bottomRightRad: 20.0,
-                isNetworkImage: true,
-                elevation: kElevationValue / 2,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kMainHorizontalPadding,
-                    vertical: kMainHorizontalPadding / 2),
-                child: MaterialText(
-                  text: "${widget.service["title"]}",
-                  fontStyle: kTestTextStyleWhite,
-                  color: kPrimaryColor,
-                ),
-              ),
-              CardWithTitleAndText(
-                title: "Project Description",
-                text: "${widget.service["description"]}",
-              ),
-              //Show the terms of the job and when the job was created
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kMainHorizontalPadding,
-                    vertical: kMainHorizontalPadding / 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MaterialText(
-                      text: "${widget.service["terms"]}",
-                      fontStyle: kTestTextStyleWhite,
-                      color: kMyJobsColor,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ImageScreen(
+                          imageUrl:
+                              "$kImageBaseUrl${widget.service['imageUrl']}",
+                          isNetworkImage: true),
                     ),
-                    Flexible(
-                        child: Text(
-                      parseDate(widget.service["createdAt"]),
-                      style: kTestTextStyleBlack,
-                      maxLines: 4,
-                      overflow: TextOverflow.fade,
-                    )),
-                  ],
+                  );
+                },
+                child: ImageContainer(
+                  imageUrl: "$kImageBaseUrl${widget.service['imageUrl']}",
+                  height: 400.0,
+                  borderRadius: 20.0,
+                  bottomLeftRad: 20.0,
+                  bottomRightRad: 20.0,
+                  isNetworkImage: true,
+                  elevation: kElevationValue / 2,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(kMainHorizontalPadding),
-                child: Container(
-                  child: widget.userIsClient
-                      ? CardWithTitleAndText(
-                          title: 'Winning Bid: ${widget.bid['amount']}',
-                          text:
-                              "${widget.bid['coverLetter']}. \nAgent's availability is: ${widget.bid['availability']}",
-                        )
-                      : MaterialText(
-                          text: "Started on: ${parseDate(widget.jobStart)}",
-                          color: kPrimaryColor,
-                          fontStyle: kHeadingSubTextStyle.copyWith(
-                              color: Colors.white),
-                        ),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kMainHorizontalPadding),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kMainHorizontalPadding / 2),
+                      child: MaterialText(
+                        text:
+                            "${widget.service["title"].toString().toUpperCase()}",
+                        fontStyle: kTestTextStyleWhite,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kMainHorizontalPadding / 2),
+                      child: DetailsContainer(
+                          title: "Project Description",
+                          content: "${widget.service["description"]}"),
+                    ),
+                    //Show the terms of the job and when the job was created
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kMainHorizontalPadding / 2),
+                      child: GridDetailsCard(
+                          row1col1: 'Terms',
+                          row1col2: "${widget.service["terms"]}",
+                          row2col1: "Bid amount",
+                          row2col2: "${widget.bid['amount']}"),
+                    ),
+
+                    widget.userIsClient
+                        ?
+                        //Client sees this
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: kMainHorizontalPadding / 2),
+                            child: GridDetailsCard(
+                                row1col1: "Availability",
+                                row1col2: "${widget.bid['availability']}",
+                                row2col1: "Start Date",
+                                row2col2:
+                                    "${parseDate(widget.service["createdAt"])}"),
+                          )
+                        :
+                        //Agent sees this
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: kMainHorizontalPadding / 2),
+                            child: MaterialText(
+                              text: "Started on: ${parseDate(widget.jobStart)}",
+                              color: kPrimaryColor,
+                              fontStyle: kHeadingSubTextStyle.copyWith(
+                                  color: Colors.white),
+                            ),
+                          ),
+                    DetailsContainer(
+                        title: "Cover Letter",
+                        content: "${widget.bid['coverLetter']}"),
+
+                    SectionsSeparator(
+                        text: widget.userIsClient
+                            ? "Agent's Profile"
+                            : "Client's Profile"),
+                  ],
                 ),
               ),
               showSpinner
@@ -263,6 +285,9 @@ class _JobDetailsState extends State<JobDetails> {
                         );
                       },
                     ),
+
+              SectionsSeparator(
+                  text: "Actions"),
               seeReviewOrError(
                   userIsClient: widget.userIsClient,
                   futureReview: futureReviewOrEmpty,

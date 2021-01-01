@@ -18,6 +18,7 @@ import 'package:servio/components/image_container.dart';
 import 'package:servio/components/review_card.dart';
 import 'package:servio/screens/settings_screen.dart';
 import 'package:servio/models/ProfileWithTierRoleAndUser.dart';
+import 'package:servio/screens/image_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String token;
@@ -83,18 +84,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: futureProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print("${snapshot.data.user.firstName} ${snapshot.data.user.lastName}".toUpperCase());
+            print(
+                "${snapshot.data.user.firstName} ${snapshot.data.user.lastName}"
+                    .toUpperCase());
             return CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
-                  child: ImageContainer(
-                    elevation: 5.0,
-                    isNetworkImage: true,
-                    borderRadius: 20.0,
-                    height: 400.0,
-                    bottomLeftRad: 20.0,
-                    bottomRightRad: 20.0,
-                    imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                  //Navigate to the image screen on click
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ImageScreen(
+                              imageUrl:
+                                  "$kImageBaseUrl${snapshot.data.picture}",
+                              isNetworkImage: true),
+                        ),
+                      );
+                    },
+                    child: ImageContainer(
+                      elevation: 5.0,
+                      isNetworkImage: true,
+                      borderRadius: 20.0,
+                      height: 400.0,
+                      bottomLeftRad: 20.0,
+                      bottomRightRad: 20.0,
+                      imageUrl: "$kImageBaseUrl${snapshot.data.picture}",
+                    ),
                   ), //Picture
                 ),
                 SliverToBoxAdapter(

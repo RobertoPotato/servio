@@ -10,6 +10,7 @@ import 'package:servio/screens/profile_screens/profile_helpers.dart';
 import 'package:servio/screens/service_screens/my_services.dart';
 import 'package:servio/screens/settings_screen.dart';
 import 'package:servio/screens/stats_screen.dart';
+import 'package:servio/screens/image_screen.dart';
 
 class MainParentScreen extends StatefulWidget {
   static String id = 'parentScreen';
@@ -48,13 +49,27 @@ class _MainParentScreenState extends State<MainParentScreen> {
                           height: 250.0,
                           child: DrawerHeader(
                             //images/Alien-Butt.gif
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image:
-                                          AssetImage("images/Alien-Butt.gif"),
-                                      fit: BoxFit.cover),
-                                  borderRadius: BorderRadius.circular(10.0)),
+                            child: InkWell(
+                              onTap: () {
+                                print("Gif tapped");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        ImageScreen(
+                                            imageUrl: "images/Alien-Butt.gif",
+                                            isNetworkImage: false),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image:
+                                            AssetImage("images/Alien-Butt.gif"),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(10.0)),
+                              ),
                             ),
                           ),
                         ),
