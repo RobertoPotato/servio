@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/card_title_text.dart';
-import 'package:servio/components/material_text.dart';
+import 'package:servio/components/divider_component.dart';
+import 'package:servio/components/image_container.dart';
+import 'package:servio/components/grid_details_card.dart';
 
 class MyBidDetails extends StatelessWidget {
   final bid;
@@ -56,21 +57,69 @@ class MyBidDetails extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: kMainHorizontalPadding,
+                vertical: kMainHorizontalPadding),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(kMainHorizontalPadding),
-                  child: MaterialText(
-                    text:
-                        "Your bid amount was ${bid["currency"]} ${bid["amount"]}",
-                    color: kMyBidsColor,
-                    fontStyle: kTestTextStyleWhite,
+                ImageContainer(
+                    borderRadius: 10.0,
+                    elevation: 2.0,
+                    imageUrl: kNetworkImage,
+                    isNetworkImage: true,
+                    height: 300.0),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Description",
+                        style: kHeadingTextStyle,
+                      ),
+                      Text("${bidService["description"]}",
+                          style: kHeadingSubTextStyle),
+                    ],
                   ),
                 ),
-                CardWithTitleAndText(
-                  title: "Cover Letter",
-                  text: bid["coverLetter"],
+                GridDetailsCard(
+                    row1col1: "Budget",
+                    row1col2:
+                        "${budget(bidService["budgetMin"], bidService["budgetMax"])}",
+                    row2col1: "Bid amount",
+                    row2col2: "${bid["currency"]} ${bid["amount"]}"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: DividerComponent(
+                    height: 1.5,
+                    width: double.infinity,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Cover Letter",
+                        style: kHeadingTextStyle,
+                      ),
+                      Text(
+                        "${bid["coverLetter"]}",
+                        style: kHeadingSubTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: DividerComponent(
+                    height: 1.5,
+                    width: double.infinity,
+                    color: kPrimaryColor,
+                  ),
                 ),
                 ListTile(
                   trailing: Icon(Icons.card_travel, color: Colors.blueAccent),
@@ -104,40 +153,6 @@ class MyBidDetails extends StatelessWidget {
                       },
                     ),
                   ),
-                ),
-                Column(
-                  children: [
-                    MaterialText(
-                      text:
-                          "The client's budget: ${budget(bidService["budgetMin"], bidService["budgetMax"])}",
-                      color: kMyBidsColor,
-                      fontStyle: kTestTextStyleWhite,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(kMainHorizontalPadding),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(kBorderRadius),
-                        elevation: kElevationValue / 2,
-                        child: Container(
-                          height: 300,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    kNetworkImage /*bidService["imageUrl"]*/),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(kBorderRadius),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: CardWithTitleAndText(
-                        title: "Description",
-                        text: bidService["description"],
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

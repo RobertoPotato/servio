@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
-import 'package:servio/components/my_vertical_divider.dart';
+import 'package:servio/components/divider_component.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/components/card_title_text.dart';
 import 'package:servio/models/ReviewWithUser.dart';
@@ -159,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         color: Colors.white),
                                   ),
                                 ),
-                                MyVerticalDivider(
+                                DividerComponent(
                                   height: 20.0,
                                   width: 1.0,
                                   color: kPrimaryColor,

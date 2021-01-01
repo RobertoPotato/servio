@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyVerticalDivider extends StatelessWidget {
-  MyVerticalDivider({this.height, this.width, this.color});
+class DividerComponent extends StatelessWidget {
+  DividerComponent({this.height, this.width, this.color});
   final double height;
   final double width;
   final Color color;

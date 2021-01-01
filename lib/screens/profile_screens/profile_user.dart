@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/my_vertical_divider.dart';
+import 'package:servio/components/divider_component.dart';
 import 'package:servio/components/image_container.dart';
 
 class UserProfile extends StatelessWidget {
@@ -96,7 +96,7 @@ class UserProfile extends StatelessWidget {
                               Text(roleTitle),
                             ],
                           ),
-                          MyVerticalDivider(
+                          DividerComponent(
                             height: 30,
                             color: Colors.black54,
                             width: 1.0,
@@ -111,7 +111,7 @@ class UserProfile extends StatelessWidget {
                               Text(tierTitle),
                             ],
                           ),
-                          MyVerticalDivider(
+                          DividerComponent(
                             height: 30,
                             color: Colors.black54,
                             width: 1.0,

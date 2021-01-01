@@ -144,6 +144,11 @@ const kTestTextStyleWhite = TextStyle(
   letterSpacing: 1.2,
 );
 
+const kMaterialTextWhite = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 20.0,
+);
+
 const kTestTextStyleBlack = TextStyle(
   color: Colors.black54,
   fontWeight: FontWeight.bold,

@@ -11,7 +11,9 @@ class MaterialText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding, vertical: kMainHorizontalPadding/2),
+        padding: const EdgeInsets.symmetric(
+            horizontal: kMainHorizontalPadding,
+            vertical: kMainHorizontalPadding / 2),
         child: Text(
           text.toString(),
           maxLines: 2,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/my_vertical_divider.dart';
+import 'package:servio/components/divider_component.dart';
 
 class StatsWidget extends StatelessWidget {
   final double rating;
@@ -24,7 +24,7 @@ class StatsWidget extends StatelessWidget {
             Column(
               children: <Widget>[Text(rating.toString()), Text('Rating')],
             ),
-            MyVerticalDivider(
+            DividerComponent(
               height: 28.0,
               width: 1.0,
               color: kPrimaryColor,
@@ -32,7 +32,7 @@ class StatsWidget extends StatelessWidget {
             Column(
               children: <Widget>[Text('$successrate %'), Text('Success rate')],
             ),
-            MyVerticalDivider(
+            DividerComponent(
               height: 28.0,
               width: 1.0,
               color: kPrimaryColor,

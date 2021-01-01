@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'material_text.dart';
 import 'package:servio/constants.dart';
-import 'my_vertical_divider.dart';
+import 'divider_component.dart';
 
-class JobDetailsCard extends StatelessWidget {
-  const JobDetailsCard({this.county, this.town, this.budgetRange, this.terms}) ;
+class GridDetailsCard extends StatelessWidget {
+  const GridDetailsCard(
+      {@required this.row1col1,
+      @required this.row1col2,
+      @required this.row2col1,
+      @required this.row2col2});
 
-  final county;
-  final town;
-  final budgetRange;
-  final terms;
+  final row1col1;
+  final row1col2;
+  final row2col1;
+  final row2col2;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: kElevationValue/2,
+      elevation: kElevationValue / 2,
       child: Padding(
         padding: const EdgeInsets.all(kMainHorizontalPadding),
         child: Column(
@@ -23,14 +27,16 @@ class JobDetailsCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: MaterialText(
-                    text: '$county County',
+                    text: '$row1col1',
                   ),
                   flex: 1,
                 ),
-                MyVerticalDivider(height: 10.0,),
+                DividerComponent(
+                  height: 10.0,
+                ),
                 Expanded(
                   child: MaterialText(
-                    text: '$town Town',
+                    text: '$row1col2',
                   ),
                   flex: 1,
                 ),
@@ -43,14 +49,16 @@ class JobDetailsCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: MaterialText(
-                    text: 'Ksh $budgetRange',
+                    text: '$row2col1',
                   ),
                   flex: 1,
                 ),
-                MyVerticalDivider(height: 10.0,),
+                DividerComponent(
+                  height: 10.0,
+                ),
                 Expanded(
                   child: MaterialText(
-                    text: '$terms',
+                    text: '$row2col2',
                   ),
                   flex: 1,
                 ),

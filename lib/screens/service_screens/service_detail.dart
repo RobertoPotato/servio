@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
-import 'package:servio/components/job_details_card.dart';
+import 'package:servio/components/grid_details_card.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
 import 'package:servio/screens/bids_screens/make_bid_screen.dart';
@@ -106,11 +106,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: kMainHorizontalPadding,
                     vertical: kMainHorizontalPadding / 2),
-                child: JobDetailsCard(
-                  county: widget.county,
-                  town: widget.town,
-                  budgetRange: widget.budget,
-                  terms: widget.terms,
+                child: GridDetailsCard(
+                  row1col1: "${widget.county} County",
+                  row1col2: "${widget.town} Town",
+                  row2col1: "Ksh: ${widget.budget}",
+                  row2col2: widget.terms,
                 ),
               ),
               Padding(

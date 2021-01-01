@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
-import 'package:servio/components/my_vertical_divider.dart';
+import 'package:servio/components/divider_component.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/components/card_title_text.dart';
@@ -176,7 +176,7 @@ class _BidDetailsState extends State<BidDetails> {
                                 ],
                               ),
                             ),
-                            MyVerticalDivider(
+                            DividerComponent(
                               height: 28.0,
                               width: 1.0,
                               color: kPrimaryColor,
