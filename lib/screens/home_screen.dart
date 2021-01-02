@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: kElevationValue,
         actions: <Widget>[
+          /*
           IconButton(
             icon: Icon(
               Icons.search,
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               //showSearch(context: context, delegate: ServiceSearchDelegate());
             },
-          ),
+          ),*/
           IconButton(
             icon: Icon(
               Icons.add,

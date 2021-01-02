@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:servio/screens/auth_screens/login_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:servio/jwt_helpers.dart';
 
 class SettingsScreen extends StatefulWidget {
   static String id = 'settings';
@@ -43,6 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile(
                 title: 'Sign out',
                 leading: Icon(Icons.exit_to_app),
+                onTap: () => logOutUser(context, LoginScreen.id),
               ),
             ],
           ),

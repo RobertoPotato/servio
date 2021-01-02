@@ -103,6 +103,7 @@ class _StatsPageState extends State<StatsPage> {
                           item: "Average rating",
                           value: "${snapshot.data.averageRating}",
                         ),
+                        //TODO There's a bug somewhere here
                         BasicStats(
                           item: "Bidding success rate",
                           value:

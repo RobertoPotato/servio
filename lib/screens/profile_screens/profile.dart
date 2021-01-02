@@ -16,7 +16,7 @@ import 'package:servio/screens/profile_screens/new_profile.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/components/image_container.dart';
 import 'package:servio/components/review_card.dart';
-import 'package:servio/screens/settings_screen.dart';
+import 'package:servio/screens/profile_screens/edit_profile.dart';
 import 'package:servio/models/ProfileWithTierRoleAndUser.dart';
 import 'package:servio/screens/image_screen.dart';
 
@@ -288,11 +288,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               },
                             ),
                             IconButtonWithText(
-                              text: 'Settings',
-                              icon: Icons.settings,
+                              text: 'Edit',
+                              icon: Icons.edit,
                               materialColor: kMySettingsColor,
                               onTap: () {
-                                Navigator.pushNamed(context, SettingsScreen.id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        EditProfile(),
+                                  ),
+                                );
                               },
                             ),
                             IconButtonWithText(

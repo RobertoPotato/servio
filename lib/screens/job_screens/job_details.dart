@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servio/components/icon_button_text.dart';
 import 'package:servio/constants.dart';
-import 'package:servio/components/card_title_text.dart';
 import 'package:servio/components/material_text.dart';
 import 'package:servio/date_time.dart';
 import 'package:servio/models/ProfileWithTierAndRole.dart';
@@ -16,7 +15,6 @@ import 'package:servio/components/grid_details_card.dart';
 import 'package:servio/screens/image_screen.dart';
 import 'package:servio/components/details_container.dart';
 import 'package:servio/components/sections_separator.dart';
-import 'package:servio/components/divider_component.dart';
 
 class JobDetails extends StatefulWidget {
   final client;
@@ -287,7 +285,7 @@ class _JobDetailsState extends State<JobDetails> {
                     ),
 
               SectionsSeparator(
-                  text: "Actions"),
+                  text: "User's reviews & Actions"),
               seeReviewOrError(
                   userIsClient: widget.userIsClient,
                   futureReview: futureReviewOrEmpty,
