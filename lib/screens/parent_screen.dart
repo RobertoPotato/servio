@@ -199,6 +199,10 @@ class _MainParentScreenState extends State<MainParentScreen> {
                             Navigator.pushNamed(context, SettingsScreen.id);
                           },
                         ),
+                        ListTile(
+                          title: Text('In Development'),
+                          leading: Icon(Icons.developer_mode, color: kRedAlert),
+                        ),
                       ],
                     ),
                   ),
