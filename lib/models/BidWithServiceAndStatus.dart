@@ -10,6 +10,7 @@ String bidWithServiceAndStatusToJson(BidWithServiceAndStatus data) => json.encod
 
 class BidWithServiceAndStatus {
   BidWithServiceAndStatus({
+    this.id,
     this.amount,
     this.coverLetter,
     this.canTravel,
@@ -19,7 +20,8 @@ class BidWithServiceAndStatus {
     this.service,
   });
 
-  double amount;
+  int id;
+  int amount;
   String coverLetter;
   bool canTravel;
   String availability;
@@ -28,7 +30,8 @@ class BidWithServiceAndStatus {
   Service service;
 
   factory BidWithServiceAndStatus.fromJson(Map<String, dynamic> json) => BidWithServiceAndStatus(
-    amount: json["amount"].toDouble(),
+    id: json["id"],
+    amount: json["amount"],
     coverLetter: json["coverLetter"],
     canTravel: json["canTravel"],
     availability: json["availability"],
@@ -38,6 +41,7 @@ class BidWithServiceAndStatus {
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "amount": amount,
     "coverLetter": coverLetter,
     "canTravel": canTravel,
@@ -56,6 +60,8 @@ class Service {
     this.budgetMax,
     this.terms,
     this.imageUrl,
+    this.county,
+    this.town,
     this.updatedAt,
     this.status,
   });
@@ -66,6 +72,8 @@ class Service {
   double budgetMax;
   String terms;
   String imageUrl;
+  String county;
+  String town;
   DateTime updatedAt;
   Status status;
 
@@ -76,6 +84,8 @@ class Service {
     budgetMax: json["budgetMax"].toDouble(),
     terms: json["terms"],
     imageUrl: json["imageUrl"],
+    county: json["county"],
+    town: json["town"],
     updatedAt: DateTime.parse(json["updatedAt"]),
     status: Status.fromJson(json["Status"]),
   );
@@ -87,6 +97,8 @@ class Service {
     "budgetMax": budgetMax,
     "terms": terms,
     "imageUrl": imageUrl,
+    "county": county,
+    "town": town,
     "updatedAt": updatedAt.toIso8601String(),
     "Status": status.toJson(),
   };

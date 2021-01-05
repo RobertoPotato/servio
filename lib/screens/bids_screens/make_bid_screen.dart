@@ -289,7 +289,7 @@ Future<String> createBid(
     displayResponseCard(ctxt, "Oops!", error.error, kErrorImage);
     return error.error;
   } else {
-    displayResponseCard(ctxt, "Oops!", kSomethingWrongException, kErrorImage);
+    displayResponseCard(ctxt, kUniversalErrorTitle, kSomethingWrongException, kErrorImage);
     return kSomethingWrongException;
   }
 }

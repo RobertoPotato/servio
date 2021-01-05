@@ -88,6 +88,7 @@ class _BidsState extends State<Bids> {
                                 bid: currentBidIndex,
                                 bidService: currentServiceIndex,
                                 serviceStatus: currentStatusIndex,
+                                token: widget.token,
                               ),
                             ),
                           );
