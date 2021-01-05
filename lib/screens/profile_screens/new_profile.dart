@@ -84,7 +84,7 @@ class _NewProfileState extends State<NewProfile> {
         content: Text('Do you really want to exit?'),
         actions: <Widget>[
           FlatButton(
-            child: Text('Continue'),
+            child: Text('Stay'),
             onPressed: () => Navigator.pop(context, false),
           ),
           FlatButton(
@@ -131,7 +131,7 @@ class _NewProfileState extends State<NewProfile> {
                             decoration: InputDecoration().copyWith(
                               hintText: 'Phone Number',
                               labelText: 'Phone',
-                              prefixIcon: Icon(Icons.work),
+                              prefixIcon: Icon(Icons.phone),
                             ),
                             validators: [FormBuilderValidators.required()],
                           ),
@@ -149,7 +149,7 @@ class _NewProfileState extends State<NewProfile> {
                               //hasFloatingPlaceholder: false,
                               labelText: 'Bio',
                               hintText: 'Say something about yourself',
-                              prefixIcon: Icon(Icons.note_add),
+                              prefixIcon: Icon(Icons.chat_bubble),
                             ),
                             validators: [FormBuilderValidators.required()],
                           ),
@@ -245,6 +245,8 @@ class _NewProfileState extends State<NewProfile> {
                                 ),
                             ),
                         FlatButton(
+                          color: kPrimaryColor,
+                          textColor: Colors.white,
                           onPressed: () async {
                             if (imageFile == null) {
                               displayDialog(context, 'Error',
@@ -267,10 +269,7 @@ class _NewProfileState extends State<NewProfile> {
                               }
                             }
                           },
-                          child: Icon(
-                            Icons.send,
-                            size: 54.0,
-                          ),
+                          child: Text("Upload"),
                         )
                       ],
                     ),

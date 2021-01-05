@@ -296,7 +296,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        EditProfile(),
+                                        EditProfile(
+                                      bio: snapshot.data.bio,
+                                      phoneNumber: snapshot.data.phoneNumber,
+                                      token: widget.token,
+                                      picture: snapshot.data.picture,
+                                    ),
                                   ),
                                 );
                               },
