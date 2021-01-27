@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:servio/screens/errors/error_screen.dart';
 import 'package:servio/screens/home_screen.dart';
 import 'package:servio/constants.dart';
@@ -43,7 +44,28 @@ class _MainParentScreenState extends State<MainParentScreen> {
               return Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
-                  title: Text("Home"),
+                  title: Text(_selectedIndex == 0 ? "Home" : "Categories"),
+                  actions: [
+                    _selectedIndex == 1 ? GestureDetector(
+                      onTap: () {
+                        const kMessage =
+                            "Long press a category for more information";
+
+                        Fluttertoast.showToast(
+                            msg: kMessage,
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.SNACKBAR,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.grey[700],
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: kMainHorizontalPadding),
+                        child: Icon(Icons.info_outline_rounded, size: 26.0, color: kAccentColor,),
+                      ),
+                    ): Container(),
+                  ],
                 ),
                 drawer: Drawer(
                   child: ListView(
@@ -204,14 +226,15 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   onTap: _onItemTapped,
                 ),
                 floatingActionButton: FloatingActionButton(
-                  isExtended: true,
+                  backgroundColor: Colors.teal[500],
                   tooltip: "Request a service",
                   onPressed: () {
                     Navigator.pushNamed(context, RequestServicePage.id);
                   },
                   child: Icon(Icons.add_rounded),
                 ),
-                floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerDocked,
               );
             } else {
               return ErrorScreen(

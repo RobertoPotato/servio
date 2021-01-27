@@ -6,7 +6,6 @@ import 'package:servio/components/alert_card.dart';
 import 'package:servio/constants.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/models/Alert.dart';
-import 'package:servio/screens/service_screens/request_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:servio/components/hiring.dart';

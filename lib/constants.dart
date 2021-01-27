@@ -8,7 +8,7 @@ const domainName = "test.robertwabuti.co.ke";
 const portLoc = "3000";
 const portNet = "3000";
 
-const port = portLoc;
+const port = portNet;
 const ip = ipNet;
 
 //change to https after certificates have been configured

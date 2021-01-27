@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:servio/jwt_helpers.dart';
 import 'dart:convert';
 import 'package:servio/models/Category.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Categories extends StatefulWidget {
   final String token;
@@ -61,42 +60,7 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        /*appBar: AppBar(
-          title: Text('Categories'),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kMainHorizontalPadding),
-              child: GestureDetector(
-                onTap: () {
-                  const kMessage = "Long press a category for more information";
-                  const kWaitingForCategories =
-                      "Please allow some time for the request to be served. Ensure you have a stable internet connection";
-                  Fluttertoast.showToast(
-                      msg: data == null
-                          ? kWaitingForCategories
-                          : data.length != 0
-                              ? kMessage
-                              : kCategoriesNotFound,
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.SNACKBAR,
-                      timeInSecForIosWeb: 2,
-                      backgroundColor: Colors.grey[700],
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                },
-                child: Icon(
-                  Icons.info,
-                  color: data == null
-                      ? Colors.orangeAccent
-                      : data.length != 0
-                          ? kAccentColor
-                          : Colors.red,
-                ),
-              ),
-            )
-          ],
-        ),*/
+        /**/
         body: data == null
             ? Center(
                 child: CircularProgressIndicator(),
