@@ -61,7 +61,7 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Text('Categories'),
           actions: [
             Padding(
@@ -96,7 +96,7 @@ class _CategoriesState extends State<Categories> {
               ),
             )
           ],
-        ),
+        ),*/
         body: data == null
             ? Center(
                 child: CircularProgressIndicator(),

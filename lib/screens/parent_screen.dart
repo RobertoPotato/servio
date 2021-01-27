@@ -8,6 +8,7 @@ import 'package:servio/screens/job_screens/job_parent_screen.dart';
 import 'package:servio/jwt_helpers.dart';
 import 'package:servio/screens/profile_screens/profile_helpers.dart';
 import 'package:servio/screens/service_screens/my_services.dart';
+import 'package:servio/screens/service_screens/request_service.dart';
 import 'package:servio/screens/settings_screen.dart';
 import 'package:servio/screens/stats_screen.dart';
 import 'package:servio/screens/image_screen.dart';
@@ -40,170 +41,141 @@ class _MainParentScreenState extends State<MainParentScreen> {
               return Center(child: CircularProgressIndicator());
             if (jwtSnapshot.data != "") {
               return Scaffold(
-                drawer: Container(
-                  color: Colors.white, //Background for sidebar
-                  child: Drawer(
-                    child: ListView(
-                      children: [
-                        Container(
-                          height: 250.0,
-                          child: DrawerHeader(
-                            //images/Alien-Butt.gif
-                            child: InkWell(
-                              onTap: () {
-                                print("Gif tapped");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        ImageScreen(
-                                            imageUrl: "images/Alien-Butt.gif",
-                                            isNetworkImage: false),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image:
-                                            AssetImage("images/Alien-Butt.gif"),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(10.0)),
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text("Home"),
+                ),
+                drawer: Drawer(
+                  child: ListView(
+                    children: [
+                      ListTile(
+                        title: Text('Profile'),
+                        leading: Icon(
+                          Icons.person,
+                          color: Colors.teal,
+                        ),
+                        trailing: profileSnapshot.data != ''
+                            ? Text('')
+                            : Icon(
+                                Icons.error,
+                                color: kRedAlert,
+                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  profileOrNewProfile(
+                                      jwtSnapshot.data, profileSnapshot.data),
+                            ),
+                          );
+                        },
+                      ),
+                      /*
+                      ListTile(
+                        title: Text('Favorites(Coming Soon)'),
+                        leading: Icon(
+                          Icons.favorite,
+                          color: kRedAlert,
+                        ),
+                        trailing: Icon(Icons.timer),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  FavoritesScreen(
+                                token: jwtSnapshot.data,
                               ),
                             ),
-                          ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: Text('Messages(Coming Soon)'),
+                        leading: Icon(
+                          Icons.chat,
+                          color: Colors.tealAccent,
                         ),
-                        ListTile(
-                          title: Text('Profile'),
-                          leading: Icon(
-                            Icons.person,
-                            color: Colors.teal,
-                          ),
-                          trailing: profileSnapshot.data != ''
-                              ? Text('')
-                              : Icon(
-                                  Icons.error,
-                                  color: kRedAlert,
-                                ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    profileOrNewProfile(
-                                        jwtSnapshot.data, profileSnapshot.data),
+                        trailing: Icon(Icons.timer),
+                      ),
+                      */
+                      ListTile(
+                        title: Text('My Services'),
+                        leading: Icon(Icons.dashboard, color: Colors.redAccent),
+                        onTap: () {
+                          //MyServices
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => MyServices(
+                                token: jwtSnapshot.data,
                               ),
-                            );
-                          },
-                        ),
-                        /*
-                        ListTile(
-                          title: Text('Favorites(Coming Soon)'),
-                          leading: Icon(
-                            Icons.favorite,
-                            color: kRedAlert,
-                          ),
-                          trailing: Icon(Icons.timer),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    FavoritesScreen(
-                                  token: jwtSnapshot.data,
-                                ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: Text('My Bids'),
+                        leading: Icon(Icons.payment, color: Colors.greenAccent),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => Bids(
+                                token: jwtSnapshot.data,
                               ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('Messages(Coming Soon)'),
-                          leading: Icon(
-                            Icons.chat,
-                            color: Colors.tealAccent,
-                          ),
-                          trailing: Icon(Icons.timer),
-                        ),
-                        */
-                        ListTile(
-                          title: Text('My Services'),
-                          leading:
-                              Icon(Icons.dashboard, color: Colors.redAccent),
-                          onTap: () {
-                            //MyServices
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => MyServices(
-                                  token: jwtSnapshot.data,
-                                ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: Text('Jobs'),
+                        leading: Icon(Icons.work, color: Colors.purple),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  JobParentScreen(
+                                token: jwtSnapshot.data,
                               ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('My Bids'),
-                          leading:
-                              Icon(Icons.payment, color: Colors.greenAccent),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => Bids(
-                                  token: jwtSnapshot.data,
-                                ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: Text('Stats'),
+                        leading:
+                            Icon(Icons.grade, color: Colors.lightBlueAccent),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => StatsPage(
+                                token: jwtSnapshot.data,
                               ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('Jobs'),
-                          leading: Icon(Icons.work, color: Colors.purple),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    JobParentScreen(
-                                  token: jwtSnapshot.data,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('Stats'),
-                          leading:
-                              Icon(Icons.grade, color: Colors.lightBlueAccent),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => StatsPage(
-                                  token: jwtSnapshot.data,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('Help(Coming soon)'),
-                          trailing: Icon(Icons.timer),
-                          leading: Icon(Icons.help, color: kPrimaryColor),
-                        ),
-                        ListTile(
-                          title: Text('Settings'),
-                          leading: Icon(Icons.settings, color: Colors.blueGrey),
-                          onTap: () {
-                            Navigator.pushNamed(context, SettingsScreen.id);
-                          },
-                        ),
-                        ListTile(
-                          title: Text('In Development'),
-                          leading: Icon(Icons.developer_mode, color: kRedAlert),
-                        ),
-                      ],
-                    ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: Text('Help(Coming soon)'),
+                        trailing: Icon(Icons.timer),
+                        leading: Icon(Icons.help, color: kPrimaryColor),
+                      ),
+                      ListTile(
+                        title: Text('Settings'),
+                        leading: Icon(Icons.settings, color: Colors.blueGrey),
+                        onTap: () {
+                          Navigator.pushNamed(context, SettingsScreen.id);
+                        },
+                      ),
+                      ListTile(
+                        title: Text('In Development'),
+                        leading: Icon(Icons.developer_mode, color: kRedAlert),
+                      ),
+                    ],
                   ),
                 ),
                 //body will be whatever screen is represented by the index and the
@@ -231,6 +203,15 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   selectedItemColor: kScaffoldBackgroundColor,
                   onTap: _onItemTapped,
                 ),
+                floatingActionButton: FloatingActionButton(
+                  isExtended: true,
+                  tooltip: "Request a service",
+                  onPressed: () {
+                    Navigator.pushNamed(context, RequestServicePage.id);
+                  },
+                  child: Icon(Icons.add_rounded),
+                ),
+                floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
               );
             } else {
               return ErrorScreen(

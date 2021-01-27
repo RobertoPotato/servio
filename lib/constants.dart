@@ -9,7 +9,7 @@ const portLoc = "3000";
 const portNet = "3000";
 
 const port = portLoc;
-const ip = ipLoc;
+const ip = ipNet;
 
 //change to https after certificates have been configured
 const kBaseUrl = "http://$ip:$port/api";

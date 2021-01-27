@@ -67,37 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: kElevationValue,
-        actions: <Widget>[
-          /*
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.black54,
-              size: 30,
-            ),
-            onPressed: () {
-              //showSearch(context: context, delegate: ServiceSearchDelegate());
-            },
-          ),*/
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.black54,
-              size: 36,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, RequestServicePage.id);
-            },
-          ),
-        ],
-        //elevation: kElevationValue,
-        title: Text(
-          'Home',
-          style: kAppBarTitle,
-        ),
-      ),
       body: CustomScrollView(
         slivers: <Widget>[
           /*   SliverToBoxAdapter(
