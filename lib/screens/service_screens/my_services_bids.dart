@@ -27,6 +27,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
     futureBidWithUserName = fetchBidsWithUserNames();
   }
 
+  // Todo Use try catch logic
   Future<BidWithUserName> fetchBidsWithUserNames() async {
     var url = "$kBaseUrl/v1/bids/formyservice/${widget.serviceId}";
 
@@ -54,7 +55,7 @@ class _MyServicesBidsState extends State<MyServicesBids> {
           title: Text("Bids"),
         ),
         body: bidsWithUserNames == null
-            ? Text('No bids for this service yet')
+            ? Center(child: CircularProgressIndicator(),)
             : ListView.builder(
                 itemCount:
                     bidsWithUserNames == null ? 0 : bidsWithUserNames.length,

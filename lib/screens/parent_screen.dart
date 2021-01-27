@@ -180,7 +180,7 @@ class _MainParentScreenState extends State<MainParentScreen> {
                 ),
                 //body will be whatever screen is represented by the index and the
                 //token contained in snapshot.data
-                body: _selectedIndex == 0
+                body: _selectedIndex == 1
                     ? Categories(
                         token: jwtSnapshot.data,
                       )
@@ -191,12 +191,12 @@ class _MainParentScreenState extends State<MainParentScreen> {
                   backgroundColor: kPrimaryColor,
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.category),
-                      label: 'Categories',
-                    ),
-                    BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.category),
+                      label: 'Categories',
                     ),
                   ],
                   currentIndex: _selectedIndex,

@@ -52,10 +52,15 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   roundedPercent(recoveredValue) {
-    recoveredValue == 1
-        ? recoveredValue = recoveredValue * 100 - 1
-        : recoveredValue = recoveredValue * 100;
-    return double.parse((recoveredValue).toStringAsFixed(1));
+    if (recoveredValue >= 0 && recoveredValue <= 1) {
+      recoveredValue == 1
+          ? recoveredValue = recoveredValue * 100 - 1
+          : recoveredValue = recoveredValue * 100;
+
+      return double.parse((recoveredValue).toStringAsFixed(1));
+    } else {
+      return 0;
+    }
   }
 
   @override
@@ -67,62 +72,58 @@ class _StatsPageState extends State<StatsPage> {
           title: Text("Basic Stats"),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              FutureBuilder(
-                future: futureStats,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        BasicStats(
-                          item: "Bids made",
-                          value: "${snapshot.data.bidCount}",
-                        ),
-                        BasicStats(
-                          item: "Times hired",
-                          value: "${snapshot.data.jobCount}",
-                        ),
-                        BasicStats(
-                          item: "Jobs completed",
-                          value: "${snapshot.data.jobsCompleted}",
-                        ),
-                        BasicStats(
-                          item: "Jobs stalled",
-                          value: "${snapshot.data.jobsStalled}",
-                        ),
-                        BasicStats(
-                          item: "Jobs Created",
-                          value: "${snapshot.data.jobsCreated}",
-                        ),
-                        BasicStats(
-                          item: "Total services",
-                          value: "${snapshot.data.servicesCount}",
-                        ),
-                        BasicStats(
-                          item: "Average rating",
-                          value: "${snapshot.data.averageRating}",
-                        ),
-                        //TODO There's a bug somewhere here
-                        BasicStats(
-                          item: "Bidding success rate",
-                          value:
-                              "${(roundedPercent((snapshot.data.jobCount / snapshot.data.bidCount)))}%",
-                        ),
-                        BasicStats(
-                          item: "Job completion rate",
-                          value:
-                              "${roundedPercent((snapshot.data.jobsCompleted / snapshot.data.jobCount))}%",
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasData) {
-                    return Text("Error");
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
-              )
-            ],
+          child: FutureBuilder(
+            future: futureStats,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    BasicStats(
+                      item: "Bids made",
+                      value: "${snapshot.data.bidCount}",
+                    ),
+                    BasicStats(
+                      item: "Times hired",
+                      value: "${snapshot.data.jobCount}",
+                    ),
+                    BasicStats(
+                      item: "Jobs completed",
+                      value: "${snapshot.data.jobsCompleted}",
+                    ),
+                    BasicStats(
+                      item: "Jobs stalled",
+                      value: "${snapshot.data.jobsStalled}",
+                    ),
+                    BasicStats(
+                      item: "Jobs Created",
+                      value: "${snapshot.data.jobsCreated}",
+                    ),
+                    BasicStats(
+                      item: "Total services",
+                      value: "${snapshot.data.servicesCount}",
+                    ),
+                    BasicStats(
+                      item: "Average rating",
+                      value: "${snapshot.data.averageRating}",
+                    ),
+                    //TODO There's a bug somewhere here
+                    BasicStats(
+                      item: "Bidding success rate",
+                      value:
+                          "${(roundedPercent((snapshot.data.jobCount / snapshot.data.bidCount)))}%",
+                    ),
+                    BasicStats(
+                      item: "Job completion rate",
+                      value:
+                          "${roundedPercent((snapshot.data.jobsCompleted / snapshot.data.jobCount))}%",
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasData) {
+                return Text("Error");
+              }
+              return Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),

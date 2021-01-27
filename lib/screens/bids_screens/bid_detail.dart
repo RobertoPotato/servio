@@ -304,7 +304,7 @@ class _BidDetailsState extends State<BidDetails> {
                 errorImage: kPageNotFoundImage,
               );
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),
