@@ -15,6 +15,7 @@ class MyServices extends StatefulWidget {
   _MyServicesState createState() => _MyServicesState();
 }
 
+// TODO add try catch logic
 class _MyServicesState extends State<MyServices> {
   Future<Service> futureService;
   List services;
@@ -62,9 +63,7 @@ class _MyServicesState extends State<MyServices> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : services.length == 0
-              ? Center(child: Text(kNoServicesRequestedPrompt))
-              : ListView.builder(
+          :  ListView.builder(
                   itemCount: services == null ? 0 : services.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
