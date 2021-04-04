@@ -112,6 +112,10 @@ class _RequestServicePageState extends State<RequestServicePage> {
               key: _fbKey,
               child: SingleChildScrollView(
                 child: FutureBuilder(
+
+
+
+
                     future: jwtOrEmpty,
                     builder: (context, jwtSnapshot) {
                       if (!jwtSnapshot.hasData)
@@ -121,7 +125,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                             future: futureCategories,
                             builder: (context, categoriesSnapshot) {
                               if (categoriesSnapshot.hasData) {
-                                if (categoriesSnapshot.data != null){
+                                if (categoriesSnapshot.data != null) {
                                   return FutureBuilder(
                                     future: profileOrEmpty,
                                     builder: (context, profileSnapshot) {
@@ -129,11 +133,12 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                         children: <Widget>[
                                           profileSnapshot.data == ''
                                               ? MaterialText(
-                                            text:
-                                            "Please set up your profile",
-                                            fontStyle: kTestTextStyleWhite,
-                                            color: kRedAlert,
-                                          )
+                                                  text:
+                                                      "Please set up your profile",
+                                                  fontStyle:
+                                                      kTestTextStyleWhite,
+                                                  color: kRedAlert,
+                                                )
                                               : Container(),
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -143,7 +148,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             child: FormBuilderTextField(
                                               attribute: 'title',
                                               decoration:
-                                              InputDecoration().copyWith(
+                                                  InputDecoration().copyWith(
                                                 hintText: 'Title',
                                                 labelText: 'Title',
                                                 prefixIcon: Icon(Icons.work),
@@ -161,23 +166,24 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             child: FormBuilderDropdown(
                                               attribute: 'categoryId',
                                               decoration:
-                                              InputDecoration().copyWith(
-                                                prefixIcon: Icon(Icons.category),
+                                                  InputDecoration().copyWith(
+                                                prefixIcon:
+                                                    Icon(Icons.category),
                                               ),
-                                              hint:
-                                              Text('Select Service Category'),
+                                              hint: Text(
+                                                  'Select Service Category'),
                                               validators: [
                                                 FormBuilderValidators.required()
                                               ],
                                               items: categories
                                                   .map(
                                                     (category) =>
-                                                    DropdownMenuItem(
-                                                      child:
-                                                      Text(category['title']),
+                                                        DropdownMenuItem(
+                                                      child: Text(
+                                                          category['title']),
                                                       value: category['id'],
                                                     ),
-                                              )
+                                                  )
                                                   .toList(),
                                             ),
                                           ),
@@ -188,15 +194,17 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 top: kMainHorizontalPadding),
                                             child: FormBuilderTextField(
                                               keyboardType:
-                                              TextInputType.multiline,
+                                                  TextInputType.multiline,
                                               maxLines: 7,
                                               attribute: 'description',
                                               decoration:
-                                              InputDecoration().copyWith(
+                                                  InputDecoration().copyWith(
                                                 //hasFloatingPlaceholder: false,
                                                 labelText: 'Description',
-                                                hintText: 'Describe the service',
-                                                prefixIcon: Icon(Icons.note_add),
+                                                hintText:
+                                                    'Describe the service',
+                                                prefixIcon:
+                                                    Icon(Icons.note_add),
                                               ),
                                               validators: [
                                                 FormBuilderValidators.required()
@@ -211,7 +219,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             child: FormBuilderDropdown(
                                               attribute: 'terms',
                                               decoration:
-                                              InputDecoration().copyWith(
+                                                  InputDecoration().copyWith(
                                                 prefixIcon: Icon(
                                                     Icons.supervisor_account),
                                               ),
@@ -225,10 +233,10 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 'Unspecified'
                                               ]
                                                   .map((service) =>
-                                                  DropdownMenuItem(
-                                                    child: Text('$service'),
-                                                    value: service,
-                                                  ))
+                                                      DropdownMenuItem(
+                                                        child: Text('$service'),
+                                                        value: service,
+                                                      ))
                                                   .toList(),
                                             ),
                                           ),
@@ -240,8 +248,9 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             child: FormBuilderDropdown(
                                               attribute: 'county',
                                               decoration:
-                                              InputDecoration().copyWith(
-                                                prefixIcon: Icon(Icons.category),
+                                                  InputDecoration().copyWith(
+                                                prefixIcon:
+                                                    Icon(Icons.category),
                                               ),
                                               hint: Text('Select your county'),
                                               validators: [
@@ -249,11 +258,12 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                               ],
                                               items: counties
                                                   .map(
-                                                    (county) => DropdownMenuItem(
-                                                  child: Text(county),
-                                                  value: county,
-                                                ),
-                                              )
+                                                    (county) =>
+                                                        DropdownMenuItem(
+                                                      child: Text(county),
+                                                      value: county,
+                                                    ),
+                                                  )
                                                   .toList(),
                                             ),
                                           ),
@@ -265,11 +275,11 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                             child: FormBuilderTextField(
                                               attribute: 'town',
                                               decoration:
-                                              InputDecoration().copyWith(
+                                                  InputDecoration().copyWith(
                                                 hintText: 'Town',
                                                 labelText: 'Town',
                                                 prefixIcon:
-                                                Icon(Icons.location_city),
+                                                    Icon(Icons.location_city),
                                               ),
                                               validators: [
                                                 FormBuilderValidators.required()
@@ -283,25 +293,27 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 top: kMainHorizontalPadding),
                                             child: Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: <Widget>[
                                                 Expanded(
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                        .only(
+                                                            .only(
                                                         right:
-                                                        kMainHorizontalPadding /
-                                                            2),
+                                                            kMainHorizontalPadding /
+                                                                2),
                                                     child: FormBuilderTextField(
                                                       keyboardType:
-                                                      TextInputType.number,
+                                                          TextInputType.number,
                                                       attribute: 'budgetMin',
                                                       decoration:
-                                                      InputDecoration()
-                                                          .copyWith(
-                                                        labelText: 'Budget From',
+                                                          InputDecoration()
+                                                              .copyWith(
+                                                        labelText:
+                                                            'Budget From',
                                                         prefixIcon:
-                                                        Icon(Icons.payment),
+                                                            Icon(Icons.payment),
                                                       ),
                                                       validators: [
                                                         FormBuilderValidators
@@ -313,17 +325,17 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                                 Expanded(
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                        .only(
+                                                            .only(
                                                         left:
-                                                        kMainHorizontalPadding /
-                                                            2),
+                                                            kMainHorizontalPadding /
+                                                                2),
                                                     child: FormBuilderTextField(
                                                       keyboardType:
-                                                      TextInputType.number,
+                                                          TextInputType.number,
                                                       attribute: 'budgetMax',
                                                       decoration:
-                                                      InputDecoration()
-                                                          .copyWith(
+                                                          InputDecoration()
+                                                              .copyWith(
                                                         labelText: 'Budget To',
                                                       ),
                                                       validators: [
@@ -349,82 +361,86 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                           ),
                                           imageFile == null
                                               ? InkWell(
-                                            onTap: () {
-                                              showModalBottomSheet<void>(
-                                                  context: context,
-                                                  builder: (BuildContext
-                                                  context) {
-                                                    return Container(
-                                                      height: 100.0,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .stretch,
-                                                        children: [
-                                                          FlatButton(
-                                                            onPressed: () {
-                                                              if (imageFile ==
-                                                                  null) {
-                                                                _getImageGallery();
-                                                              }
-                                                            },
-                                                            child: Text(
-                                                                "Select from gallery"),
-                                                          ),
-                                                          FlatButton(
-                                                            onPressed: () {
-                                                              if (imageFile ==
-                                                                  null) {
-                                                                _getImageCamera();
-                                                              }
-                                                            },
-                                                            child: Text(
-                                                                "Launch camera"),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  });
-                                            },
-                                            child: Icon(
-                                              Icons.add_a_photo,
-                                              size: 150.0,
-                                              color: kPrimaryColor,
-                                            ),
-                                          )
-                                              : Padding(
-                                            padding: const EdgeInsets.only(
-                                                left:
-                                                kMainHorizontalPadding,
-                                                right:
-                                                kMainHorizontalPadding,
-                                                top:
-                                                kMainHorizontalPadding),
-                                            child: Stack(
-                                              alignment: Alignment.topRight,
-                                              children: [
-                                                Image.file(
-                                                  imageFile,
-                                                  width: 200.0,
-                                                  height: 200.0,
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                                //Remove the selected image
-                                                InkWell(
                                                   onTap: () {
-                                                    setState(() {
-                                                      imageFile = null;
-                                                    });
+                                                    showModalBottomSheet<void>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Container(
+                                                            height: 100.0,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .stretch,
+                                                              children: [
+                                                                FlatButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    if (imageFile ==
+                                                                        null) {
+                                                                      _getImageGallery();
+                                                                    }
+                                                                  },
+                                                                  child: Text(
+                                                                      "Select from gallery"),
+                                                                ),
+                                                                FlatButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    if (imageFile ==
+                                                                        null) {
+                                                                      _getImageCamera();
+                                                                    }
+                                                                  },
+                                                                  child: Text(
+                                                                      "Launch camera"),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        });
                                                   },
                                                   child: Icon(
-                                                    Icons.remove_circle,
-                                                    size: 28.0,
-                                                    color: kRedAlert,
+                                                    Icons.add_a_photo,
+                                                    size: 150.0,
+                                                    color: kPrimaryColor,
+                                                  ),
+                                                )
+                                              : Padding(
+                                                  padding: const EdgeInsets
+                                                          .only(
+                                                      left:
+                                                          kMainHorizontalPadding,
+                                                      right:
+                                                          kMainHorizontalPadding,
+                                                      top:
+                                                          kMainHorizontalPadding),
+                                                  child: Stack(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    children: [
+                                                      Image.file(
+                                                        imageFile,
+                                                        width: 200.0,
+                                                        height: 200.0,
+                                                        fit: BoxFit.fitHeight,
+                                                      ),
+                                                      //Remove the selected image
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            imageFile = null;
+                                                          });
+                                                        },
+                                                        child: Icon(
+                                                          Icons.remove_circle,
+                                                          size: 28.0,
+                                                          color: kRedAlert,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: kMainHorizontalPadding,
@@ -436,32 +452,35 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                               materialColor: kPrimaryColor,
                                               onTap: () async {
                                                 if (imageFile == null) {
-                                                  displayDialog(context, 'Error',
+                                                  displayDialog(
+                                                      context,
+                                                      'Error',
                                                       "You haven\'t selected an image");
                                                 } else {
                                                   if (_fbKey.currentState
                                                       .saveAndValidate()) {
-                                                    final formData =
-                                                        _fbKey.currentState.value;
+                                                    final formData = _fbKey
+                                                        .currentState.value;
 
                                                     setState(() {});
                                                     final title =
-                                                    formData['title'];
+                                                        formData['title'];
                                                     final description =
-                                                    formData['description'];
+                                                        formData['description'];
                                                     final budgetMin =
-                                                    double.parse(formData[
-                                                    'budgetMin']);
+                                                        double.parse(formData[
+                                                            'budgetMin']);
                                                     final budgetMax =
-                                                    double.parse(formData[
-                                                    'budgetMax']);
+                                                        double.parse(formData[
+                                                            'budgetMax']);
                                                     final terms =
-                                                    formData['terms'];
+                                                        formData['terms'];
                                                     final county =
-                                                    formData['county'];
-                                                    final town = formData['town'];
+                                                        formData['county'];
+                                                    final town =
+                                                        formData['town'];
                                                     final categoryId =
-                                                    formData['categoryId'];
+                                                        formData['categoryId'];
                                                     final token =
                                                         jwtSnapshot.data;
 
@@ -489,7 +508,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                                   );
                                 }
                               }
-                              if (categoriesSnapshot.hasError){
+                              if (categoriesSnapshot.hasError) {
                                 return ErrorScreen(
                                   message: "${categoriesSnapshot.error}",
                                   errorImage: kErrorImage,
